@@ -1,15 +1,18 @@
-.. CompuCell3DReferenceManual documentation master file, created by
-   sphinx-quickstart on Sat Jul 07 17:58:38 2018.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. CompuCell3DReferenceManual documentation master file
 
-Welcome to CompuCell3DReferenceManual's documentation!
+CompuCell3D Reference Manual - 3.7.8
 ======================================================
+The focus of this manual is to teach you how to use CC3DML (XML-based syntax) to build powerful multi-scale
+multi-cell tissue simulations. We will assume that you have a working knowledge of XML.
+You do not have to be an XML guru but you should know how to write simple XML documents
+
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+
+   introduction
 
 
 Indices and tables
