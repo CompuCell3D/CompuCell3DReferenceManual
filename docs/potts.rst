@@ -26,50 +26,53 @@ lattice and the simulation.
 
 
 This section appears at the beginning of the configuration file. Line
-<Dimensions x="101" y="101" z="1"/> declares the dimensions of the
-lattice to be 101 x 101 x 1, *i.e.*, the lattice is two-dimensional and
-extends in the xy plane. The basis of the lattice is 0 in each
-direction, so the 101 lattice sites in the x and y directions have
-indices ranging from 0 to 100. <Steps>1000</Steps> tells CompuCell how
+``<Dimensions x="101" y="101" z="1"/>`` declares the dimensions of the
+lattice to be``101 x 101 x 1``, *i.e.*, the lattice is two-dimensional and
+extends in the ``xy`` plane. The basis of the lattice is 0 in each
+direction, so the ``101`` lattice sites in the ``x`` and ``y`` directions have
+indices ranging from ``0`` to ``100``.`` <Steps>1000</Steps>`` tells CompuCell how
 long the simulation lasts in MCS. After executing this number of steps,
 CompuCell can run simulation at zero temperature for an additional
-period. In our case it will run for <Anneal>10</Anneal> extra steps.
-FluctuationAmplitude parameter determines intrinsic fluctuation or
-motility of cell membrane. Fluctuation amplitude is a temperature
+period. In our case it will run for ``<Anneal>10</Anneal>`` extra steps.
+``FluctuationAmplitude`` parameter determines intrinsic fluctuation or
+motility of cell membrane. **Fluctuation amplitude is a temperature
 parameter in classical GGH model formulation. We have decided to use
 FluctuationAmplitude term instead of temperature because using word
 “temperature” to describe intrinsic motility of cell membrane was quite
-confusing.
+confusing.**
 
 In the above example, fluctuation amplitude applies to all cells in the
 simulation. To define fluctuation amplitude separately for each cell
 type we use the following syntax:
 
-<FluctuationAmplitude>
+.. code-block:: xml
 
-<FluctuationAmplitudeParameters CellType="Condensing"\\
+    <FluctuationAmplitude>
+        <FluctuationAmplitudeParameters CellType="Condensing"\
+        FluctuationAmplitude="10"/>
+        <FluctuationAmplitudeParameters CellType="NonCondensing”\
+        FluctuationAmplitude="5"/>
+    </FluctuationAmplitude>
 
-FluctuationAmplitude="10"/>
 
-<FluctuationAmplitudeParameters CellType="NonCondensing”\\
 
-FluctuationAmplitude="5"/>
-
-</FluctuationAmplitude>
-
-When CompuCell3D encounters expanded definition of FluctuationAmplitude
+When CompuCell3D encounters expanded definition of ``FluctuationAmplitude``
 it will use it in place of a global definition –
 
-<FluctuationAmplitude>5</ FluctuationAmplitude >
+.. code-block:: xml
 
-To complete the picture CompUCell3D allows users to set fluctuation
+    <FluctuationAmplitude>5</ FluctuationAmplitude >
+
+To complete the picture CompuCell3D allows users to set fluctuation
 amplitude individually for each cell. Using Python scripting we write:
 
-for cell in self.cellList:
+.. code-block:: python
 
-if cell.type==1:
+    for cell in self.cellList:
+        if cell.type==1:
+            cell.fluctAmpl=20
 
-cell.fluctAmpl=20
+
 
 When determining which value of fluctuation amplitude to use, CompuCell
 first checks if fluctAmpl is non-negative. If this is the case it will
