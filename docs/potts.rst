@@ -35,11 +35,15 @@ long the simulation lasts in MCS. After executing this number of steps,
 CompuCell can run simulation at zero temperature for an additional
 period. In our case it will run for ``<Anneal>10</Anneal>`` extra steps.
 ``FluctuationAmplitude`` parameter determines intrinsic fluctuation or
-motility of cell membrane. **Fluctuation amplitude is a temperature
-parameter in classical GGH model formulation. We have decided to use
-FluctuationAmplitude term instead of temperature because using word
-“temperature” to describe intrinsic motility of cell membrane was quite
-confusing.**
+motility of cell membrane.
+
+.. note::
+
+   ``FluctuationAmplitude`` is a ``Temperature``
+   parameter in classical GGH model formulation. We have decided to use
+   ``FluctuationAmplitude`` term instead of temperature because using word
+   ``Temperature`` to describe intrinsic motility of cell membrane was quite
+   confusing.
 
 In the above example, fluctuation amplitude applies to all cells in the
 simulation. To define fluctuation amplitude separately for each cell
