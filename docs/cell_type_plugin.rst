@@ -2,7 +2,7 @@ CellType Plugin
 ---------------
 
 An example of the plugin that stores user assigned data that is used to
-configure simulation before it is run is a ``CellType Plugi``n. This plugin
+configure simulation before it is run is a ``CellType Plugin``. This plugin
 is responsible for defining cell types and storing cell type
 information. It is a basic plugin used by virtually every CompuCell
 simulation. The syntax is straight forward as can be seen in the example
