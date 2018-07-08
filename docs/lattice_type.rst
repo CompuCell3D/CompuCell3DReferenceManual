@@ -68,10 +68,23 @@ centers of the hexagons. Notice that unit surface in 2D is simply a
 length of the hexagon side and surface area of the hexagon with side ``a``
 is:
 
-In 3D we can derive the corresponding unit quantities starting with the
-formulae for Volume and surface of rhombic dodecahedron (12 hedra)
+.. math::
+   :nowrap:
 
-where 'a' denotes length of dodecahedron edge.
+   S = 6\frac{{\sqrt[]{3}}}{4}a^2
+
+In 3D we can derive the corresponding unit quantities starting with the
+formulae for volume and surface of rhombic dodecahedron (12 hedra)
+
+.. math::
+   :nowrap:
+
+   \begin{align*}
+       &V = \frac{16}{9}{\sqrt[]{3}}a^3 \\
+       &S = 8{\sqrt[]{2}}a^2
+   \end{align*}
+
+where ``a`` denotes length of dodecahedron edge.
 
 Constraining the volume to be one we get
 

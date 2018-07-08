@@ -136,7 +136,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'cc3d_reference_manuall.tex', u'CC3D\\_Reference\\_Manual Documentation',
+    (master_doc, 'cc3d_reference_manual.tex', u'CC3D\\_Reference\\_Manual Documentation',
      u'Maciej Swat, Julio Belmonte, James Glazier', 'manual'),
 ]
 
@@ -157,7 +157,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'cc3d_reference_manual', u'cc3d_reference_manuall Documentation',
+    (master_doc, 'cc3d_reference_manual', u'cc3d_reference_manual Documentation',
      author, 'cc3d_reference_manual', 'One line description of project.',
      'Miscellaneous'),
 ]
