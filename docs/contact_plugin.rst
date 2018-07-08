@@ -15,7 +15,7 @@ The explicit formula for the energy is:
 
     \begin{eqnarray}
         E_{adhesion} = \sum_{i,j,neighbors} J\left ( \tau_{\sigma(i)},\tau_{\sigma(j)} \right )\left ( 1-\delta_{\sigma(i), \sigma(j)} \right )
-    \begin{eqnarray}
+    \end{eqnarray}
 
 where ``i`` and ``j`` label two neighboring lattice sites :math:`\sigma`'s denote cell
 Ids, :math:`\tau`'s denote cell types .
@@ -24,7 +24,7 @@ Ids, :math:`\tau`'s denote cell types .
 In the above formula, we need to differentiate between cell types and
 cell Ids. This formula shows that cell types and cell Ids **are not the
 same**. The ``Contact`` plugin in the ``.xml`` file, defines the energy per unit
-area of contact between cells of different types (:math:`J\left ( \tau_{\sigma(i)},\tau_{\sigma(j)} \right )\left`) and the interaction
+area of contact between cells of different types (:math:`J\left ( \tau_{\sigma(i)},\tau_{\sigma(j)} \right )`) and the interaction
 range ``NeighborOrder`` of the contact:
 
 .. code-block:: xml
