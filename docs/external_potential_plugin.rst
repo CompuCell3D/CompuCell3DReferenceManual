@@ -36,7 +36,7 @@ We can also apply external potential to specific cell types:
         <ExternalPotentialParameters CellType="Body3" x="0" y="0" z="0"/>
     </Plugin>
 
-Where in`` ExternalPotentialParameters`` we specify which cell type is
+Where in ``ExternalPotentialParameters`` we specify which cell type is
 subject to external potential (``Lambda`` is specified using ``x , y , z``
 attributes).
 
