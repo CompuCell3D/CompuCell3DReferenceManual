@@ -12,6 +12,7 @@ derivations can be found in “Introduction to Hexagonal Lattices”
 available from `http://www.compucell3d.org/BinDoc/cc3d_binaries/Manuals/HexagonalLattice.pdf <http://www.compucell3d.org/BinDoc/cc3d_binaries/Manuals/HexagonalLattice.pdf>`__
 
 To enable hexagonal lattice you need to put
+
 .. code-block:: xml
 
     <LatticeType>Hexagonal</LatticeType>
@@ -71,7 +72,9 @@ is:
 .. math::
    :nowrap:
 
-   S = 6\frac{{\sqrt[]{3}}}{4}a^2
+   \begin{eqnarray}
+      S = 6\frac{{\sqrt[]{3}}}{4}a^2
+   \end{eqnarray}
 
 In 3D we can derive the corresponding unit quantities starting with the
 formulae for volume and surface of rhombic dodecahedron (12 hedra)
@@ -86,8 +89,31 @@ formulae for volume and surface of rhombic dodecahedron (12 hedra)
 
 where ``a`` denotes length of dodecahedron edge.
 
-Constraining the volume to be one we get
+Constraining the volume to be ``1`` we get:
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      a = \sqrt[3]{\frac{9V}{16\sqrt[]{3}}}
+   \end{eqnarray}
+
 
 and thus unit surface is given by:
 
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      S_{unit-hex} = \frac{S}{12} = \frac{8\sqrt[]{2}}{12}\sqrt[3]{\frac{9V}{16\sqrt[]{3}}}\approx 0.445
+   \end{eqnarray}
+
 and unit length by:
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      L_{unit-hex} = 2\frac{\sqrt[]{2}}{\sqrt[]{3}}a = 2\frac{\sqrt[]{2}}{\sqrt[]{3}} \sqrt[3]{\frac{9V}{16\sqrt[]{3}}}\approx 1.122
+   \end{eqnarray}
+
