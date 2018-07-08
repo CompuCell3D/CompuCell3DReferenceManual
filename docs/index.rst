@@ -20,6 +20,7 @@ You do not have to be an XML guru but you should know how to write simple XML do
    global_volume_and_surface_plugins
    volume_and_surface_tracker_plugins
    volume_and_surface_flex_plugins
+   neighbor_tracker
 
 
 
