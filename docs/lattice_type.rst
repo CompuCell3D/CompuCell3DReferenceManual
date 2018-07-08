@@ -46,11 +46,26 @@ Based on the above facts one can work out how unit length and unit
 surface transform to the hex lattice. The conversion factors are given
 below:
 
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      S_{hex-unit}=\sqrt[]{\frac{2}{3\sqrt[]{3}}}\approx 0.6204
+   \end{eqnarray}
+
 For the 2D case, assuming that each pixel has unit volume, we get:
 
-where denotes length of the hexagon and denotes a distance between
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      L_{hex-unit}=\sqrt[]{\frac{2}{\sqrt[]{3}}}\approx 1.075
+   \end{eqnarray}
+
+
+where :math:`S_{hex-unit}` denotes length of the hexagon and :math:`L_{hex-unit}` denotes a distance between
 centers of the hexagons. Notice that unit surface in 2D is simply a
-length of the hexagon side and surface area of the hexagon with side 'a'
+length of the hexagon side and surface area of the hexagon with side ``a``
 is:
 
 In 3D we can derive the corresponding unit quantities starting with the
