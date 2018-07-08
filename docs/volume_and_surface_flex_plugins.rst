@@ -20,11 +20,11 @@ mimics the example below.
 
 .. note::
 
-    Almost all CompuCell3D modules which have options ``Fle``x or
-    ``LocalFle``x are implemented as a single C++ module and CC3D, based on
+    Almost all CompuCell3D modules which have options ``Flex`` or
+    ``LocalFlex`` are implemented as a single C++ module and CC3D, based on
     CC3DML syntax used, figures out which functionality to load at the run
     time. As a result for the reminder of this reference manual we will
-    stick to the convention that all ``Flex`` and ``LocalFle``x modules will be
+    stick to the convention that all ``Flex`` and ``LocalFlex`` modules will be
     invoked using core name of the module only.
 
 Notice that in the example above cell types ``Wall`` and ``Ground`` have target
@@ -49,7 +49,7 @@ to use, and also not efficient in terms of speed of simulation run.
 SurfaceFlex Plugin
 ------------------
 
-``SurfaceFlex`` plugin is more sophisticated version of ``Surfac``e Plugin.
+``SurfaceFlex`` plugin is more sophisticated version of ``Surface`` Plugin.
 Everything that was said with respect to ``VolumeFlex`` plugin applies to
 ``SurfaceFlex``. For syntax see example below:
 
@@ -70,7 +70,7 @@ VolumeLocalFlex Plugin
 you specify lambda coefficient and target volume, individually for each cell.
 In the course of
 simulation you can change this target volume depending on e.g.
-concentration of *e.g.* ``FGF ``in the particular cell. This way you can specify
+concentration of *e.g.* ``FGF``in the particular cell. This way you can specify
 which cells grow faster, which slower based on a state of the
 simulation. This plugin requires you to develop a module (plugin or
 steppable) which will alter target volume for each cell. You can do it

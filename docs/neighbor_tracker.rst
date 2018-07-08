@@ -28,7 +28,7 @@ pixels and cell 2 6 pixels.
 
 To include this plugin in your simulation , add the following code to the CC3DML
 
-.. code-block::
+.. code-block:: xml
 
     <Plugin Name="NeighborTracker"/>
 

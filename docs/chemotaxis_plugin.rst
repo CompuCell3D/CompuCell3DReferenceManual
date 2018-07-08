@@ -151,7 +151,7 @@ fields listed in the CC3DML will be used to calculate chemotaxis energy:
 
 
 In the above excerpt from the CC3DML configuration file we see that
-cells of type ``Macrophag``e will chemotax in response to ``ATTR`` gradient.
+cells of type ``Macrophage`` will chemotax in response to ``ATTR`` gradient.
 
 Using Python scripting we can modify chemotaxis properties of individual
 cells as follows:
@@ -159,31 +159,31 @@ cells as follows:
 
 .. code-block:: python
 
-class ChemotaxisSteering(SteppableBasePy):
-        def __init__(self, _simulator, _frequency=100):
-            SteppableBasePy.__init__(self, _simulator, _frequency)
+   class ChemotaxisSteering(SteppableBasePy):
+           def __init__(self, _simulator, _frequency=100):
+               SteppableBasePy.__init__(self, _simulator, _frequency)
 
-        def start(self):
+           def start(self):
 
-            for cell in self.cellList:
-                if cell.type == 2:
-                    cd = self.chemotaxisPlugin.addChemotaxisData(cell, "ATTR")
-                    cd.setLambda(20.0)
+               for cell in self.cellList:
+                   if cell.type == 2:
+                       cd = self.chemotaxisPlugin.addChemotaxisData(cell, "ATTR")
+                       cd.setLambda(20.0)
 
-                    # cd.initializeChemotactTowardsVectorTypes("Bacterium,Medium")
-                    cd.assignChemotactTowardsVectorTypes([0, 1])
+                       # cd.initializeChemotactTowardsVectorTypes("Bacterium,Medium")
+                       cd.assignChemotactTowardsVectorTypes([0, 1])
 
-                    break
+                       break
 
-        def step(self, mcs):
-            for cell in self.cellList:
-                if cell.type == 2:
+           def step(self, mcs):
+               for cell in self.cellList:
+                   if cell.type == 2:
 
-                    cd = self.chemotaxisPlugin.getChemotaxisData(cell, "ATTR")
-                    if cd:
-                        lam = cd.getLambda() - 3
-                        cd.setLambda(lam)
-                    break
+                       cd = self.chemotaxisPlugin.getChemotaxisData(cell, "ATTR")
+                       if cd:
+                           lam = cd.getLambda() - 3
+                           cd.setLambda(lam)
+                       break
 
 In the ``start`` function for first encountered cell of type ``Macrophage``
 (``type==2``) we insert ``ChemotaxisData`` object (it determines chemotaxing

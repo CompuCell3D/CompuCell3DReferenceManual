@@ -37,7 +37,7 @@ We can also apply external potential to specific cell types:
     </Plugin>
 
 Where in`` ExternalPotentialParameters`` we specify which cell type is
-subject to external potential (``Lambda`` is specified using ``x``,``y``,``z``
+subject to external potential (``Lambda`` is specified using ``x , y , z``
 attributes).
 
 We can also apply external potential to individual cells. In that case,
