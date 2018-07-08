@@ -23,6 +23,7 @@ You do not have to be an XML guru but you should know how to write simple XML do
    neighbor_tracker
    chemotaxis_plugin
    external_potential_plugin
+   center_of_mass_plugin
 
 
 
