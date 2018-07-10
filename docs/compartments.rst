@@ -140,3 +140,5 @@ to the same cluster or not we will use internal or external contact
 energies respectively.
 
 .. |compartments| image:: images/compartments.png
+   :width: 6.00000in
+   :height: 4.33333in
