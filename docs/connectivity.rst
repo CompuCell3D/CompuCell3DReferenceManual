@@ -76,7 +76,9 @@ and couple it with the following Python steppable:
 Below we describe a slower version of ConnectivityGlobal plugin that is still supported but
 has much slower performance and for that reason we encourage you to try faster implementation described above
 
- .. deprecated::
+ .. note::
+
+    **DEPRECATED**
 
     A more general type of connectivity constraint is implemented in
     ``ConnectivityGlobal`` plugin. In this case we calculate volume of a cell
