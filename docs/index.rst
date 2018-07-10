@@ -25,6 +25,7 @@ You do not have to be an XML guru but you should know how to write simple XML do
    external_potential_plugin
    center_of_mass_plugin
    contact_plugin
+   adhesion_flex_plugin
 
 
 
