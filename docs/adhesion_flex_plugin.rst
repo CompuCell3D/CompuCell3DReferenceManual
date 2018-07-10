@@ -9,17 +9,17 @@ own adhesion molecules. We use the following formula to calculate
 adhesion energy in ``AdhesionFlex`` plugin:
 
 .. math::
-    ..nowrap:
+    :nowrap:
 
     \begin{eqnarray}
         E_{adhesion} = \sum_{i,j,neighbors} \left ( - \sum_{m,n}k_{mn}F\left ( N_{m}\left (i \right ), N_{n} \left( i \right ) \right ) \right )\left ( 1-\delta_{\sigma(i), \sigma(j)} \right )
     \end{eqnarray}
 
 
-where indexes ``i``, ``j`` label pixels, :math:` - \sum_{m,n}k_{mn}F\left ( N_{m}\left (i \right ), N_{n} \left( i \right ) \right )`
-denotes contact energy between cell types :math:`\sigma(i)` and :math:`\sigma(j)` and indexes ``m`` ,``n``
+where indexes ``i``, ``j`` label pixels, :math:`- \sum_{m,n}k_{mn}F\left ( N_{m}\left (i \right ), N_{n} \left( i \right ) \right )`
+denotes contact energy between cell types :math:`\sigma(i)` and :math:`\sigma(j)` and indexes ``m`` , ``n``
 label adhesion molecules in cells composed of pixels ``i`` and ``j`` respectively. ``F``
-denotes user-defined function of *N\ :sub:`m`* and *N\ :sub:`n`*.
+denotes user-defined function of :math:`N_m` and :math:`N_n`.
 Although this may look a bit complex, the basic idea is simple: each
 cell has certain number of adhesion molecules on its surface. When cells touch
 each other the resultant energy is simply a "product of interactions" of
