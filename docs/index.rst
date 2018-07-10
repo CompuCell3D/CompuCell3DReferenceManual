@@ -28,6 +28,7 @@ You do not have to be an XML guru but you should know how to write simple XML do
    adhesion_flex_plugin
    compartments
    length_constraint
+   connectivity
 
 
 

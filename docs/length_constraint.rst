@@ -78,14 +78,6 @@ definition by-type definitions:
     energy penalty (defined by a user) to change of energy effectively
     prohibiting such pixel copy. In the case of 2D on square lattice
     checking cell connectivity can be done locally and thus is very fast.
-    Unfortunately on hex lattice and in 3D on either lattice we don’t have
-    an algorithm of performing such check locally and therefore we do it
-    globally using breadth first search algorithm and comparing volumes of
-    cells calculated this way with actual volume of the cell. If they agree
-    we conclude that cell connectivity is preserved. However, the
-    computational cost of running such algorithm can be quite high.
-    Therefore if one does need extremely elongated cells (it is when
-    connectivity algorithm has to do a lot of work) one may neglect
-    connectivity constraint and use Length constrain only. For slight cells
-    elongations the connectivity should be preserved however, occasionally
-    cells may fragment.
+    In 3D the connectivity algorithm is a bit slower but but its performance is
+    acceptable. Therefore if you need large cell elongations you should always use connectivity in order to
+    prevent cell fragmentation
