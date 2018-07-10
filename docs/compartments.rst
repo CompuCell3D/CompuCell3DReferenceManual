@@ -10,7 +10,9 @@ the following form:
     :nowrap:
 
     \begin{eqnarray}
+
         E_{adhesion} = \sum_{i,j,neighbors} J\left ( \sigma (\mu_{i},\nu_{i}),\sigma (\mu_{j},\nu_{j})  \right )
+
     \end{eqnarray}
 
 where ``i`` and ``j`` denote pixels , ``σ(µ,ν)`` denotes a cell
