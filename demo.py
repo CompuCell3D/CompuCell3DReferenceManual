@@ -1,12 +1,7 @@
-class SecretionSteppable(SecretionBasePy):
-    def __init__(self, _simulator, _frequency=1):
-        SecretionBasePy.__init__(self, _simulator, _frequency)
+deleteFocalPointPlasticityLink(cell1, cell2)
 
-    def step(self, mcs):
-        attrSecretor = self.getFieldSecretor("ATTR")
-        for cell in self.cellList:
-            if cell.type == 3:
-                attrSecretor.secreteInsideCell(cell, 300)
-                attrSecretor.secreteInsideCellAtBoundary(cell, 300)
-                attrSecretor.secreteOutsideCellAtBoundary(cell, 500)
-                attrSecretor.secreteInsideCellAtCOM(cell, 300)
+deleteInternalFocalPointPlasticityLink(cell1, cell2)
+
+createFocalPointPlasticityLink(cell1, cell2, lambda , targetDistance, maxDistance)
+
+createInternalFocalPointPlasticityLink(cell1, cell2, lambda , targetDistance, maxDistance)
