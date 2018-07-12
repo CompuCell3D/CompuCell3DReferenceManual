@@ -1,11 +1,12 @@
-def start(self):
-    for cell in self.cellList:
-        if cell.type == 2:
-            cd = self.chemotaxisPlugin.addChemotaxisData(cell, "ATTR")
-            cd.setLambda(20.0)
-            cd.setSaturationCoef(200.0)
+class SecretionSteppable(SecretionBasePy):
+    def __init__(self, _simulator, _frequency=1):
+        SecretionBasePy.__init__(self, _simulator, _frequency)
 
-            # cd.initializeChemotactTowardsVectorTypes("Bacterium,Medium")
-            cd.assignChemotactTowardsVectorTypes([0, 1])
-
-            break
+    def step(self, mcs):
+        attrSecretor = self.getFieldSecretor("ATTR")
+        for cell in self.cellList:
+            if cell.type == 3:
+                attrSecretor.secreteInsideCell(cell, 300)
+                attrSecretor.secreteInsideCellAtBoundary(cell, 300)
+                attrSecretor.secreteOutsideCellAtBoundary(cell, 500)
+                attrSecretor.secreteInsideCellAtCOM(cell, 300)
