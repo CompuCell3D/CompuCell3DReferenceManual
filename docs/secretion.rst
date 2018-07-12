@@ -138,7 +138,7 @@ Currently we support 7 secretion modes for individual cells:
    pixels and in contact with cells listed the last argument of the
    function call
 
-7.`` secreteInsideCellAtCOM`` – secretion at the center of mass of the cell
+7. ``secreteInsideCellAtCOM`` – secretion at the center of mass of the cell
 
 and 6 uptake modes:
 
@@ -227,7 +227,7 @@ as shown in the example below:
 
     Make sure that fields into which you will be secreting
     chemicals exist. They are usually fields defined in PDE solvers. When
-    using secretion plugin you do not need to specify ``SecretionDat``a section
+    using secretion plugin you do not need to specify ``SecretionData`` section
     for the PDE solvers.
 
 When implementing e.g. secretion inside cell when the cell is in contact
@@ -293,8 +293,8 @@ Typical CC3DML syntax for Secretion plugin is presented below:
 
 
 
-By default`` ExtraTimesPerMC`` is set to ``0`` - meaning no extra calls to
-``Secretio``n plugin per MCS.
+By default ``ExtraTimesPerMC`` is set to ``0`` - meaning no extra calls to
+``Secretion`` plugin per MCS.
 
 Typical use of secretion from Python is demonstrated best in the example
 below:
