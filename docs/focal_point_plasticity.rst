@@ -52,6 +52,7 @@ Once cells are linked the energy calculation is carried out according to the for
 
 .. math::
    :nowrap:
+
    \begin{eqnarray}
       E = \sum_{i,j,cell\ neighbors}\lambda_{ij}\left ( l_{ij}-L_{ij} \right )^2
    \end{eqnarray}
@@ -60,7 +61,7 @@ where :math:`l_{ij}` is a distance between center of masses of cells ``i`` and `
 a target length corresponding to :math:`l_{ij}`.
 
 :math:`\lambda_{ij}` and :math:`L_{ij}` between different cell types are
-specified using ``Lambda`` and ``TargetDistanc``e tags. The``MaxDistance``
+specified using ``Lambda`` and ``TargetDistance`` tags. The ``MaxDistance``
 determines the distance between cells’ center of masses past which the link
 between those cells break. When the link breaks, then in order for the
 two cells to reconnect they would need to come in contact again.
@@ -137,7 +138,7 @@ FocalPointPlasticity CC3DML plugin:
 
 
 By default CC3D defines 3 variables (``Lambda``, ``Length``, ``TargetLength``) which
-correspond to ,:math:`\lambda_{ij}` :math:`l_{ij}` and :math:`L_{ij}` from the formula
+correspond to :math:`\lambda_{ij}` ,  :math:`l_{ij}` and :math:`L_{ij}` from the formula
 above. We can also define extra variables in the CC3DML (e.g.
 ``LambdaExtra``). The actual link constituent law obeys ``muParser`` syntax
 convention. Once link constituent law is defined it is applied to all
