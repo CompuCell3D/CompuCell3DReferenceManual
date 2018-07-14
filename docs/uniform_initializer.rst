@@ -1,9 +1,6 @@
 UniformInitializer Steppable
 ----------------------------
 
-UniformInitializer Steppable
-----------------------------
-
 Th ``UniformInitializer`` steppable lays out cells on the lattice. It allows users to specify
 rectangular regions of field with square (or cube in 3D) cells of user
 defined types (or random types). Cells can be touching each other or can
