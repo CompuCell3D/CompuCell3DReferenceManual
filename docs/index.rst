@@ -32,6 +32,7 @@ You do not have to be an XML guru but you should know how to write simple XML do
    secretion
    pde_solver_caller
    focal_point_plasticity
+   curvature
 
 
 
