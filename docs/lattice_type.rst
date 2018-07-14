@@ -1,5 +1,5 @@
 Lattice Type
-============
+------------
 
 Early versions of CompuCell3D allowed users to use only square lattice.
 Most recent versions allow the simulation to be run on
