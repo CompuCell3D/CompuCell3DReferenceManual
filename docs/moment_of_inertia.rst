@@ -5,14 +5,14 @@ MomentOfInertia Plugin
 parallel axis theorem to calculate most up-to-date tensor of inertia. While, the plugin
 can be called directly:
 
-.. code-block::
+.. code-block:: xml
 
    <Plugin Name="MomentOfInertia"/>
 
 most commonly it is called indirectly by other plugins like e.g. ``LengthConstraint``
 plugin.
 
-``MomentOfInertia` plugin gives users access (via Python scripting) to
+``MomentOfInertia`` plugin gives users access (via Python scripting) to
 current lengths of cell’s semiaxes. Examples in *Demos/PluginDemos/MomentOfInertia*
 demonstrate how to get lengths of semiaxes. For example, to get semiaxes lengths for
 a given ``cell``, in Python we would type:
