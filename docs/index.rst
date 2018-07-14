@@ -33,6 +33,7 @@ You do not have to be an XML guru but you should know how to write simple XML do
    pde_solver_caller
    focal_point_plasticity
    curvature
+   pixel_tracking_plugins
 
 
 
