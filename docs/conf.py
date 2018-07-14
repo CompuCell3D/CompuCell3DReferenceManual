@@ -36,7 +36,6 @@ extensions = [
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
-    'doc_extensions',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
