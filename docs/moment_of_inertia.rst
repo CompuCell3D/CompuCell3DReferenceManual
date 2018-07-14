@@ -41,6 +41,6 @@ minor axis, 1\ :sup:`st` – length of median axis (which is set to 0 in
    .. code-block:: python
 
       if length != length:
-          print “length is NaN”:
+          print "length is NaN":
       else:
-          print “length is a proper floating point number”
+          print "length is a proper floating point number"
