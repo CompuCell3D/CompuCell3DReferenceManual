@@ -34,6 +34,7 @@ You do not have to be an XML guru but you should know how to write simple XML do
    focal_point_plasticity
    curvature
    pixel_tracking_plugins
+   moment_of_inertia
 
 
 
