@@ -9,3 +9,4 @@ simulation before it is run.
 * :doc:`cell_type_plugin`
 * :doc:`global_volume_and_surface_plugins`
 
+.. include:: cell_type_plugin
