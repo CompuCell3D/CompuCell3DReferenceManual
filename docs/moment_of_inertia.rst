@@ -33,7 +33,7 @@ minor axis, 1\ :sup:`st` – length of median axis (which is set to 0 in
    square of one of the semiaxes may end up being slightly negative leading
    to ``NaN`` (not a number) length. This is due to round-off error and whenever
    CC3D detects very small absolute value of square of the length of
-   semiaxes (10:sup:`-6`) it sets length of this semiaxes to ``0.0`` regardless
+   semiaxes (10\ :sup:`-6`) it sets length of this semiaxes to ``0.0`` regardless
    whether the squared value is positive or negative. However, it is a good
    practice to test whether the length of semiaxis is sane by adding a simple
    ``if`` statement as shown below (here we show how to test for a ``NaN``):
