@@ -35,7 +35,7 @@ You do not have to be an XML guru but you should know how to write simple XML do
    curvature
    pixel_tracking_plugins
    moment_of_inertia
-   convergent_extention
+   convergent_extension
 
 
 
