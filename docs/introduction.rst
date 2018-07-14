@@ -1,5 +1,5 @@
-CC3DML Syntax of CompuCell3D modules
-====================================
+Introduction to CompuCell3D Modules CC3DML Syntax
+=====================================================
 
 This CompuCell3D reference material provides users with fairly detaild
 description of CC3DML syntax (CC3DML is XML-based model description

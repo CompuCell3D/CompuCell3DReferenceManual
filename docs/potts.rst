@@ -1,5 +1,5 @@
 Potts Section
--------------
+==============
 
 The first section of the .xml file defines the global parameters of the
 lattice and the simulation.
