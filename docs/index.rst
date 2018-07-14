@@ -8,7 +8,7 @@ You do not have to be an XML guru but you should know how to write simple XML do
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
 

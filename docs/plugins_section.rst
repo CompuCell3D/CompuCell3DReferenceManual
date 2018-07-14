@@ -1,5 +1,5 @@
 Plugins Section
----------------
+================
 
 In this section we overview CC3DML syntax for all the plugins available
 in CompuCell3D. Plugins are either energy functions, lattice monitors or
