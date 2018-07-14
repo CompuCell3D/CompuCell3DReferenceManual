@@ -26,6 +26,14 @@ introduction
    plugins_section
 
 
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Steppable Section
+
+   steppable_section
+
+
 
 
 
