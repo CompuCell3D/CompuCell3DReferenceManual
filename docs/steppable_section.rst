@@ -24,5 +24,7 @@ currently available in the CompuCell3D and describe their usage.
 This section "off-the-shelf" steppables that are availab e in CC3D and were implemented using C++
 
 * :doc:`uniform_initializer`
+* :doc:`blob_initializer`
 
 .. include:: uniform_initializer.rst
+.. include:: blob_initializer.rst
