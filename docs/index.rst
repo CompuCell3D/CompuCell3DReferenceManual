@@ -33,6 +33,12 @@ introduction
 
    steppable_section
 
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: PDE Solvers Section
+
+   pde_solvers_section
 
 
 
