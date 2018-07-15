@@ -4,8 +4,11 @@ FlexibleDiffusionSolver
 This steppable is one of the basic and most important modules in
 CompuCell3D simulations.
 
-**Remark:** starting from version 3.6.2 we developed DiffusionSolverFE
-which eliminates several inconveninces of FlexibleDiffusionSolver.
+
+.. tip::
+
+    Starting from version ``3.6.2`` we developed ``DiffusionSolverFE``
+    which eliminates several inconveniences of ``FlexibleDiffusionSolver``.
 
 As the name suggests it is responsible for solving diffusion equation
 but in addition to this it also handles chemical secretion which maybe

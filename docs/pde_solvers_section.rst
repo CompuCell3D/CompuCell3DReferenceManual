@@ -1,5 +1,5 @@
 PDESolvers in CompuCell3D
--------------------------
+=========================
 
 One of the most important and time consuming parts of the CC3D
 simulation is to solve all sorts of Partial Differential Equations which
@@ -16,6 +16,5 @@ specification may differ from solver to solver. However, the basic
 structure of CC3DML PDE solver code follows similar pattern .
 
 * :doc:`flexible_diffusion_solver`
-
 
 .. include:: flexible_diffusion_solver.rst
