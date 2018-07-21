@@ -77,14 +77,14 @@ the following:
 .. math::
     :nowrap:
 
-         \begin{eqnarray}
-            f_H=\left\{
-                         \begin{align*}
-                          0.1F \{text if    } CellType=1 \\
-                          0.1F \{text otherwise }
-                        \end{align}
-                      \right.
-         \end{eqnarray}
+    \alpha(x)=\begin{cases}
+               x\\
+               \frac{1}{1+e^{-kx}}\\
+               \frac{e^x-e^{-x}}{e^x+e^{-x}}
+            \end{cases}
+
+
+
 
 In such a case additional term would be coded as follows:
 
