@@ -77,13 +77,14 @@ the following:
 .. math::
     :nowrap:
 
-    f_H=\left\{
-                \begin{array}{ll}
-                  0.1F \{text if    } CellType=1 \\
-                  0.1F \{text otherwise }
-                \end{array}
-              \right.
-
+         \begin{eqnarray}
+            f_H=\left\{
+                         \begin{align*}
+                          0.1F \{text if    } CellType=1 \\
+                          0.1F \{text otherwise }
+                        \end{align}
+                      \right.
+         \end{eqnarray}
 
 In such a case additional term would be coded as follows:
 
