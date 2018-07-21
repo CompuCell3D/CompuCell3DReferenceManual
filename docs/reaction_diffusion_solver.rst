@@ -77,10 +77,9 @@ the following:
 .. math::
     :nowrap:
 
-        \alpha(x)=\begin{cases}
-               x\\
-               \frac{1}{1+e^{-kx}}\\
-               \frac{e^x-e^{-x}}{e^x+e^{-x}}
+        f_F = \begin{cases}
+               0.1F \{text if    } CellType=1\\
+                0.1F \{text otherwise }
             \end{cases}
 
 
