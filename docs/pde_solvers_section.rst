@@ -16,5 +16,7 @@ specification may differ from solver to solver. However, the basic
 structure of CC3DML PDE solver code follows similar pattern .
 
 * :doc:`flexible_diffusion_solver`
+* :doc:`diffusion_solver_settings`
 
 .. include:: flexible_diffusion_solver.rst
+.. include:: diffusion_solver_settings.rst
