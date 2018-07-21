@@ -77,7 +77,7 @@ the following:
 .. math::
     :nowrap:
 
-    \alpha(x)=\begin{cases}
+        \alpha(x)=\begin{cases}
                x\\
                \frac{1}{1+e^{-kx}}\\
                \frac{e^x-e^{-x}}{e^x+e^{-x}}
