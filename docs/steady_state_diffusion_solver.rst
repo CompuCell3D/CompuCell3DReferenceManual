@@ -17,7 +17,7 @@ the asymptotic solution (i.e. at :math:`t=\infty`) it is often more convenient t
 
        \begin{eqnarray}
             \nabla^2c-kc=F
-       \end{eqnarray
+       \end{eqnarray}
 
 
 where :math:`F` is a source function of the coordinates - it is an input to
@@ -163,6 +163,6 @@ proper ordering of calls to Python module and the C++ diffusion solver.
 
     Notice that all the pixels that do not secrete **have to be 0.0** as
     mentioned above. **If you don’t initialize field values in the
-    non-secreting pixels to ``0.0`` you will get wrong results**. The above
+    non-secreting pixels to 0.0 you will get wrong results**. The above
     code, with comments, is available in our Demo suite (``Demos/SteppableDemos/SecretionSteadyState`` or
     ``Demos/SteppableDemos/SteadyStateDiffusionSolver``).
