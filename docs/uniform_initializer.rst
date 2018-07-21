@@ -1,66 +1,36 @@
-UniformInitializer Steppable
-----------------------------
+BoxWatcher Steppable
+---------------------
 
-Th ``UniformInitializer`` steppable lays out cells on the lattice. It allows users to specify
-rectangular regions of field with square (or cube in 3D) cells of user
-defined types (or random types). Cells can be touching each other or can
-be separated by a gap.
+.. warning::
 
-The syntax of the plugin is as follows:
+    Functionality of this module has been reduced in CC3D
+    versions that support parallel computations (``3.6.0`` and up). Main
+    motivation for this module was to speed up computations but with
+    parallel version the need for this module is somewhat smaller.
 
-.. code-block:: xml
+This steppable can potentially speed-up your simulation. Every MCS (or
+every ``Frequency`` MCS) it determines maximum and minimum coordinates of
+cells and then imposes slightly bigger box around cells and ensures that
+in the subsequent MCS pixel copy attempts take place only inside this
+box containing cells (plus some amount of medium on the sides). Thus,
+instead of sweeping entire lattice and attempting random pixel copies
+CompuCell3D will only spend time trying flips inside the box. Depending
+on the simulation the performance gains are up to approx. 30%. The
+steppable will work best if you have simulation with cells localized in
+one region of the lattice with lots of empty space. The steppable will
+adjust box every ``MCS`` (or every ``Frequency`` MCS) according to evolving
+cellular pattern.
 
-    <Steppable Type="UniformInitializer">
-       <Region>
-         <BoxMin x="35" y="0" z="30"/>
-           <BoxMax x="135" y="1" z="430"/>
-           <Gap>0</Gap>
-           <Width>5</Width>
-          <Types>psm</Types>
-       </Region>
+The syntax is as follows:
+
+.. code-block::
+
+    <Steppable Type="BoxWatcher">
+        <XMargin>5</XMargin>
+        <YMargin>5</YMargin>
+        <ZMargin>5</ZMargin>
     </Steppable>
 
-
-Above we have defined a 2D rectangular box filled with ``5x5`` cells
-touching each other (``Gap = 0``) and having type ``psm``. Notice that if you want
-to initialize 2D box in xz plane as above then ``y_min`` and ``y_max`` have to
-be ``0`` and ``1`` respectively.
-
-Users can include as many regions as they want. The regions can overlap
-each other and, as expected, region defined later in the code overshadows
-the one defined earlier. As a result cells from "earlier" regions may
-get overwritten by cells from regions defined later in the code. Cells
-that are overwritten will either disappear or be truncated.
-
-Additionally users can initialize region with random cell types chosen
-from provided list of cell types:
-
-.. code-block:: xml
-
-    <Steppable Type="UniformInitializer">
-        <Region>
-            <BoxMin x="35" y="0" z="30"/>
-            <BoxMax x="135" y="1" z="430"/>
-            <Gap>0</Gap>
-            <Width>5</Width>
-            <Types>psm,ncad,ncam</Types>
-        </Region>
-    </Steppable>
-
-
-When user specifies more than one cell type between ``<Types>`` tags then
-cells for this region will be initialized with types chosen randomly
-from the provided list (here the choices would be ``psm``, ``ncad``, ``ncam``).
-
-.. note::
-
-    The types have to be separated with ``','`` and there should be
-    **no spaces**.
-
-.. tip::
-
-    If one of the type names is repeated inside ``<Types>`` element
-    this type will get greater weighting means probability of assigning this
-    type to a cell will be greater. For example:
-    ``<Types>psm,ncad,ncam,ncam,ncam</Types>`` ncam will assigned to a cell with
-    probability ``3/5`` and ``psm`` and ``ncad`` with probability ``1/5``.
+All that is required is to specify amount of extra space (expressed in
+units of pixels) that needs to be added to a tight box i.e. the box
+whose sides just touch most peripheral cells' pixels.

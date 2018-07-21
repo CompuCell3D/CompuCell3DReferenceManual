@@ -28,9 +28,11 @@ This section "off-the-shelf" steppables that are availab e in CC3D and were impl
 * :doc:`pif_initializer`
 * :doc:`pif_dumper`
 * :doc:`mitosis`
+* :doc:`box_watcher`
 
 .. include:: uniform_initializer.rst
 .. include:: blob_initializer.rst
 .. include:: pif_initializer.rst
 .. include:: pif_dumper.rst
 .. include:: mitosis.rst
+.. include:: box_watcher.rst
