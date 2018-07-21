@@ -81,98 +81,88 @@ for simulations in 3D.
 
     We can use Python to control secretion in the steady state solvers but
     it requires a little bit of low level coding. Implementing secretion
-    in steady state diffusion solver is different from “regular” Forward
+    in steady state diffusion solver is different from "regular" Forward
     Euler solvers. Steady state solver takes secretion rate that is
-    specified at t=0 and returns the solution at t=∞. For alrge diffusion
+    specified at ``t=0`` and returns the solution at ``t=∞``. For a large diffusion
     constants we approximate solution to the PDE during one MCS by using
-    solution at t=∞. However that means that if at each MCS secretion
+    solution at`` t=∞``. However, this means that if at each MCS secretion
     changes we have to do three things 1) zero entire field, 2) set
     secretion rate 3) solve steady state solver. The reason we need to zero
-    entire field is because any value left in the field at mcs=N is
+    entire field is because any value left in the field at ``mcs=N`` is
     interpreted by the solver as a secretion constant at this location at
-    mcs=N+1. **Moreover the the secretion constant needs to have negative
+    ``mcs=N+1``. **Moreover,  the the secretion constant needs to have negative
     value if we want to secrete positive amount of substance - this weird
     requirements comes from the fact that we re using 3\ :sup:`rd` party
     solver which inverts signs of the secretion constants.**
 
 An example below demonstrates how we control secretion of the steady
-state in Python. First we need to include tag <ManageSecretionInPython/>
+state in Python. First we need to include tag ``<ManageSecretionInPython/>``
 in the XML definition of the solver:
 
-<Steppable Type="SteadyStateDiffusionSolver2D">
+.. code-block:: xml
 
-<DiffusionField>
+    <Steppable Type="SteadyStateDiffusionSolver2D">
+         <DiffusionField>
+            <ManageSecretionInPython/>
+            <DiffusionData>
+                <FieldName>FGF</FieldName>
+                <DiffusionConstant>1.00</DiffusionConstant>
+                <DecayConstant>0.00001</DecayConstant>
+            </DiffusionData>
+        </DiffusionField>
+    </Steppable>
 
-<ManageSecretionInPython/>
-
-<DiffusionData>
-
-<FieldName>FGF</FieldName>
-
-<DiffusionConstant>1.00</DiffusionConstant>
-
-<DecayConstant>0.00001</DecayConstant>
-
-</DiffusionData>
-
-</DiffusionField>
-
-</Steppable>
 
 In Python the code to control the secretion involves iteration over
 every pixel and adjusting concentration (which as we mentioned will be
 interpreted by the solver as a secretion constant) and we have to make
-sure that we inherit from SecretionBasePy not SteppableBasePy to ensure
+sure that we inherit from ``SecretionBasePy`` not ``SteppableBasePy`` to ensure
 proper ordering of calls to Python module and the C++ diffusion solver.
-**Important:** make sure you inherit from SecretionBasePy when you try
-to manage secretion in the steady state solver using Python. This will
-ensure proper ordering of calls to steppable and to C++ solver code.
 
-**Important:** Once you use <ManageSecretionInPython/> tag in the XML
-all secretion tags in the SecretionData will be ignored. In other words,
-for this solver you cannot mix secretion specification in Python and
-secretion specification in the XML.
+.. note::
+    Make sure you inherit from ``SecretionBasePy`` when you try
+    to manage secretion in the steady state solver using Python. This will
+    ensure proper ordering of calls to steppable and to C++ solver code.
 
-def \_\_init\_\_(self,\_simulator,\_frequency=1):
+.. note::
 
-SecretionBasePy.\_\_init\_\_(self,\_simulator,\_frequency)
+    Once you use ``<ManageSecretionInPython/>`` tag in the XML
+    all secretion tags in the ``SecretionData`` will be ignored. In other words,
+    for this solver you cannot mix secretion specification in Python and
+    secretion specification in the XML.
 
-def start(self):
+.. code-block:: python
 
-| self.field=CompuCell.getConcentrationField\\
-| (self.simulator,"FGF")
+    def __init__(self, _simulator, _frequency=1):
+        SecretionBasePy.__init__(self, _simulator, _frequency)
 
-secrConst=10
 
-for x,y,z in self.everyPixel(1,1,1):
+    def start(self):
+        self.field = CompuCell.getConcentrationField \
+            (self.simulator, "FGF")
 
-cell=self.cellField[x,y,z]
+        secrConst = 10
+        for x, y, z in self.everyPixel(1, 1, 1):
+            cell = self.cellField[x, y, z]
+            if cell and cell.type == 1:
+                self.field[x, y, z] = -secrConst
+            else:
+                self.field[x, y, z] = 0.0
 
-if cell and cell.type==1:
 
-self.field[x,y,z]=-secrConst
+    def step(self, mcs):
+        secrConst = mcs
+        for x, y, z in self.everyPixel(1, 1, 1):
+            cell = self.cellField[x, y, z]
+            if cell and cell.type == 1:
+                self.field[x, y, z] = -secrConst
+            else:
+                self.field[x, y, z] = 0.0
 
-else:
+.. warning::
 
-self.field[x,y,z]=0.0
-
-def step(self, mcs):
-
-secrConst=mcs
-
-for x,y,z in self.everyPixel(1,1,1):
-
-cell=self.cellField[x,y,z]
-
-if cell and cell.type==1:
-
-self.field[x,y,z]=-secrConst
-
-else:
-
-self.field[x,y,z]=0.0
-
-Notice that all the pixels that do not secrete have to be 0.0 as
-mentioned above. **If you don’t initialize field values in the
-non-secreting pixels to 0.0 you will get wrong results**. The above
-code, with comments, is available in our Demo suite.
+    Notice that all the pixels that do not secrete **have to be 0.0** as
+    mentioned above. **If you don’t initialize field values in the
+    non-secreting pixels to ``0.0`` you will get wrong results**. The above
+    code, with comments, is available in our Demo suite (``Demos/SteppableDemos/SecretionSteadyState`` or
+    ``Demos/SteppableDemos/SteadyStateDiffusionSolver``).

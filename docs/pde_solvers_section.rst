@@ -22,6 +22,8 @@ structure of CC3DML PDE solver code follows similar pattern .
 * :doc:`fast_diffusion_solver_2D`
 * :doc:`kernel_diffusion_solver_2D`
 * :doc:`reaction_diffusion_solver`
+* :doc:`steady_state_diffusion_solver`
+
 
 .. include:: flexible_diffusion_solver.rst
 .. include:: diffusion_solver_settings.rst
@@ -30,3 +32,4 @@ structure of CC3DML PDE solver code follows similar pattern .
 .. include:: fast_diffusion_solver_2D.rst
 .. include:: kernel_diffusion_solver.rst
 .. include:: reaction_diffusion_solver.rst
+.. include:: steady_state_diffusion_solver.rst

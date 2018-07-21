@@ -1,47 +1,25 @@
-from PySteppables import *
-from PySteppablesExamples import MitosisSteppableBase
-import CompuCell
+def __init__(self, _simulator, _frequency=1):
+    SecretionBasePy.__init__(self, _simulator, _frequency)
 
 
-class VolumeParamSteppable(SteppableBasePy):
-    def __init__(self, _simulator, _frequency=1):
-        SteppableBasePy.__init__(self, _simulator, _frequency)
+def start(self):
+    self.field = CompuCell.getConcentrationField \
+        (self.simulator, "FGF")
 
-    def start(self):
-        for cell in self.cellList:
-            cell.targetVolume = 25
-            cell.lambdaVolume = 2.0
-
-    def step(self, mcs):
-        for cell in self.cellList:
-            cell.targetVolume += 1
-
-
-class MitosisSteppable(MitosisSteppableBase):
-    def __init__(self, _simulator, _frequency=1):
-        MitosisSteppableBase.__init__(self, _simulator, _frequency)
-
-        # 0 - parent child position will be randomized between mitosis event
-        # negative integer - parent appears on the 'left' of the child
-        # positive integer - parent appears on the 'right' of the child
-        self.setParentChildPositionFlag(-1)
-
-    def step(self, mcs):
-        cells_to_divide = []
-        for cell in self.cellList:
-            if cell.volume > 50:
-                cells_to_divide.append(cell)
-
-        for cell in cells_to_divide:
-            # to change mitosis mode leave one of the below lines uncommented
-            self.divideCellRandomOrientation(cell)
-
-
-    def updateAttributes(self):
-        self.parentCell.targetVolume /= 2.0  # reducing parent target volume
-        self.cloneParent2Child()
-
-        if self.parentCell.type == self.CONDENSING:
-            self.childCell.type = self.NONCONDENSING
+    secrConst = 10
+    for x, y, z in self.everyPixel(1, 1, 1):
+        cell = self.cellField[x, y, z]
+        if cell and cell.type == 1:
+            self.field[x, y, z] = -secrConst
         else:
-            self.childCell.type = self.CONDENSING
+            self.field[x, y, z] = 0.0
+
+
+def step(self, mcs):
+    secrConst = mcs
+    for x, y, z in self.everyPixel(1, 1, 1):
+        cell = self.cellField[x, y, z]
+        if cell and cell.type == 1:
+            self.field[x, y, z] = -secrConst
+        else:
+            self.field[x, y, z] = 0.0
