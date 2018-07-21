@@ -1,5 +1,5 @@
 Instabilities of the Forward Euler Method
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------
 
 Most of the PDE solvers in CC3D use Forward Euler explicit numerical
 scheme. This method is unstable for large diffusion constant. As a
@@ -44,7 +44,7 @@ and
    \end{eqnarray}
 
 Initial Conditions
-~~~~~~~~~~~~~~~~~~
+-------------------
 
 We can specify initial concentration as a function of ``x``, ``y``, ``z``
 coordinates using ``<InitialConcentrationExpression>`` tag we use ``muParser``
@@ -86,7 +86,7 @@ convenient to type one line of the CC3DML script than few lines in
 Python.
 
 Boundary Conditions
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 All standard solvers (``Flexible``, ``Fast``, and ``ReactionDiffusion``) by default
 use the same boundary conditions as the GGH simulation (and those are
