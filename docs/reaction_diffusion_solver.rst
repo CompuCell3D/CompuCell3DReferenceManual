@@ -76,6 +76,7 @@ the following:
 
 .. math::
     :nowrap:
+
         f_F  =
          \begin{cases}
                0.1F  && \text{if CellType=1}\\
