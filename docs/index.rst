@@ -40,6 +40,14 @@ introduction
 
    pde_solvers_section
 
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: References
+
+   references
+
+
 
 
 
