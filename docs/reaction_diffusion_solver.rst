@@ -78,8 +78,8 @@ the following:
     :nowrap:
 
         f_F = \begin{cases}
-               0.1F \{text if    } CellType=1\\
-                0.1F \{text otherwise }
+               0.1F  if CellType=1\\
+                0.1F  otherwise
             \end{cases}
 
 
