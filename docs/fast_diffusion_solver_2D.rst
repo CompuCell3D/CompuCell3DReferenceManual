@@ -13,7 +13,6 @@ below:
 
 .. code-block:: xml
 
-
     <Steppable Type="FastDiffusionSolver2DFE">
        <DiffusionField Name="FGF">
          <DiffusionData>
@@ -23,8 +22,7 @@ below:
            <DecayConstant>0.003</DecayConstant>
          <ExtraTimesPerMCS>2</ExtraTimesPerMCS>
            <DoNotDecayIn>Wall</DoNotDecay>
-           <ConcentrationFileName>
-           Demos/diffusion/diffusion_2D_fast_box.pulse.txt
+           <ConcentrationFileName>Demos/diffusion/diffusion_2D_fast_box.pulse.txt
            </ConcentrationFileName>
         </DiffusionData>
       </DiffusionField>
