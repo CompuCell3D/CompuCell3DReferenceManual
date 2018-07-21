@@ -76,12 +76,11 @@ the following:
 
 .. math::
     :nowrap:
-        \[
-        f_F  = \begin{cases}
+        f_F  =
+         \begin{cases}
                0.1F  && \text{if CellType=1}\\
                 0.51F  && \text{otherwise}
             \end{cases}
-        \]
 
 
 In such a case additional term would be coded as follows:
