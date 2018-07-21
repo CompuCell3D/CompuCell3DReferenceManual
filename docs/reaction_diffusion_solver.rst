@@ -76,12 +76,12 @@ the following:
 
 .. math::
     :nowrap:
-
-        f_F = \begin{cases}
+    \begin{eqnarray}
+        f_F && = \begin{cases}
                0.1F  && \text{if CellType=1}\\
-                0.1F  && \text{otherwise}
+                0.51F  && \text{otherwise}
             \end{cases}
-
+    \end{eqnarray}
 
 
 
