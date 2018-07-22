@@ -44,8 +44,8 @@ or in full form
     -\sum_i x_i z_i & -\sum_i  y_i z_i & \sum_i x_i^2+y_i^2 - \lambda \\
     \end{vmatrix} = \begin{vmatrix}
      I_{xx} - \lambda & I_{xy} & I_xz \\
-     I_{xy} - \lambda & I_{yy} & I_yz \\
-     I_{xz} - \lambda & I_{yz} & I_zz
+     I_{xy}  & I_{yy} - \lambda & I_yz \\
+     I_{xz}  & I_{yz} & I_zz - \lambda
       \end{vmatrix}
    \end{eqnarray}
 
@@ -55,9 +55,17 @@ polynomial. The roots of it are guaranteed to be real. The polynomial
 itself can be found either by explicit derivation, using symbolic
 calculation or simply in Wikipedia ( http://en.wikipedia.org/wiki/Eigenvalue_algorithm )
 
-|image0|
+|eigenvalue_formula_wiki|
 
 so in our case the eigenvalue equation takes the form:
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      -L^2+L^2(I_{xx}+I_{yy}+I_{zz})+L(I_{xy}^2+I_{yz}^2+I_{xz}^2-I_{xx}I_{yy}-I_{yy}I_{zz}-I_{xx}I_{zz}) \\
+      +I_{xx}I_{yy}I_{zz} - I_{xx}I_{yz}^2 -I_{yy}I_{zz}^2 I_{zz}I_{xy}^2 + 2I_{xy}I_{yz}I_{zx}
+   \end{eqnarray}
 
 This equation can be solved analytically, again we may use Wikipedia (
 http://en.wikipedia.org/wiki/Cubic_function )
@@ -67,20 +75,63 @@ a cell. That is they are components of inertia tensor in a coordinate
 frame rotated in such a way that off-diagonal elements of inertia tensor
 are 0:
 
+.. math::
+   :nowrap:
+
+   I = \begin{eqnarray}
+      \begin{vmatrix}
+        I_{xx} & 0 & 0 \\
+        0 & I_{yy} & 0 \\
+        0 & 0 & I_zz
+      \end{vmatrix}
+   \end{eqnarray}
+
+
 In our cell shape constraint we will want to obtain ellipsoidal cells.
 Therefore the target tensor of inertia for the cell should be tensor if
 inertia for ellipsoid:
 
-where *a,b,c* are parameters describing the surface of an ellipsoid:
+.. math::
+   :nowrap:
 
-In other words *a,b,c* are half lengths of principal axes (they are
-analogues of circle's radius)
+   I = \begin{eqnarray}
+      \begin{vmatrix}
+        \frac{1}{5}(b^2+c^2) & 0 & 0 \\
+        0 & \frac{1}{5}(a^2+c^2) & 0 \\
+        0 & 0 & \frac{1}{5}(a^2+b^2)
+      \end{vmatrix}
+   \end{eqnarray}
+
+where ``a``, ``b``, ``c`` are parameters describing the surface of an ellipsoid:
+
+.. math::
+   :nowrap:
+
+   I = \begin{eqnarray}
+      \frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1
+   \end{eqnarray}
+
+In other words ``a``, ``b``, ``c`` are half lengths of principal axes (they are
+analogues of circle's radius).
 
 Now we can determine semi axes lengths in terms of principal moments of
 inertia by inverting the following set of equations:
+
+.. math::
+   :nowrap:
+
+   I = \begin{eqnarray}
+     I_{xx} = \frac{1}{5}(b^2+c^2) \\
+     I_{yy} = \frac{1}{5}(a^2+c^2) \\
+     I_{zz} = \frac{1}{5}(a^2+b^2)
+   \end{eqnarray}
 
 Once we have calculated semiaxes lengths in terms of moments of inertia
 we can plug –in actual numbers for moment of inertia (the ones for
 actual cell) and obtain lengths of semiexes. Next we apply quadratic
 constraint on largest (semimajor) and smallest (seminimor axes). This is
 what elongation plugin does.
+
+.. |eigenvalue_formula_wiki| image:: images/eigenvalue_formula_wiki.png
+   :width: 9.00000in
+   :height: 0.75000in
