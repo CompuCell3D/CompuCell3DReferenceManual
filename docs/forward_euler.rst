@@ -37,7 +37,7 @@ where to save space we used shorthand notation:
    :nowrap:
 
    \begin{eqnarray}
-     c(x+\delta x,y,z,t)) \equiv c(x+\delta x,,t)) \\
+     c(x+\Delta x,y,z,t)) \equiv c(x+\Delta x,,t)) \\
      c(x,y,z,t) \equiv c(x,t)
    \end{eqnarray}
 
