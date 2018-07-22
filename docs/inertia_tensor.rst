@@ -66,7 +66,7 @@ the ``x`` , ``d`` is the distance between the axes two and ``M`` is mass of the 
 
 Let us now draw a picture of a cell gaining one pixel:
 
-|inertia_tensor_fig4|
+|inertia_tensor_fig5|
 
 **Figure 5:** Cell gaining one pixel.d denotes a distance from origin of a fixed frame
 of reference to a center of mass of a cell before cell gains new pixel.
