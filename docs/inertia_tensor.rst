@@ -140,17 +140,17 @@ relation:
    :nowrap:
 
    \begin{eqnarray}
-      I_{xy}^{new}} = - \sum_i^{N+1} x_i y_i + (V+1)x^{new}_{COM}y^{new}_{COM} \\
+      I_{xy}^{new} = - \sum_i^{N+1} x_i y_i + (V+1)x^{new}_{COM}y^{new}_{COM} \\
       = - \sum_i^{N} x_i y_i +  V x_{COM}y_{COM} -   x_{COM}Vy_{COM} + (V+1)x^{new}_{COM}y^{new}_{COM} - x_{N+1}y_{n+1} \\
-      = I_{xy}^{old}} - V x_{COM}y_{COM} + (V+1)x^{new}_{COM}y^{new}_{COM} - x_{N+1}y_{n+1}
+      = I_{xy}^{old} - V x_{COM}y_{COM} + (V+1)x^{new}_{COM}y^{new}_{COM} - x_{N+1}y_{n+1}
    \end{eqnarray}
 
 
-where we have added and subtracted :math:`V x_{COM}y_{COM}` to be able to form :math:`I_{xy}^{old}}- \sum_i^{N} x_i y_i+ V x_{COM}y_{COM}`
-on the right hand side of the expression for :math:`I_{xy}^{new}}` . As it was the case for diagonal element,
-calculating off-diagonal of the inertia tensor involves ::math`I_{xy}^{old}}` and positions of
+where we have added and subtracted :math:`V x_{COM}y_{COM}` to be able to form :math:`I_{xy}^{old}- \sum_i^{N} x_i y_i+ V x_{COM}y_{COM}`
+on the right hand side of the expression for :math:`I_{xy}^{new}` . As it was the case for diagonal element,
+calculating off-diagonal of the inertia tensor involves ::math`I_{xy}^{old}` and positions of
 center of mass of the cell before and after gaining new pixel. All those
-quantities are either known *a priori* (::math`I_{xy}^{old}}`) or can be easily calculated
+quantities are either known *a priori* (::math`I_{xy}^{old}`) or can be easily calculated
 (center of mass position after gaining one pixel).
 
 Therefore, we have shown how we can calculate tensor of inertia for a
