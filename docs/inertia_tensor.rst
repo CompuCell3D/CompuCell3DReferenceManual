@@ -115,28 +115,45 @@ terms? Let us write explicitly expression for :math:`I_{xy}` :
    :nowrap:
 
    \begin{eqnarray}
-        I_{xx}^{new} = I_{x'x'}^{old} + y_{n+1}^2 + z_{n+1}^2 - Vd^2 + Vd^2 (V+1)d_{new}^2 \\
-        = I_{x'x'}^{old} - Vd^2 + y_{n+1}^2 + z_{n+1}^2 + Vd^2 (V+1)d_{new}^2 \\
-        I_{xx}^{old} - Vd^2 + y_{n+1}^2 + z_{n+1}^2 + Vd^2 (V+1)d_{new}^2
+        I_{xy} = -\sum_i^N (x_i-x_{com})(y_i-y_{com}) = -\sum_i^N x_i y_i + x_{COM}\sum_i^Ny_i + y_{COM}\sum_i^Nx_i - x_{COM}y_{COM}\sum_i^N \\
+        =  -\sum_i^N x_i y_i + x_{COM}Vy_{COM} + y_{COM}Vx_{COM} - x_{COM}y_{COM} V \\
+        = -\sum_i^N x_i y_i + V x_{COM}y_{COM}
    \end{eqnarray}
 
-where denotes *x* COM position of the cell, similarly denotes *y* COM
-position of cell and *V* denotes cell volume. In the above formula we
-have used the fact that
+where :math:`x_{COM}`, :math:`y_{COM}` denote ``x`` and ``y`` center of mass positions of the cell,
+:math:`V` denotes cell volume. In the above formula we have used the fact that:
 
-and similarly for the *y* coordinate.
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      x_{COM} = \frac{\sum_i x_i}{V} \implies \sum_i x_i =  x_{COM} V
+   \end{eqnarray}
+
+
+and similarly for the ``y`` coordinate.
 
 Now, for the new cell with additional pixel we have the following
 relation:
 
-where we have added and subtracted to be able to form on the right hand
-side of the expression for . As it was the case for diagonal element,
-calculating off-diagonal of the inertia tensor involves and positions of
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      I_{xy}^{new}} = - \sum_i^{N+1} x_i y_i + (V+1)x^{new}_{COM}y^{new}_{COM} \\
+      = - \sum_i^{N} x_i y_i +  V x_{COM}y_{COM} -   x_{COM}Vy_{COM} + (V+1)x^{new}_{COM}y^{new}_{COM} - x_{N+1}y_{n+1} \\
+      = I_{xy}^{old}} - V x_{COM}y_{COM} + (V+1)x^{new}_{COM}y^{new}_{COM} - x_{N+1}y_{n+1}
+   \end{eqnarray}
+
+
+where we have added and subtracted :math:`V x_{COM}y_{COM}` to be able to form :math:`I_{xy}^{old}}- \sum_i^{N} x_i y_i+ V x_{COM}y_{COM}`
+on the right hand side of the expression for :math:`I_{xy}^{new}}` . As it was the case for diagonal element,
+calculating off-diagonal of the inertia tensor involves ::math`I_{xy}^{old}}` and positions of
 center of mass of the cell before and after gaining new pixel. All those
-quantities are either known a priori () or can be easily calculated
+quantities are either known *a priori* (::math`I_{xy}^{old}}`) or can be easily calculated
 (center of mass position after gaining one pixel).
 
-Therefore we have shown how we can calculate tensor of inertia for a
+Therefore, we have shown how we can calculate tensor of inertia for a
 given cell with respect to a coordinate frame with origin at cell's
 center of mass, without evaluating full sums. Such "local" calculations
 greatly speed up simulations
