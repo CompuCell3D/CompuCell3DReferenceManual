@@ -12,12 +12,19 @@ the resources reside. The structure of the new-style CC3D simulation is
 presented in the diagram below:
 
 ->**CellsortDemo**
+
     CellsortDemo.cc3d
+
    **->Simulation**
+
       Cellsort.xml
+
       Cellsort.py
+
       CellsortSteppables.py
+
       Cellsort.piff
+
       FGF.txt
 
 Bold fonts denote folders. The benefit of using CC3D project files
