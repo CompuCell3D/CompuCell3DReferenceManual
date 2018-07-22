@@ -91,7 +91,7 @@ most cases after few MCS cells will readjust their volume.
    |compartments_fig_10|
 
 **Figure 10.** CC3D example of compartmental cell division. See also
-Demos/CompuCellPythonTutorial/clusterMitosis.
+*Demos/CompuCellPythonTutorial/clusterMitosis.*
 
 
 .. |compartments_fig_7| image:: images/compartments_fig_7.png
