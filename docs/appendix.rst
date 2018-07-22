@@ -7,6 +7,7 @@ This section covers some of the computational algorithms we use in CC3D
 * :doc:`calculating_elongation_term`
 * :doc:`forward_euler`
 * :doc:`com_with_periodic_bc`
+* :doc:`dividing_clusters`
 * :doc:`command_line_options`
 
 
@@ -14,4 +15,5 @@ This section covers some of the computational algorithms we use in CC3D
 .. include:: calculating_elongation_term.rst
 .. include:: forward_euler.rst
 .. include:: com_with_periodic_bc.rst
+.. include:: dividing_clusters.rst
 .. include:: command_line_options.rst
