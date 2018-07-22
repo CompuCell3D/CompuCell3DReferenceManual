@@ -42,51 +42,51 @@ and center of masses of clusters. We do it according to the formula:
       \vec{p} = \vec{o} - \frac{1}{2}(\vec{o} \cdot \vec{n})\vec{n}
    \end{eqnarray}
 
-   where :math:`\vec{p}` denotes offset after mitosis from center of mass of child
-   (parent) clusters, :math:`\vec{o}` is orientation vector before mitosis (see
-   picture above) and :math:`\vec{n}` is a normalized vector perpendicular to division
-   line/plane. If we try to divide the cluster along dashed line as on
-   the picture below:
+where :math:`\vec{p}` denotes offset after mitosis from center of mass of child
+(parent) clusters, :math:`\vec{o}` is orientation vector before mitosis (see
+picture above) and :math:`\vec{n}` is a normalized vector perpendicular to division
+line/plane. If we try to divide the cluster along dashed line as on the picture below:
 
 |compartments_fig_8|
 
-**Figure 8**. Division of cell along dashed line. Notice the
-  orientation of :math:`\vec{n}` . The offsets after the mitosis for child and parent cell will be
-   :math:`\vec{p}_1=\frac{1}{2}\vec{o}_1` and :math:`\vec{p}_2=\vec{o}_2` as
-  expected because both parent and child cells will retain their heights
-  but after mitosis will become twice narrower (cell with grey outer
-  compartments is a parent cell):
+**Figure 8**. Division of cell along dashed line. Notice the orientation of :math:`\vec{n}` .
+The offsets after the mitosis for child and parent cell will be
+:math:`\vec{p}_1=\frac{1}{2}\vec{o}_1` and :math:`\vec{p}_2=\vec{o}_2` as
+expected because both parent and child cells will retain their heights
+but after mitosis will become twice narrower (cell with grey outer
+
+compartments is a parent cell):
 
 |compartments_fig_9|
 
 **Figure 9**.Child and parent (the one with grey outer compartments)
 cells after mitosis.
 
- The formula given above is heuristic. It gives fairly simple way of
- assigning pixels of child/parent clusters to cellular compartments.
- It is not perfect but the idea is to get approximate shape of the
- cell after the mitosis and as simulation runs cell shape will
- readjust based on constraints such as adhesion of focal point
- plasticity. Before continuing with the mitosis we check if center of
- masses of compartments belong to child/parent clusters. If the
- center of masses are outside their target pixels we abandon mitosis
- and wait for readjustment of cell shape at which point mitosis
- algorithm will pass this sanity check. For certain “exotic” shapes
- of cluster shapes presented mitosis algorithm may not work well or
- at all. In this case we would have to write specialized mitosis
- algorithm.
+The formula given above is heuristic. It gives fairly simple way of
+assigning pixels of child/parent clusters to cellular compartments.
+It is not perfect but the idea is to get approximate shape of the
+cell after the mitosis and as simulation runs cell shape will
+readjust based on constraints such as adhesion of focal point
+plasticity. Before continuing with the mitosis we check if center of
+masses of compartments belong to child/parent clusters. If the
+center of masses are outside their target pixels we abandon mitosis
+and wait for readjustment of cell shape at which point mitosis
+algorithm will pass this sanity check. For certain “exotic” shapes
+of cluster shapes presented mitosis algorithm may not work well or
+at all. In this case we would have to write specialized mitosis
+algorithm.
 
 5) We divide clusters and knowing offsets from child/parent cluster
-   center of mass we assign pixels to particular compartments. The
-   assignment is based on the distance of particular pixel to center of
-   masses of clusters. Pixel is assigned to particular compartment if
-   its distance to the center of mass of the compartment is the smallest
-   as compared to distances between centroids of other compartments. If
-   given compartment has reached its target volume and other compartments
-   are underpopulated we would assign pixels to other compartments based
-   on the closest distance criterion. Although this method may result in
-   some deviation from perfect 50-50 division of compartment volume in
-   most cases after few MCS cells will readjust their volume.
+center of mass we assign pixels to particular compartments. The
+assignment is based on the distance of particular pixel to center of
+masses of clusters. Pixel is assigned to particular compartment if
+its distance to the center of mass of the compartment is the smallest
+as compared to distances between centroids of other compartments. If
+given compartment has reached its target volume and other compartments
+are underpopulated we would assign pixels to other compartments based
+on the closest distance criterion. Although this method may result in
+some deviation from perfect 50-50 division of compartment volume in
+most cases after few MCS cells will readjust their volume.
 
    |compartments_fig_10|
 
