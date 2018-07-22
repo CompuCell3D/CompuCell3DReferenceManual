@@ -32,15 +32,14 @@ which we implemented in CC3D works in the following way:
 **Figure 7**.Vectors :math:`\vec{o}_1` and :math:`\vec{o}_2` show offsets between center of mass of a
 cluster and center of mass particular compartments.
 
-4) We pick division line/plane and for parents and child cells we
-  offsets between cluster center of mass (after mitosis) and center
-  of masses of clusters. We do it according to the formula:
+4) We pick division line/plane and for parents and child cells with offsets between cluster center of mass (after mitosis)
+and center of masses of clusters. We do it according to the formula:
 
 .. math::
    :nowrap:
 
    \begin{eqnarray}
-      \vec{p} = \vec{o} - \frac{1}{2}(\vec{o} \ddot \vec{n})\vec{n}
+      \vec{p} = \vec{o} - \frac{1}{2}(\vec{o} \cdot \vec{n})\vec{n}
    \end{eqnarray}
 
    where :math:`\vec{p}` denotes offset after mitosis from center of mass of child
