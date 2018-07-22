@@ -27,7 +27,7 @@ or in vector form:
    :nowrap:
 
    \begin{eqnarray}
-      \vec{r_{COM}} = \frac{\sum_i \vec{r_i}}{V}
+      \vec{r}_{COM} = \frac{\sum_i \vec{r}_i}{V}
    \end{eqnarray}
 
 would result in being somewhere in the middle of the lattice and
@@ -49,11 +49,11 @@ This is how we do it using mathematical formulas:
    :nowrap:
 
    \begin{eqnarray}
-      \vec{s} = \vec{r_{COM}} - \vec{c}
+      \vec{s} = \vec{r}_{COM} - \vec{c}
    \end{eqnarray}
 
 First we define shift vector :math:`\vec{s}` as a vector difference between vector
-pointing to center of mass of the cell :math:`\vec{r_{COM}}` and vector pointing to
+pointing to center of mass of the cell :math:`\vec{r}_{COM}` and vector pointing to
 (approximately) the middle of the lattice :math:`\vec{c}`.
 
 Next we shift cell to the middle of the lattice using :
@@ -62,10 +62,10 @@ Next we shift cell to the middle of the lattice using :
    :nowrap:
 
    \begin{eqnarray}
-      \vec{r'_{COM}} = \vec{r_{COM}} - \vec{s}
+      \vec{r'}_{COM} = \vec{r}_{COM} - \vec{s}
    \end{eqnarray}
 
-where :math:`\vec{r'_{COM}` denotes center of mass position of a cell after shifting but
+where :math:`\vec{r'}_{COM}` denotes center of mass position of a cell after shifting but
 before adding or subtracting a pixel.
 
 Next we take into account the new pixel (either gained or lost) and
@@ -75,23 +75,23 @@ calculate center of mass position (for the shifted cell):
    :nowrap:
 
    \begin{eqnarray}
-      \vec{r'_{COM}^{new}} = \frac{\vec{r'_{COM}}V+\vec{r}_i}{V+1}
+      \vec{r'}_{COM}^{new} = \frac{\vec{r'}_{COM}V + \vec{r}_i}{V+1}
    \end{eqnarray}
 
 
 Above we have assumed that we are adding one pixel.
 
-Now all that we need to do is to shift back :math:`\vec{r'_{COM}^{new}}` by same vector :math:`\vec{s}` that brought
+Now all that we need to do is to shift back :math:`\vec{r'}_{COM}^{new}` by same vector :math:`\vec{s}` that brought
 cell to (approximately) center of the lattice:
 
 .. math::
    :nowrap:
 
    \begin{eqnarray}
-      \vec{r_{COM}^{new}} = \vec{r'_{COM}^{new}} + \vec{s}
+      \vec{r}_{COM}^{new} = \vec{r'}_{COM}^{new} + \vec{s}
    \end{eqnarray}
 
-We are almost done. We still have to check if :math:`\vec{r'_{COM}^{new}}` is inside the lattice. If
+We are almost done. We still have to check if :math:`\vec{r'}_{COM}^{new}` is inside the lattice. If
 this is not the case we need to shift it back to the lattice but now we
 are allowed to use only a vector :math:`\vec{P}` whose components are multiples of
 lattice dimensions (and we can safely restrict to +1 and -1 multiples of
@@ -104,7 +104,7 @@ the lattice dimensions) . For example we may have:
       \vec{P} = (x_{max}, -y_{max}, 0)
    \end{eqnarray}
 
-where :math:`\vec{x_{max}}`, :math:`\vec{y_{max}}`, :math:`\vec{z_{max}}` are dimensions of the lattice.
+where :math:`\vec{x}_{max}`, :math:`\vec{y}_{max}`, :math:`\vec{z}_{max}` are dimensions of the lattice.
 
 There is no cheating here. In the lattice with periodic boundary
 conditions you are allowed to shift point coordinates a vector whose
