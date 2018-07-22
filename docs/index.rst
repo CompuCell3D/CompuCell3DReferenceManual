@@ -43,6 +43,14 @@ introduction
 .. toctree::
    :maxdepth: 1
    :hidden:
+   :caption: Appendix
+
+   appendix
+
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
    :caption: References
 
    references
