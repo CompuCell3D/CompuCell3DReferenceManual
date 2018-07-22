@@ -80,7 +80,7 @@ of inertia after cell gains one pixel the following that:
    :nowrap:
 
    \begin{eqnarray}
-        I_{x'x'}^{new} = I_{xx}^{new} - (V+1)d_{new}^2
+        I_{xx}^{new} = I_{x'x'}^{new} - (V+1)d_{new}^2
    \end{eqnarray}
 
 where, as before, :math:`I_{xx}^{new}` denotes moment of inertia of a cell with new pixel with
@@ -94,20 +94,31 @@ rewrite above equation by adding ad subtracting :math:`Vd^2` term:
    :nowrap:
 
    \begin{eqnarray}
-        I_{x'x'}^{new} = I_{xx}^{new} - (V+1)d_{new}^2
+        I_{xx}^{new} = I_{x'x'}^{old} + y_{n+1}^2 + z_{n+1}^2 - Vd^2 + Vd^2 (V+1)d_{new}^2 \\
+        = I_{x'x'}^{old} - Vd^2 + y_{n+1}^2 + z_{n+1}^2 + Vd^2 (V+1)d_{new}^2 \\
+        I_{xx}^{old} - Vd^2 + y_{n+1}^2 + z_{n+1}^2 + Vd^2 (V+1)d_{new}^2
    \end{eqnarray}
 
 Therefore we have found an expression for moment of inertia passing
 through the center of mass of the cell with additional pixel. Note that
 this expression involves moment of inertia but for the old cell (*i.e*.
 the original cell, not the one with extra pixel). When we add new pixel
-we know its coordinates and we can also easily calculate *d\ :sub:`new`*
-.Thus when we need to calculate the moment of intertia for new cell
+we know its coordinates and we can also easily calculate :math:`d_new` .
+Thus,  when we need to calculate the moment of inertia for new cell
 instead of performing summation as given in the definition of the
 inertia tensor we can use much simpler expression.
 
 This was diagonal term of the inertia tensor. What about off-diagonal
-terms? Let us write explicitely expression for *I­\ :sub:`xy`* :
+terms? Let us write explicitly expression for :math:`I_{xy}` :
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+        I_{xx}^{new} = I_{x'x'}^{old} + y_{n+1}^2 + z_{n+1}^2 - Vd^2 + Vd^2 (V+1)d_{new}^2 \\
+        = I_{x'x'}^{old} - Vd^2 + y_{n+1}^2 + z_{n+1}^2 + Vd^2 (V+1)d_{new}^2 \\
+        I_{xx}^{old} - Vd^2 + y_{n+1}^2 + z_{n+1}^2 + Vd^2 (V+1)d_{new}^2
+   \end{eqnarray}
 
 where denotes *x* COM position of the cell, similarly denotes *y* COM
 position of cell and *V* denotes cell volume. In the above formula we
