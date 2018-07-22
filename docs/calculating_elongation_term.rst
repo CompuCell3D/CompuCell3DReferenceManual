@@ -107,7 +107,7 @@ where ``a``, ``b``, ``c`` are parameters describing the surface of an ellipsoid:
 .. math::
    :nowrap:
 
-   I = \begin{eqnarray}
+   \begin{eqnarray}
       \frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1
    \end{eqnarray}
 
@@ -120,7 +120,7 @@ inertia by inverting the following set of equations:
 .. math::
    :nowrap:
 
-   I = \begin{eqnarray}
+   \begin{eqnarray}
      I_{xx} = \frac{1}{5}(b^2+c^2) \\
      I_{yy} = \frac{1}{5}(a^2+c^2) \\
      I_{zz} = \frac{1}{5}(a^2+b^2)
