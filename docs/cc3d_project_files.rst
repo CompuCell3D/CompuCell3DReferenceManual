@@ -11,7 +11,7 @@ Concentration files *etc…** and a directory called ``Simulation`` where all
 the resources reside. The structure of the new-style CC3D simulation is
 presented in the diagram below:
 
-->**CellsortDemo**
+**->CellsortDemo**
 
     CellsortDemo.cc3d
 
