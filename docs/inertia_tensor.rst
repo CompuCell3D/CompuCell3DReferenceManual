@@ -9,20 +9,26 @@ For each cell the inertia tensor is defined as follows:
    \begin{eqnarray}
 
     I = \begin{bmatrix}
-    1 & x & x^2 \\
-    1 & y & y^2 \\
-    1 & z & z^2 \\
+    \sum_i y_i^2+z_i^2 & -\sum_i x_i y_i & -\sum_i x_i z_i \\
+    -\sum_i x_i y_i & \sum_i x_i^2+z_i^2 & -\sum_i y_i z_i \\
+    -\sum_i x_i z_i & -\sum_i  y_i z_i & \sum_i x_i^2+y_i^2 \\
     \end{bmatrix}
    \end{eqnarray}
 
 
-where index '*i*' denotes *i*-th pixel of a given cell and *x\ :sub:`i`,
-y\ :sub:`i`,z\ :sub:`i`* are coordinates of that pixel in a given
+where index :math:`i` denotes ``i-th`` pixel of a given cell and :math:`x_i`,
+:math:`y_i` and :math:`z_i` are coordinates of that pixel in a given
 coordinate frame.
 
-where index '*i*' denotes *i*-th pixel of a given cell and *x\ :sub:`i`,
-y\ :sub:`i`,z\ :sub:`i`* are coordinates of that pixel in a given
-coordinate frame.
+|inertia_tensor_fig3|
+
+**Figure 3:** Cell and coordinate system passing through center of mass of a cell.
+Notice that as cell changes shape the position of center of mass moves.
+
+|inertia_tensor_fig4|
+
+**Figure 4:** Cell and its coordinate frame in which we calculate inertia tensor
+
 
 In Figure 4 we show one possible coordinate frame in which one can
 calculate inertia tensor. If the coordinate frame is fixed calculating
@@ -96,3 +102,16 @@ Therefore we have shown how we can calculate tensor of inertia for a
 given cell with respect to a coordinate frame with origin at cell's
 center of mass, without evaluating full sums. Such "local" calculations
 greatly speed up simulations
+
+
+.. |inertia_tensor_fig3| image:: images/inertia_tensor_fig_3.png
+   :width: 6.00000in
+   :height: 6.00000in
+
+.. |inertia_tensor_fig4| image:: images/inertia_tensor_fig_4.png
+   :width: 6.00000in
+   :height: 6.00000in
+
+.. |inertia_tensor_fig5| image:: images/inertia_tensor_fig_5.png
+   :width: 6.00000in
+   :height: 6.00000in
