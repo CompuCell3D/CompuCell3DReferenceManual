@@ -1,9 +1,9 @@
 Introduction to CompuCell3D Modules CC3DML Syntax
-=====================================================
+###################################################
 
-This CompuCell3D reference material provides users with fairly detaild
+This CompuCell3D reference material provides users with fairly detailed
 description of CC3DML syntax (CC3DML is XML-based model description
-format) of CC3D modules. The presented material is indended for users
+format) of CC3D modules. The presented material is intended for users
 who are already familiar with CompuCell3D basics and know how to build
 and run simple simulations such as cell-sorting, bacterium macrophage or
 cell-type-oscillator. Since we often show CC3DML syntax and accompanying
