@@ -54,7 +54,7 @@ type we use the following syntax:
     <FluctuationAmplitude>
         <FluctuationAmplitudeParameters CellType="Condensing"\
         FluctuationAmplitude="10"/>
-        <FluctuationAmplitudeParameters CellType="NonCondensing”\
+        <FluctuationAmplitudeParameters CellType="NonCondensing"\
         FluctuationAmplitude="5"/>
     </FluctuationAmplitude>
 
@@ -85,17 +85,17 @@ users defined fluctuation amplitude for cell types using expanded CC3DML
 definition and if so it will use those values as fluctuation amplitudes.
 Lastly, it will resort to globally defined fluctuation amplitude
 (``Temperature``). Thus, it is perfectly fine to use ``FluctuationAmplitude``
-CC3DML tags and set ``fluctAmp``l for certain cells. In such a case
-CompuCell3D will use ``fluctAmp``l for cells for which users defined it and
+CC3DML tags and set ``fluctAmpl`` for certain cells. In such a case
+CompuCell3D will use ``fluctAmpl`` for cells for which users defined it and
 for all other cells it will use values defined in the CC3DML.
 
 In GGH model, the fluctuation amplitude is determined taking into
-account fluctuation amplitude of *“source”* (expanding) cell and
-*“destination”* (being overwritten) cell. Currently CompuCell3D supports 3
+account fluctuation amplitude of *"source"* (expanding) cell and
+*"destination"* (being overwritten) cell. Currently CompuCell3D supports 3
 type functions used to calculate resultant fluctuation amplitude (those
-functions take as argument fluctuation amplitude of “source” and
-*“destination”* cells and return fluctuation amplitude that is used in
-calculation of pixel-copy acceptance). The 3 functions are`` Min``, ``Max``, and
+functions take as argument fluctuation amplitude of "source" and
+*"destination"* cells and return fluctuation amplitude that is used in
+calculation of pixel-copy acceptance). The 3 functions are ``Min``, ``Max``, and
 ``ArithmeticAverage`` and we can set them using the following option of the
 Potts section:
 
@@ -106,10 +106,10 @@ Potts section:
          …
     </Potts>
 
-By default we use``Min`` function. Notice, that if you use global
+By default we use ``Min`` function. Notice, that if you use global
 fluctuation amplitude definition ``Temperature`` it does not really matter
-which function you use. The differences arise when *“source*” and
-*“destination”* cells have different fluctuation amplitudes.
+which function you use. The differences arise when *"source"* and
+*"destination"* cells have different fluctuation amplitudes.
 
 The above concepts are best illustrated by the following example:
 
@@ -160,7 +160,7 @@ membrane fluctuations:
 
 
 
-Assigning negative``fluctuationAmplitude`` ``cell.fluctAmpl = -1`` is interpreted
+Assigning negative ``fluctuationAmplitude``, ``cell.fluctAmpl = -1`` is interpreted
 by CompuCell3D as a hint to use fluctuation amplitude defined in the
 CC3DML.
 
@@ -186,7 +186,7 @@ Let us revisit our original example of the ``Potts`` section CC3DML:
         </Potts>
 
 Based on discussion about the difference between pixel-flip attempts and
-MCS (see “Introduction to CompuCell3D”) we can specify how many pixel
+MCS (see "Introduction to CompuCell3D") we can specify how many pixel
 copies should be attempted in every MCS. We specify this number
 indirectly by specifying the ``Flip2DimRatio``  by using
 
@@ -287,8 +287,8 @@ system are accepted with probability
    \end{eqnarray}
 
 
-where ``δ`` and ``*k``* are specified by ``Offset`` and ``KBoltzman`` tags respectively.
-By default ``δ=``0 and ``*k=1*``.
+where ``δ`` and ``*k*`` are specified by ``Offset`` and ``KBoltzman`` tags respectively.
+By default ``δ=0`` and ``*k=1*``.
 
 As an alternative to exponential acceptance function you may use a
 simplified version which is essentially 1 order expansion of the

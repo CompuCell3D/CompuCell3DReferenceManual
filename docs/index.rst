@@ -8,8 +8,21 @@ The focus of this manual is to teach you how to use CC3DML (XML-based syntax) to
 multi-cell tissue simulations. We will assume that you have a working knowledge of XML.
 You do not have to be an XML guru but you should know how to write simple XML documents
 
-funding
-introduction
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Funding
+
+   funding
+
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Introduction
+
+   introduction
+
 
 .. toctree::
    :maxdepth: 1
