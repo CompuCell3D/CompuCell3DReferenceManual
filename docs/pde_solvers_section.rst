@@ -20,7 +20,7 @@ structure of CC3DML PDE solver code follows similar pattern .
 * :doc:`diffusion_solver`
 * :doc:`advection_diffusion_solver`
 * :doc:`fast_diffusion_solver_2D`
-* :doc:`kernel_diffusion_solver_2D`
+* :doc:`kernel_diffusion_solver`
 * :doc:`reaction_diffusion_solver`
 * :doc:`steady_state_diffusion_solver`
 
