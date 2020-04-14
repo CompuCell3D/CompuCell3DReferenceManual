@@ -44,6 +44,15 @@ DiffusionSolverFE might look like the following.
 Demos showing basic usage and comparison are available in
 ``Demos/SteppableDemos/FluctuationCompensator``.
 
+.. Note::
+
+   PDE solution field values can be modified outside of the solver routines without
+   invalidating the correction factors of Fluctuation Compensators *so long as*
+   they are notified that field values have been modified. The CompuCell3D library has
+   a convenience method to do exactly this: ``updateFluctuationCompensators``. Call this
+   method after modifying field values and before the next PDE solution step to refresh
+   Fluctuation Compensators according to your changes.
+
 .. [1]
    Marée, Athanasius FM, Verônica A. Grieneisen, and Leah Edelstein-Keshet.
    "How cells integrate complex stimuli: the effect of feedback from phosphoinositides
