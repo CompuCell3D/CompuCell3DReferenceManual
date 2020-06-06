@@ -1,16 +1,28 @@
 .. CompuCell3DReferenceManual documentation master file
 
 ###################################################
-CompuCell3D Reference Manual - 4.2.1
+CompuCell3D Reference Manual - 4.1.2
 ###################################################
 
 The focus of this manual is to teach you how to use CC3DML (XML-based syntax) to build powerful multi-scale
 multi-cell tissue simulations. We will assume that you have a working knowledge of XML.
 You do not have to be an XML guru but you should know how to write simple XML documents
 
-authors
-funding
-introduction
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Funding
+
+   funding
+
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Introduction
+
+   introduction
+
 
 .. toctree::
    :maxdepth: 1

@@ -8,7 +8,7 @@ Steppable Section
 Steppables are CompuCell modules that are called every Monte Carlo Step
 (MCS). More precisely, they are called after all the pixel copy attempts
 in a given MCS have been carried out. Steppables may have various
-functions - for example solving PDE's, checking if critical
+functions - for example solving PDEs, checking if critical
 concentration threshold have been reached, updating target volume or
 target surface given the concentration of come growth factor,
 initializing cell field, writing numerical results to a file, *etc...* In
@@ -21,7 +21,7 @@ currently available in the CompuCell3D and describe their usage.
     It is most convenient to implement Steppables in Python. However, in certain situations
     where code performance is an issue users can implement steppables in C++
 
-This section "off-the-shelf" steppables that are availab e in CC3D and were implemented using C++
+This section "off-the-shelf" steppables that are available in CC3D and were implemented using C++
 
 * :doc:`uniform_initializer`
 * :doc:`blob_initializer`

@@ -85,7 +85,7 @@ occupied by certain cell types by using the following syntax:
 Similar principles apply to decay constant and we use
 ``<GlobalDecayConstant>`` tag to specify global decay coefficient and
 
-.. code-block::xml
+.. code-block:: xml
 
     <DecayCoefficient CellType="Red">0.0</DecayCoefficient>
 

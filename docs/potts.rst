@@ -10,7 +10,7 @@ lattice and the simulation.
             <Dimensions x="101" y="101" z="1"/>
             <Anneal>0</Anneal>
             <Steps>1000</Steps>
-            <FluctuationAmplitude>5</ FluctuationAmplitude >
+            <FluctuationAmplitude>5</FluctuationAmplitude>
             <Flip2DimRatio>1</Flip2DimRatio>
             <Boundary_y>Periodic</Boundary_y>
             <Boundary_x>Periodic</Boundary_x>
@@ -18,8 +18,8 @@ lattice and the simulation.
             <DebugOutputFrequency>20</DebugOutputFrequency>
             <RandomSeed>167473</RandomSeed>
             <EnergyFunctionCalculator Type="Statistics">
-            <OutputFileName Frequency="10">statData.txt</OutputFileName>
-            <OutputCoreFileNameSpinFlips Frequency="1" GatherResults="" OutputAccepted="" OutputRejected="" OutputTotal="">
+                <OutputFileName Frequency="10">statData.txt</OutputFileName>
+                <OutputCoreFileNameSpinFlips Frequency="1" GatherResults="" OutputAccepted="" OutputRejected="" OutputTotal=""/>
             </EnergyFunctionCalculator>
         </Potts>
 
@@ -52,10 +52,8 @@ type we use the following syntax:
 .. code-block:: xml
 
     <FluctuationAmplitude>
-        <FluctuationAmplitudeParameters CellType="Condensing"\
-        FluctuationAmplitude="10"/>
-        <FluctuationAmplitudeParameters CellType="NonCondensing”\
-        FluctuationAmplitude="5"/>
+        <FluctuationAmplitudeParameters CellType="Condensing" FluctuationAmplitude="10"/>
+        <FluctuationAmplitudeParameters CellType="NonCondensing" FluctuationAmplitude="5"/>
     </FluctuationAmplitude>
 
 
@@ -85,17 +83,17 @@ users defined fluctuation amplitude for cell types using expanded CC3DML
 definition and if so it will use those values as fluctuation amplitudes.
 Lastly, it will resort to globally defined fluctuation amplitude
 (``Temperature``). Thus, it is perfectly fine to use ``FluctuationAmplitude``
-CC3DML tags and set ``fluctAmp``l for certain cells. In such a case
-CompuCell3D will use ``fluctAmp``l for cells for which users defined it and
+CC3DML tags and set ``fluctAmpl`` for certain cells. In such a case
+CompuCell3D will use ``fluctAmpl`` for cells for which users defined it and
 for all other cells it will use values defined in the CC3DML.
 
 In GGH model, the fluctuation amplitude is determined taking into
-account fluctuation amplitude of *“source”* (expanding) cell and
-*“destination”* (being overwritten) cell. Currently CompuCell3D supports 3
+account fluctuation amplitude of *"source"* (expanding) cell and
+*"destination"* (being overwritten) cell. Currently CompuCell3D supports 3
 type functions used to calculate resultant fluctuation amplitude (those
-functions take as argument fluctuation amplitude of “source” and
-*“destination”* cells and return fluctuation amplitude that is used in
-calculation of pixel-copy acceptance). The 3 functions are`` Min``, ``Max``, and
+functions take as argument fluctuation amplitude of "source" and
+*"destination"* cells and return fluctuation amplitude that is used in
+calculation of pixel-copy acceptance). The 3 functions are ``Min``, ``Max``, and
 ``ArithmeticAverage`` and we can set them using the following option of the
 Potts section:
 
@@ -106,10 +104,10 @@ Potts section:
          …
     </Potts>
 
-By default we use``Min`` function. Notice, that if you use global
+By default we use ``Min`` function. Notice, that if you use global
 fluctuation amplitude definition ``Temperature`` it does not really matter
-which function you use. The differences arise when *“source*” and
-*“destination”* cells have different fluctuation amplitudes.
+which function you use. The differences arise when *"source"* and
+*"destination"* cells have different fluctuation amplitudes.
 
 The above concepts are best illustrated by the following example:
 
@@ -160,7 +158,7 @@ membrane fluctuations:
 
 
 
-Assigning negative``fluctuationAmplitude`` ``cell.fluctAmpl = -1`` is interpreted
+Assigning negative ``fluctuationAmplitude``, ``cell.fluctAmpl = -1`` is interpreted
 by CompuCell3D as a hint to use fluctuation amplitude defined in the
 CC3DML.
 
@@ -172,7 +170,7 @@ Let us revisit our original example of the ``Potts`` section CC3DML:
             <Dimensions x="101" y="101" z="1"/>
             <Anneal>0</Anneal>
             <Steps>1000</Steps>
-            <FluctuationAmplitude>5</ FluctuationAmplitude >
+            <FluctuationAmplitude>5</FluctuationAmplitude>
             <Flip2DimRatio>1</Flip2DimRatio>
             <Boundary_y>Periodic</Boundary_y>
             <Boundary_x>Periodic</Boundary_x>
@@ -180,17 +178,17 @@ Let us revisit our original example of the ``Potts`` section CC3DML:
             <DebugOutputFrequency>20</DebugOutputFrequency>
             <RandomSeed>167473</RandomSeed>
             <EnergyFunctionCalculator Type="Statistics">
-            <OutputFileName Frequency="10">statData.txt</OutputFileName>
-            <OutputCoreFileNameSpinFlips Frequency="1" GatherResults="" OutputAccepted="" OutputRejected="" OutputTotal="">
+                <OutputFileName Frequency="10">statData.txt</OutputFileName>
+                <OutputCoreFileNameSpinFlips Frequency="1" GatherResults="" OutputAccepted="" OutputRejected="" OutputTotal=""/>
             </EnergyFunctionCalculator>
         </Potts>
 
 Based on discussion about the difference between pixel-flip attempts and
-MCS (see “Introduction to CompuCell3D”) we can specify how many pixel
+MCS (see "Introduction to CompuCell3D") we can specify how many pixel
 copies should be attempted in every MCS. We specify this number
-indirectly by specifying the ``Flip2DimRatio``  by using
+indirectly by specifying the ``Flip2DimRatio`` by using
 
-.. code-block::xml
+.. code-block:: xml
 
     <Flip2DimRatio>1</Flip2DimRatio>
 
@@ -206,9 +204,10 @@ attempts per MCS you would write:
 The line beingning with ``<NeighborOrder>2</NeighborOrder>`` specifies the neighbor order.
 The higher neighbor order the longer the Euclidian distance from a given pixel. In previous
 The pixel neighbors are ranked according to their distance from a reference pixel (*i.e.* the one
- you are measuring a distance from). thus we have 1\ :sup:`st`  2\ :sup:`nd`, 3\ :sup:`rd` and so on nearest neighbors for every
-pixel in the lattice. Using 1\ :sup:`st` nearest neighbor interactions may cause artifacts due to lattice
-anisotropy. The longer the interaction range (*i.e.* 2\ :sup:`nd`, 3\ :sup:`rd` or higher ``NeighborOrder``), the more isotropic the
+you are measuring a distance from). thus we have 1\ :sup:`st`  2\ :sup:`nd`, 3\ :sup:`rd` and
+so on nearest neighbors for every pixel in the lattice. Using 1\ :sup:`st` nearest neighbor
+interactions may cause artifacts due to lattice anisotropy. The longer the interaction range
+(*i.e.* 2\ :sup:`nd`, 3\ :sup:`rd` or higher ``NeighborOrder``), the more isotropic the
 simulation and the slower it runs. In addition, if the interaction range
 is comparable to the cell size, you may generate unexpected effects,
 since non-adjacent cells will contact each other.
@@ -218,7 +217,7 @@ On hex lattice those problems seem to be less severe and there
 
 The Potts section also contains tags called ``<Boundary_y>`` and
 ``<Boundary_x>``. These tags impose boundary conditions on the lattice. In
-this case the ``x`` and ``y`` axes are **periodic**
+this case the ``x`` and ``y`` axes are **periodic**.
 
 For example:
 
@@ -227,8 +226,8 @@ For example:
     <Boundary_x>Periodic</Boundary_x>
 
 
-will cause  that the pixels with coordinates ``x=0 , y=1, z=1``
-will neighbor the pixel with coordinates ``x=100, y=1, z=1`` . If you do not
+will cause that the pixels with coordinates ``x=0 , y=1, z=1``
+will neighbor the pixel with coordinates ``x=100, y=1, z=1``. If you do not
 specify boundary conditions CompuCell will assume them to be of type
 **no-flux**, *i.e.* lattice will not be extended. The conditions are
 independent in each direction, so you can specify any combination of
@@ -271,7 +270,7 @@ may end up with many files in your directory.
 One option of the Potts section that we have not used here is the
 ability to customize acceptance function for Metropolis algorithm:
 
-.. code-block::
+.. code-block:: xml
 
     <Offset>-0.1</Offset>
     <KBoltzman>1.2</KBoltzman>
@@ -287,8 +286,8 @@ system are accepted with probability
    \end{eqnarray}
 
 
-where ``δ`` and ``*k``* are specified by ``Offset`` and ``KBoltzman`` tags respectively.
-By default ``δ=``0 and ``*k=1*``.
+where :math:`δ` and :math:`k` are specified by ``Offset`` and ``KBoltzman`` tags respectively.
+By default :math:`δ=0` and :math:`k=1`.
 
 As an alternative to exponential acceptance function you may use a
 simplified version which is essentially 1 order expansion of the
@@ -306,6 +305,6 @@ To be able to use this function all you need to do is to add the
 following line in the Pots section:
 
 
-.. code-block::
+.. code-block:: xml
 
     <AcceptanceFunctionName>FirstOrderExpansion</AcceptanceFunctionName>
