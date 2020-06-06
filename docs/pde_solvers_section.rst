@@ -20,9 +20,10 @@ structure of CC3DML PDE solver code follows similar pattern .
 * :doc:`diffusion_solver`
 * :doc:`advection_diffusion_solver`
 * :doc:`fast_diffusion_solver_2D`
-* :doc:`kernel_diffusion_solver_2D`
+* :doc:`kernel_diffusion_solver`
 * :doc:`reaction_diffusion_solver`
 * :doc:`steady_state_diffusion_solver`
+* :doc:`fluctuation_compensator_addon`
 
 
 .. include:: flexible_diffusion_solver.rst
@@ -33,3 +34,4 @@ structure of CC3DML PDE solver code follows similar pattern .
 .. include:: kernel_diffusion_solver.rst
 .. include:: reaction_diffusion_solver.rst
 .. include:: steady_state_diffusion_solver.rst
+.. include:: fluctuation_compensator_addon.rst
