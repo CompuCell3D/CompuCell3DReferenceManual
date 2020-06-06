@@ -62,7 +62,12 @@ The syntax is as follows:
 
 .. code-block:: xml
 
-   <Plugin Name="PixelTracker"/>
+   <Plugin Name="PixelTracker">
+      <TrackMedium/>
+   </Plugin>
 
 This plugin is also used by other modules (e.g. ``Mitosis``) as a helper
 module. Simple example can be found in *Demos/PluginDemos/PixelTrackerExample*.
+Beginning with ``4.1.2``, medium pixels can be optionally tracked using ``TrackMedium``.
+This feature is automatically enabled by attaching a Fluctuation Compensator to a
+PDE solver. 
