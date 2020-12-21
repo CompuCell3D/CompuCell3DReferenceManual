@@ -317,9 +317,14 @@ link properties,
 So, for example, the value of :math:`\lambda_{ij}` for a link can be retrieved with ``link.getLambdaDistance()``,
 and can be set with ``link.setLambdaDistance(lambda_ij)`` for some float-valued variable ``lambda_ij``. Links
 automatically created by CC3D according to CC3DML specification are initialized with properties accordingly.
-Additionally, each ``FocalPointPlasticityAnchor`` has additional methods related to its anchor point,
+Additionally, ``FocalPointPlasticityLink`` and ``FocalPointPlasticityInternalLink`` objects have the property
+``cellPair``, which contains, in order, the initiator and initiated cells of the link, while
+each ``FocalPointPlasticityAnchor`` has the property ``cell`` (*i.e.*, the linked cell) and additional methods related
+to its anchor point,
 
 .. code-block:: python
+   # Attached cell
+   cell
    # Get anchor point as a 3-component list of floats
    getAnchorPoint(self) -> list
    # Set anchor point; _ap is a 3-component list of floats
