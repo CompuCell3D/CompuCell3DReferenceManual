@@ -369,7 +369,7 @@ These methods are as follows,
    get_fpp_link_by_cells(self, cell1: CellG, cell2: CellG) -> FocalPointPlasticityLink
    # Get internal link associated with two cells
    get_fpp_internal_link_by_cells(self, cell1: CellG, cell2: CellG) -> FocalPointPlasticityInternalLink
-   # Get internal link associated with two cells
+   # Get anchor assicated with a cell and anchor id
    get_fpp_anchor_by_cell_and_id(self, cell: CompuCell.CellG, anchor_id: int) -> FocalPointPlasticityAnchor
    # Get list of links by cell
    get_fpp_links_by_cell(self, _cell: CellG) -> FPPLinkList
