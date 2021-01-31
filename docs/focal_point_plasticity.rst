@@ -1,7 +1,7 @@
 FocalPointPlasticity Plugin
 ---------------------------
 
-``FocalPointPlasticity`` puts constrains on the
+``FocalPointPlasticity`` puts constraints on the
 distance between cells’ center of masses. A key feature of this plugin is that
 the list of "focal point plasticity neighbors" can change as the
 simulation evolves and user has to specifies the maximum number of "focal point
@@ -237,5 +237,154 @@ comments.
       createFocalPointPlasticityLink(cell1, cell2, lambda , targetDistance, maxDistance)
 
       createInternalFocalPointPlasticityLink(cell1, cell2, lambda , targetDistance, maxDistance)
+
+Working on the Basis of Links
+-----------------------------
+
+.. note::
+
+   All functionality described in this section is relevant for CC3D versions 4.2.4+.
+
+CC3D performs all link calculations on the basis of link objects. That is,
+every link as described so far is an object with properties and functions that, much like ``CellG``
+objects, can be created, destroyed and manipulated. As such, CC3DML specification tells CC3D to simulate links
+and what types of links should be automatically created, but links can also be individually accessed, manipulated,
+created and destroyed in Python. ``FocalPointPlasticity`` Plugin always uses the basis of links for link calculations,
+and so the ``<Local/>`` tag in CC3DML ``FocalPointPlasticity`` Plugin specification is no longer necessary.
+
+CC3D describes three types of links
+
+  1. ``FocalPointPlasticityLink``: a link between two cells
+  2. ``FocalPointPlasticityInternalLink``: a link between two cells of the same cluster
+  3. ``FocalPointPlasticityAnchor``: a link between a cell and a point
+
+``FocalPointPlasticityLink`` objects are automatically created from the CC3DML ``FocalPointPlasticity`` Plugin
+specification in the tag ``Parameters``,
+``FocalPointPlasticityInternalLink`` objects are automatically created from CC3DML specification in the tag
+``InternalParameters``, and ``FocalPointPlasticityAnchor`` objects are only created in Python.
+*CompuCell3D/core/Demos/PluginDemos/FocalPointPlasticityLinks* demonstrates basic usage of
+``FocalPointPlasticityLink``, the pattern of which is mostly the same for ``FocalPointPlasticityInternalLink``
+and ``FocalPointPlasticityAnchor`` except for naming conventions of certain properties, functions and objects.
+
+CC3D adopts the convention that for every link with a cell pair (*i.e.*, ``FocalPointPlasticityLink`` and
+``FocalPointPlasticityInternalLink``), one cell is the *initiator* cell (*i.e.*, the cell that initated the link), and
+the other cell is the *initiated* cell. Using this convention, every link has the following API for manipulating
+link properties,
+
+.. code-block:: python
+
+   # --------------
+   # | Properties |
+   # --------------
+   # Link length; automatically updated by CC3D
+   distance
+   # Link tension = 2 * lambda * (distance - target_distance); automatically updated by CC3D
+   tension
+   # -----------
+   # | Methods |
+   # -----------
+   # Given one cell, returns the other cell of a link
+   getOtherCell(_cell: CellG) -> CellG
+   # Returns True if the cell is the initiator
+   isInitiator(_cell: CellG) -> bool
+   # Get lambda distance
+   getLambdaDistance(self) -> float
+   # Set lambda distance
+   setLambdaDistance(self, _lm: float) -> None
+   # Get target distance
+   getTargetDistance(self) -> float
+   # Set target distance
+   setTargetDistance(self, _td: float) -> None
+   # Get maximum distance
+   getMaxDistance(self) -> float
+   # Set maximum distance
+   setMaxDistance(self, _md: float) -> None
+   # Get maximum number of junctions
+   getMaxNumberOfJunctions(self) -> int
+   # Set maximum number of junctions
+   setMaxNumberOfJunctions(self, _mnj: int) -> None
+   # Get activation energy
+   getActivationEnergy(self) -> float
+   # Set activation energy
+   setActivationEnergy(self, _ae: float) -> None
+   # Get neighbor order
+   getNeighborOrder(self) -> int
+   # Set neighbor order
+   setNeighborOrder(self, _no: int) -> None
+   # Get initialization step; automatically recorded at instantiation
+   getInitMCS(self) -> int
+
+So, for example, the value of :math:`\lambda_{ij}` for a link can be retrieved with ``link.getLambdaDistance()``,
+and can be set with ``link.setLambdaDistance(lambda_ij)`` for some float-valued variable ``lambda_ij``. Links
+automatically created by CC3D according to CC3DML specification are initialized with properties accordingly.
+Additionally, ``FocalPointPlasticityLink`` and ``FocalPointPlasticityInternalLink`` objects have the property
+``cellPair``, which contains, in order, the initiator and initiated cells of the link, while
+each ``FocalPointPlasticityAnchor`` has the property ``cell`` (*i.e.*, the linked cell) and additional methods related
+to its anchor point,
+
+.. code-block:: python
+   # Attached cell
+   cell
+   # Get anchor point as a 3-component list of floats
+   getAnchorPoint(self) -> list
+   # Set anchor point; _ap is a 3-component list of floats
+   setAnchorPoint(self, _ap: list) -> None
+   # Get anchor id
+   getAnchorId(self) -> int
+
+Steppables have built-in method for creating and destroying each type of link,
+
+.. code-block:: python
+
+   # Create a link between two cells
+   new_fpp_link(self, initiator: CellG, initiated: CellG, lambda_distance: float, target_distance: float,
+                max_distance: float) -> FocalPointPlasticityLink
+   # Create an internal link between two cells of a cluster
+   new_fpp_internal_link(self, initiator: CellG, initiated: CellG, lambda_distance: float,
+                         target_distance: float, max_distance: float) -> FocalPointPlasticityInternalLink
+   # Create an anchor
+   # Anchor point can be specified by individual components x, y and z, or by Point3D pt
+   new_fpp_anchor(self, cell: CellG, lambda_distance: float, target_distance: float,
+                  max_distance: float, x: float = 0.0, y: float = 0.0, z: float = 0.0,
+                  pt: Point3D = None) -> FocalPointPlasticityAnchor
+   # Destroy a link type FocalPointPlasticityLink, FocalPointPlasticityInternalLink or FocalPointPlasticityAnchor
+   delete_fpp_link(_link) -> None
+   # Destroy all links attached to a cell by link type
+   # links, internal_links and anchors selects which type, or all types if not specified
+   remove_all_cell_fpp_links(self, _cell: CellG, links: bool = False, internal_links: bool = False,
+                             anchors: bool = False) -> None
+
+Steppables also have built-in methods for retrieving information about links in simulation, by cell, and by cell pair.
+These methods are as follows,
+
+.. code-block:: python
+
+   # Get number of links
+   get_number_of_fpp_links(self) -> int
+   # Get number of internal links
+   get_number_of_fpp_internal_links(self) -> int
+   # Get number of anchors
+   get_number_of_fpp_anchors(self) -> int
+   # Get link associated with two cells
+   get_fpp_link_by_cells(self, cell1: CellG, cell2: CellG) -> FocalPointPlasticityLink
+   # Get internal link associated with two cells
+   get_fpp_internal_link_by_cells(self, cell1: CellG, cell2: CellG) -> FocalPointPlasticityInternalLink
+   # Get anchor assicated with a cell and anchor id
+   get_fpp_anchor_by_cell_and_id(self, cell: CompuCell.CellG, anchor_id: int) -> FocalPointPlasticityAnchor
+   # Get list of links by cell
+   get_fpp_links_by_cell(self, _cell: CellG) -> FPPLinkList
+   # Get list of internal links by cell
+   get_fpp_internal_links_by_cell(self, _cell: CellG) -> FPPInternalLinkList
+   # Get list of anchors by cell
+   get_fpp_anchors_by_cell(self, _cell: CellG) -> FPPAnchorList
+   # Get list of cells linked to a cell
+   get_fpp_linked_cells(self, _cell: CompuCell.CellG) -> mvectorCellGPtr
+   # Get list of cells internally linked to a cell
+   get_fpp_internal_linked_cells(self, _cell: CellG) -> mvectorCellGPtr
+   # Get number of link junctions by type for a cell
+   get_number_of_fpp_junctions_by_type(self, _cell: CellG, _type: int) -> int
+   # Get number of internal link junctions by type for a cell
+   get_number_of_fpp_internal_junctions_by_type(self, _cell: CompuCell.CellG, _type: int) -> int
+
 
 
