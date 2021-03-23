@@ -18,29 +18,6 @@ following formula:
 where :math:`c(x_{source})` and :math:`c(x_{destination})` denote chemical concentration at
 the pixel-copy-source and pixel-copy-destination pixel, respectively.
 
-We also support a slight modification of the above formula in the
-``Chemotaxis`` plugin where :math:`\Delta E` is non-zero only if the cell located at :math:`x_{source}` *after*
-the pixel copy is non-medium. to enable such mode users need to include
-
-.. code-block:: xml
-
-    <Algorithm="Regular"/>
-
-tag in the body of CC3DML plugin.
-
-Let's look at the syntax by studying the example usage of the Chemotaxis
-plugin:
-
-.. code-block:: xml
-
-    <Plugin Name="Chemotaxis">
-       <ChemicalField Source="FlexibleDiffusionSolverFE" Name="FGF">
-            <ChemotaxisByType Type="Amoeba" Lambda="300"/>
-            <ChemotaxisByType Type="Bacteria" Lambda="200"/>
-       </ChemicalField>
-    </Plugin>
-
-
 The body of the ``Chemotaxis`` plugin description contains sections called
 ``ChemicalField``. In this section we tell CompuCell3D which module contains
 chemical field that we wish to use for chemotaxis. In our case it is
@@ -121,6 +98,36 @@ to ``Amoeba`` and ``Medium``.
 .. note::
 
     The term ``ChemotactTowards`` means "chemotax at the interface between"
+
+CC3D supports slight modifications of the above formulas in the
+``Chemotaxis`` plugin where :math:`\Delta E` is non-zero only if the cell located at :math:`x_{source}` *after*
+the pixel copy is non-medium. To enable this mode users need to include
+
+.. code-block:: xml
+
+    <Algorithm="Regular"/>
+
+tag in the body of CC3DML plugin.
+Additionally, ``Chemotaxis`` plugin can apply the above formulas using the parameters
+and formulas of both the cell located at :math:`x_{source}` (if any) `and` the cell located
+at :math:`x_{destination}` (if any). To enable this mode users need to include
+
+.. code-block:: xml
+
+    <Algorithm="Reciprocated"/>
+
+
+Let's look at the syntax by studying the example usage of the Chemotaxis
+plugin:
+
+.. code-block:: xml
+
+    <Plugin Name="Chemotaxis">
+       <ChemicalField Source="FlexibleDiffusionSolverFE" Name="FGF">
+            <ChemotaxisByType Type="Amoeba" Lambda="300"/>
+            <ChemotaxisByType Type="Bacteria" Lambda="200"/>
+       </ChemicalField>
+    </Plugin>
 
 The definitions of chemotaxis presented so far do not allow
 specification of chemotaxis parameters individually for each cell. To do
