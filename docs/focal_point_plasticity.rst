@@ -282,6 +282,8 @@ link properties,
    tension
    # A general python dictionary
    dict
+   # SBML solvers (as on CellG)
+   sbml
    # -----------
    # | Methods |
    # -----------
