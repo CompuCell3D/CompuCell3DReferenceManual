@@ -277,7 +277,7 @@ link properties,
    # | Properties |
    # --------------
    # Link length; automatically updated by CC3D
-   distance
+   length
    # Link tension = 2 * lambda * (distance - target_distance); automatically updated by CC3D
    tension
    # -----------
