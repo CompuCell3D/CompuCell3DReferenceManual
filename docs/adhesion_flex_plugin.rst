@@ -64,7 +64,7 @@ types. Failure to do so may result in simulation crash or undefined
 behaviors. The user-defined function ``*F*`` is specified using ``Formula`` tag
 where the arguments of the function are called ``Molecule1`` and ``Molecule2`` .
 The syntax has to follow syntax of the muParser -
-http://muparser.sourceforge.net/mup_features.html#idDef2 .
+https://beltoforion.de/en/muparser/features.php#idDef1 .
 
 CompuCell3D example – *Demos/AdhesionFlex* - demonstrates how to
 manipulate concentration of adhesion molecules. For example:
