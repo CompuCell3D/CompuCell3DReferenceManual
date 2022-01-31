@@ -12,11 +12,11 @@ adhesion energy in ``AdhesionFlex`` plugin:
     :nowrap:
 
     \begin{eqnarray}
-        E_{adhesion} = \sum_{i,j,neighbors} \left ( - \sum_{m,n}k_{mn}F\left ( N_{m}\left (i \right ), N_{n} \left( i \right ) \right ) \right )\left ( 1-\delta_{\sigma(i), \sigma(j)} \right )
+        E_{adhesion} = \sum_{i,j,neighbors} \left ( - \sum_{m,n}k_{mn}F\left ( N_{m}\left (i \right ), N_{n} \left( j \right ) \right ) \right )\left ( 1-\delta_{\sigma(i), \sigma(j)} \right )
     \end{eqnarray}
 
 
-where indexes ``i``, ``j`` label pixels, :math:`- \sum_{m,n}k_{mn}F\left ( N_{m}\left (i \right ), N_{n} \left( i \right ) \right )`
+where indexes ``i``, ``j`` label pixels, :math:`- \sum_{m,n}k_{mn}F\left ( N_{m}\left (i \right ), N_{n} \left( j \right ) \right )`
 denotes contact energy between cell types :math:`\sigma(i)` and :math:`\sigma(j)` and indexes ``m`` , ``n``
 label adhesion molecules in cells composed of pixels ``i`` and ``j`` respectively. ``F``
 denotes user-defined function of :math:`N_m` and :math:`N_n`.
