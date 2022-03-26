@@ -284,9 +284,9 @@ link properties,
    # | Methods |
    # -----------
    # Given one cell, returns the other cell of a link
-   getOtherCell(_cell: CellG) -> CellG
+   getOtherCell(self, _cell: CellG) -> CellG
    # Returns True if the cell is the initiator
-   isInitiator(_cell: CellG) -> bool
+   isInitiator(self, _cell: CellG) -> bool
    # Get lambda distance
    getLambdaDistance(self) -> float
    # Set lambda distance
@@ -348,7 +348,7 @@ Steppables have built-in method for creating and destroying each type of link,
                   max_distance: float, x: float = 0.0, y: float = 0.0, z: float = 0.0,
                   pt: Point3D = None) -> FocalPointPlasticityAnchor
    # Destroy a link type FocalPointPlasticityLink, FocalPointPlasticityInternalLink or FocalPointPlasticityAnchor
-   delete_fpp_link(_link) -> None
+   delete_fpp_link(self, _link) -> None
    # Destroy all links attached to a cell by link type
    # links, internal_links and anchors selects which type, or all types if not specified
    remove_all_cell_fpp_links(self, _cell: CellG, links: bool = False, internal_links: bool = False,
