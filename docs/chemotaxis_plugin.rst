@@ -81,6 +81,25 @@ To use second of the above formulas use ``SaturationLinearCoef`` instead of
        </ChemicalField>
     </Plugin>
 
+The ``lambda`` value specified for each cell type can also be scaled using the
+``LogScaled`` formula according to the concentration of the field at the center of mass of the
+chemotaxing cell :math:`c_{CM}`,
+
+.. math::
+    :nowrap:
+
+    \begin{eqnarray}
+        \Delta E_{chem} = -\frac{\lambda}{s + c_{CM}} \left ( c(x_{destination}) - c(x_{source}) \right )
+    \end{eqnarray}
+
+The ``LogScaled`` formula is commonly used to mitigate excessive forces on cells
+in fields that vary over several orders of magnitude, and can be selected
+by setting the value of :math:`s` with the attribute `LogScaledCoef` like as follows,
+
+.. code-block:: xml
+
+    <ChemotaxisByType Type="Amoeba" Lambda="100" LogScaledCoef="1"/>
+
 Sometimes it is desirable to have chemotaxis **at the interface
 between** only certain types of cells **and not between** other
 cell-type-pairs. In such a case we augment ``ChemotaxisByType`` element with
@@ -173,19 +192,15 @@ cells as follows:
            def start(self):
 
                for cell in self.cellList:
-                   if cell.type == 2:
+                   if cell.type == self.cell_type.Macrophage:
                        cd = self.chemotaxisPlugin.addChemotaxisData(cell, "ATTR")
                        cd.setLambda(20.0)
-
-                       # cd.initializeChemotactTowardsVectorTypes("Bacterium,Medium")
-                       cd.assignChemotactTowardsVectorTypes([0, 1])
-
+                       cd.assignChemotactTowardsVectorTypes([self.cell_type.Medium, self.cell_type.Bacterium])
                        break
 
            def step(self, mcs):
                for cell in self.cellList:
-                   if cell.type == 2:
-
+                   if cell.type == self.cell_type.Macrophage:
                        cd = self.chemotaxisPlugin.getChemotaxisData(cell, "ATTR")
                        if cd:
                            lam = cd.getLambda() - 3
@@ -193,7 +208,7 @@ cells as follows:
                        break
 
 In the ``start`` function for first encountered cell of type ``Macrophage``
-(``type==2``) we insert ``ChemotaxisData`` object (it determines chemotaxing
+(``type==self.cell_type.Macrophage``) we insert ``ChemotaxisData`` object (it determines chemotaxing
 properties) and initialize ``λ`` parameter to ``20``. We also initialize vector
 of cell types towards which Macrophage cell will chemotax (it will
 chemotax towards Medium and Bacterium cells). Notice the break statement
@@ -218,14 +233,11 @@ chemotaxis formula used. For example we may type:
 
     def start(self):
         for cell in self.cellList:
-            if cell.type == 2:
+            if cell.type == self.cell_type.Macrophage:
                 cd = self.chemotaxisPlugin.addChemotaxisData(cell, "ATTR")
                 cd.setLambda(20.0)
                 cd.setSaturationCoef(200.0)
-
-                # cd.initializeChemotactTowardsVectorTypes("Bacterium,Medium")
-                cd.assignChemotactTowardsVectorTypes([0, 1])
-
+                cd.assignChemotactTowardsVectorTypes([self.cell_type.Medium, self.cell_type.Bacterium])
                 break
 
 
@@ -235,6 +247,12 @@ would use:
 .. code-block:: python
 
     cd.setSaturationLinearCoef(2.0)
+
+To activate the ``LogScaled`` formula for a cell, we would use:
+
+.. code-block:: python
+
+    cd.setLogScaledCoef(3.0)
 
 .. warning::
 
