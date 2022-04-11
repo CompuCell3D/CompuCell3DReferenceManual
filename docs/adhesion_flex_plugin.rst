@@ -106,6 +106,7 @@ To change the value of the adhesion molecule density we use set
 functions:
 
 .. code-block:: python
+
     self.adhesionFlexPlugin.setAdhesionMoleculeDensity(cell,'NCad',0.1)
 
     self.adhesionFlexPlugin.setAdhesionMoleculeDensityByIndex(cell,1,1.02)
