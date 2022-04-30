@@ -55,7 +55,7 @@ syntax for this plugin is given below:
     </Plugin>
 
 
-*k\ :sub:`mn`* matrix is specified within the ``AdhesionInteractionMatrix``
+:math:`k_{mn}` matrix is specified within the ``AdhesionInteractionMatrix``
 tag – the elements are listed using ``BindingParameter`` tags. The
 ``AdhesionMoleculeDensity`` tag specifies initial concentration of adhesion
 molecules. Even if you are going to modify those from Python you are still required to specify the
@@ -65,6 +65,10 @@ behaviors. The user-defined function ``*F*`` is specified using ``Formula`` tag
 where the arguments of the function are called ``Molecule1`` and ``Molecule2`` .
 The syntax has to follow syntax of the muParser -
 https://beltoforion.de/en/muparser/features.php#idDef1 .
+
+.. note::
+
+    Using more complex formulas with muParser requires special ``CDATA`` syntax. Please check :doc:`mu_parser` for more details.
 
 CompuCell3D example – *Demos/AdhesionFlex* - demonstrates how to
 manipulate concentration of adhesion molecules. For example:
