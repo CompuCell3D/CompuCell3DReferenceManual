@@ -18,7 +18,7 @@ thought of as being part of general diffusion equation:
     :nowrap:
 
     \begin{eqnarray}
-        \frac{\partial c}{\partial t} = D \nabla^2c+kc+\text{secretion}
+        \frac{\partial c}{\partial t} = D \nabla^2c-kc+\text{secretion}
     \end{eqnarray}
 
 
@@ -235,9 +235,9 @@ diffusion type PDE of the form:
     :nowrap:
 
     \begin{align*}
-     \frac{\partial c}{\partial t} = D \nabla^2c+kc+\text{secretion} + m_dcd + m_fcf \\
-     \frac{\partial d}{\partial t} = D \nabla^2d+kd+\text{secretion} + n_cdc + n_fdf \\
-     \frac{\partial f}{\partial t} = D \nabla^2f+kf+\text{secretion} + p_cfc + p_dfd
+     \frac{\partial c}{\partial t} = D \nabla^2c-kc+\text{secretion} + m_dcd + m_fcf \\
+     \frac{\partial d}{\partial t} = D \nabla^2d-kd+\text{secretion} + n_cdc + n_fdf \\
+     \frac{\partial f}{\partial t} = D \nabla^2f-kf+\text{secretion} + p_cfc + p_dfd
     \end{align*}
 
 where :math:`m_c`, :math:`m_f`, :math:`n_c` , :math:`n_f`, :math:`p_c`, :math:`p_d` are coupling coefficients.

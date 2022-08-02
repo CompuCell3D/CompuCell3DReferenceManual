@@ -8,10 +8,10 @@ diffusion equations:
     :nowrap:
 
     \begin{align*}
-     \frac{\partial c_1}{\partial t} = D \nabla^2c_1+kc_1+\text{secretion} + f_1(c_1,c_2,...,c_N, W) \\
-     \frac{\partial c_2}{\partial t} = D \nabla^2c_2+kc_2+\text{secretion} + f_2(c_1,c_2,...,c_N,W) \\
+     \frac{\partial c_1}{\partial t} = D \nabla^2c_1-kc_1+\text{secretion} + f_1(c_1,c_2,...,c_N, W) \\
+     \frac{\partial c_2}{\partial t} = D \nabla^2c_2-kc_2+\text{secretion} + f_2(c_1,c_2,...,c_N,W) \\
      {\text ...} \\
-     \frac{\partial c_N}{\partial t} = D \nabla^2c_N+kC_N+\text{secretion} + f_N(c_1,c_2,...,c_N, W)
+     \frac{\partial c_N}{\partial t} = D \nabla^2c_N-kC_N+\text{secretion} + f_N(c_1,c_2,...,c_N, W)
     \end{align*}
 
 where ``W`` denotes cell type

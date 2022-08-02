@@ -20,7 +20,7 @@ The equation solved by this steppable is of the type:
     :nowrap:
 
     \begin{eqnarray}
-       \frac{\partial c}{\partial t} = D \nabla^2c+kc+\vec{\nu} \cdot \vec{\nabla} c + \text{secretion}
+       \frac{\partial c}{\partial t} = D \nabla^2c-kc+\vec{\nu} \cdot \vec{\nabla} c + \text{secretion}
     \end{eqnarray}
 
 where :math:`c` denotes concentration , :math:`D` is diffusion constant, :math:`k` decay constant, :math:`\vec{\nu}` is

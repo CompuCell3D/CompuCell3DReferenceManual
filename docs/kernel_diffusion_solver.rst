@@ -12,7 +12,7 @@ Simply put KernelDiffusionSolver solves diffusion equation:
     :nowrap:
 
     \begin{eqnarray}
-        \frac{\partial c}{\partial t} = D \nabla^2c+kc+\text{secretion}
+        \frac{\partial c}{\partial t} = D \nabla^2c-kc+\text{secretion}
     \end{eqnarray}
 
 with fixed, periodic boundary conditions on the edges of the lattice.
