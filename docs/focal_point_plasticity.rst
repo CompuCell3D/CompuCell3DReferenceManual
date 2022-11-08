@@ -280,6 +280,10 @@ link properties,
    length
    # Link tension = 2 * lambda * (distance - target_distance); automatically updated by CC3D
    tension
+   # A general python dictionary
+   dict
+   # SBML solvers (as on CellG)
+   sbml
    # -----------
    # | Methods |
    # -----------
