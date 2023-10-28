@@ -1,7 +1,7 @@
 .. CompuCell3DReferenceManual documentation master file
 
 ###################################################
-CompuCell3D Reference Manual - 4.3.0
+CompuCell3D Reference Manual - 4.4.1
 ###################################################
 
 The focus of this manual is to teach you how to use CC3DML (XML-based syntax) to build powerful multi-scale
