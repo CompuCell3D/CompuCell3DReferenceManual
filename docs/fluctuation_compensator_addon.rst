@@ -24,7 +24,7 @@ The Fluctuation Compensator algorithm consists of the following three rules.
 
 .. note::
 
-   Fluctuation Compensator is supported in DiffusionSolverFE and ReactionDiffusionSolverFE.
+   Fluctuation Compensator is supported in DiffusionSolverFE, ReactionDiffusionSolverFE and ReactionDiffusionSolverFVM.
 
 Exactly one Fluctuation Compensator can be attached to each supported solver instance.
 An attached Fluctuation Compensator performs corrections on *all* fields of the solver

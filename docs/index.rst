@@ -35,6 +35,14 @@ You do not have to be an XML guru but you should know how to write simple XML do
 .. toctree::
    :maxdepth: 1
    :hidden:
+   :caption: Tutorials
+
+   tutorials_section
+
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
    :caption: Potts and Lattice
 
    potts_and_lattice
