@@ -93,7 +93,7 @@ todo_include_todos = False
 # html_theme = 'basic'
 # html_theme = 'alabaster'
 
-# html_theme = 'sphinx_rtd_theme'
+html_theme = 'sphinx_rtd_theme'
 #
 # on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 #
