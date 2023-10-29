@@ -1,13 +1,10 @@
 PolygonInitializer Steppable
 ------------------------------
 
-``PolygonInitializer`` steppable is used to lay out any shape of cells you like on the lattice.
+``PolygonInitializer`` is used to lay out any shape of cells you like on the lattice.
 
-2D Triangle
-*********************************
 
-An example syntax where we create one circular region of cells in the lattice is presented below:
-Here is an example of how to generate a region of cells in the shape of an **equilateral triangle**:
+**Example Syntax:** 2D Equilateral Triangle
 
 .. code-block:: xml
 
@@ -99,7 +96,7 @@ Full example:
    </Steppable>
 
 
-.. |cc3d_cpp_001| image:: images/polygoninit_3Dhexagon.png
+.. image:: images/polygoninit_3Dhexagon.png
     :scale: 50%
    
 
