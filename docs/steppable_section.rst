@@ -25,6 +25,7 @@ This section "off-the-shelf" steppables that are available in CC3D and were impl
 
 * :doc:`uniform_initializer`
 * :doc:`blob_initializer`
+* :doc:`polygon_initializer`
 * :doc:`pif_initializer`
 * :doc:`pif_dumper`
 * :doc:`mitosis`

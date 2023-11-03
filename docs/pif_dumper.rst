@@ -19,7 +19,7 @@ In our case they would be ``line.0.pif``, ``line.100.pif``, ``line.200.pif``, et
 
 This module is actually quite useful. For example, if we want to start
 simulation from a more configuration of cells (not rectangular cells as
-this is the case when we use ``Uniform`` or ``Blob`` initializers). In such a
+this is the case when we use ``Uniform``, ``Blob``, or ``Polygon`` initializers). In such a
 case we would run a simulation with a ``PIFDumper`` included and once the
 cell configuration reaches desired shape we would stop and use PIF file
 corresponding to this state. Once we have PIF initial configuration we
