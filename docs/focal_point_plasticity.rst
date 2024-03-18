@@ -132,7 +132,7 @@ FocalPointPlasticity CC3DML plugin:
         <!--The following variables lare defined by default: Lambda,Length,TargetLength-->
 
         <Variable Name='LambdaExtra' Value='1.0'/>
-        <Formula>LambdaExtra*Lambda*(Length-TargetLength)^2</Formula>
+        <Expression>LambdaExtra*Lambda*(Length-TargetLength)^2</Expression>
 
     </LinkConstituentLaw>
 
