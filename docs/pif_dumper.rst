@@ -31,9 +31,7 @@ condition.
     Restarting simulation from a given configuration is actually even easier in the recent
     versions of CC3D. All you have to do is to create .``cc3d`` project where you add serialization optyion
     CC3D will be savbing complete snapshots of the simulation (including PIF files) and you can easily restart
-    the simulation from a given end-point of the previous run. For more details see "Python Scripting Manual"
-    https://pythonscriptingmanual.readthedocs.io/en/latest/restarting_simulations.html?highlight=restart
-
+    the simulation from a given end-point of the previous run. For more details see `Restarting Simulations <restarting_simulations.html>`_.
 
 .. tip::
 
