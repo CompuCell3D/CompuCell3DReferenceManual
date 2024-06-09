@@ -2,7 +2,7 @@ NeighborTracker Plugin
 ----------------------
 
 This plugin, as its name suggests, tracks neighbors of every cell. In
-addition it calculates common contact area between cell and its
+addition, it calculates common contact area between cell and its
 neighbors. We consider a neighbor this cell that has at least one common
 pixel side with a given cell. This means that cells that touch each
 other either "by edge" or by "corner" **are not** considered neighbors. See

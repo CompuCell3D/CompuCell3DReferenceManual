@@ -3,10 +3,10 @@ ConvergentExtension plugin
 
 .. note::
 
-   This is very specialized plugin which currently is in Tier 2
+   This is very specialized plugin that is currently is in Tier 2
    plugins in terms of support. It attempts to implement energy term
    described in "Simulating Convergent Extension by Way of Anisotropic
-   Differemtial Adhesion", *Zajac* M, *Jones* GL, and *Glazier* JA, Journal
+   Differential Adhesion", *Zajac* M, *Jones* GL, and *Glazier* JA, Journal
    of Theoretical Biology **222** (2), 2003. However due to certain
    ambiguities in the plugin description we had difficulties to getting it
    to work properly.

@@ -1,5 +1,5 @@
 Funding
-#######
+=======
 
 From early days CompuCell3D was funded by science grants. The list of funding entities include
 

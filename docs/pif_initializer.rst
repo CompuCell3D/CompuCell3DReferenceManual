@@ -59,7 +59,7 @@ will write PIF file for you in the language of your choice (Perl,
 Python, Matlab, Mathematica, C, C++, Java or any other programming
 language) will save a great deal of typing.
 
-Notice, that for compartmental cell model the format of the PIF file is
+Notice, that for the compartmental cell model, the format of the PIF file is
 different:
 
 .. code-block:: xml
@@ -88,7 +88,7 @@ For example:
 
     An easy way to generate PIF file from the current
     simulation snapshot is to use Player ``Tools->Generate`` PIF file from
-    current snapshot… menu option. Alternatively we can use PIFDumper
-    steppable discussed next.
+    current snapshot… menu option. Alternatively, we can use the PIFDumper
+    steppable, which will be discussed next.
 
 
