@@ -74,6 +74,13 @@ or watch the `CompuCell3D Workshop Python tutorial videos <https://www.youtube.c
 
 
 .. toctree::
+    :caption: Complete Tutorials
+    :hidden:
+
+    example_compartmental_elongated_cells_tutorial
+
+
+.. toctree::
     :caption: Screenshots, Restarts, Parameter Scans
     :hidden:
 
