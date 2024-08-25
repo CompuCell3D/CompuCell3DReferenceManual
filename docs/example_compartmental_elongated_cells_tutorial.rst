@@ -160,9 +160,107 @@ This time we get the desired result.
 
 Let's add few more cells (including of type ``Center``).
 
+.. code-block:: python
+
+    class ElongatedCellsSteppable(SteppableBasePy):
+        def __init__(self, frequency=1):
+
+            SteppableBasePy.__init__(self, frequency)
+
+        def start(self):
+            """
+            any code in the start function runs before MCS=0
+            """
+            top = self.new_cell(cell_type=1)
+            self.cell_field[45:50, 25:30, 0] = top
+
+            center_1 = self.new_cell(cell_type=2)
+            self.cell_field[45:50, 30:35, 0] = center_1
+
+            top_1 = self.new_cell(cell_type=1)
+            self.cell_field[45:50, 35:40, 0] = top_1
+
+
+
+and let's create a situation where cells "prefer" to be surrounded by Medium and not touch each other. This means
+contact energy coefficient between cell and Medium is lower than contact energy between two cells:
+
+.. code-block:: XML
+
+    <Plugin Name="Contact">
+        <Energy Type1="Medium" Type2="Medium">0</Energy>
+        <Energy Type1="Top" Type2="Top">30</Energy>
+        <Energy Type1="Top" Type2="Medium">15</Energy>
+        <Energy Type1="Center" Type2="Medium">15</Energy>
+        <Energy Type1="Center" Type2="Center">30</Energy>
+        <Energy Type1="Center" Type2="Top">30</Energy>
+        <NeighborOrder>4</NeighborOrder>
+    </Plugin>
+
+When we run this new simulation (``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_01``) we get the following:
+
+|img003|
+
+|img004|
+
+Cells that initially stick to each other after few steps are separated but each cell is i a non-pixelized form.
+
+Writing Convenience function to create elongated cell
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+When we look at the Python code above where we created 3 cells we can see that it would be nice to have a function that
+would create entire cell for us. Here is a prototype of such function:
+
+The entire code can be found here: ``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_01``
+
+.. code-block:: python
+
+    class ElongatedCellsSteppable(SteppableBasePy):
+    def __init__(self, frequency=1):
+
+        SteppableBasePy.__init__(self, frequency)
+
+    def start(self):
+        self.create_arranged_cells(x_s=25, y_s=25, size=5, cell_type_ids=[1, 2, 2, 2, 2, 1])
+
+    def create_arranged_cells(self, x_s, y_s, size, cell_type_ids=None):
+        """
+        this function creates vertically arranged cells.
+
+        x_s, ys - coordinates of bottom_left corner of the cell arrangement
+        size - size of the cell arrangement
+        cell_type_ids - list of cell type ids
+
+        """
+        for i, cell_type_id in enumerate(cell_type_ids):
+            cell = self.new_cell(cell_type=cell_type_id)
+            self.cell_field[x_s : x_s + size, y_s + i * size : y_s + (i + 1) * size, 0] = cell
+
+
+This function iterates over a list of ``cell_type_ids`` and for each new cell type listed it creates a new cell of this
+type that is placed 5 pixel above previous cell. This way after we run it we will see the following initial configuration (after first MCS and after several MCS):
+
+|img005|
+
+
+|img006|
+
+
 
 .. |img001| image:: images/elongated_cells_tutorial/img001.png
     :scale: 50%
 
 .. |img002| image:: images/elongated_cells_tutorial/img002.png
     :scale: 50%
+
+.. |img003| image:: images/elongated_cells_tutorial/img003.png
+    :scale: 50%
+
+.. |img004| image:: images/elongated_cells_tutorial/img004.png
+    :scale: 50%
+
+.. |img005| image:: images/elongated_cells_tutorial/img005.png
+    :scale: 50%
+.. |img006| image:: images/elongated_cells_tutorial/img006.png
+    :scale: 50%
+
