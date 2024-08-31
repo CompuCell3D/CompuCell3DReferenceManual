@@ -408,6 +408,351 @@ to avoid intermingling.
 |img009|
 
 
+FocalPointPlasticity Plugin - constraining intercellular distances
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Now that we understand how to handle Contact and COntactInternal plugins . let us focus attention on energy terms that will
+allow us to constrain distances between cells. FocalPointPlasticity Plugin (**FPP**) is one of the solutions.
+
+This plugin implements energy term that penalizes deviations from target distance between two cells that are connected
+by FPP link. This plugin is described in details in PLugins section of the Reference Manual but it is worth mentioning that
+this plugin has separate mechanisms for handling links between cells that are part of the same cluster and cells that
+are part of different clusters. The simulation code we will use in this section is in ``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_07``
+
+In order to add spring-like links between members of the same cluster we need to add the following section to the XML
+
+.. code-block:: XML
+
+    <Plugin Name="FocalPointPlasticity">
+
+        <InternalParameters Type1="Top" Type2="Center">
+            <Lambda>100.0</Lambda>
+            <ActivationEnergy>-50.0</ActivationEnergy>
+            <TargetDistance>5</TargetDistance>
+            <MaxDistance>10.0</MaxDistance>
+            <MaxNumberOfJunctions>1</MaxNumberOfJunctions>
+        </InternalParameters>
+
+        <InternalParameters Type1="Center" Type2="Center">
+            <Lambda>100.0</Lambda>
+            <ActivationEnergy>-50.0</ActivationEnergy>
+            <TargetDistance>5</TargetDistance>
+            <MaxDistance>10.0</MaxDistance>
+            <MaxNumberOfJunctions>2</MaxNumberOfJunctions>
+        </InternalParameters>
+
+   </Plugin>
+
+Because in our initial compartment arrangement we have two ``Top`` cells capping the "ends" of the cluster we want to allow only
+a single internal (i.e. between compartments) link between ``Top`` and ``Center`` cells. However for ``Center`` cells
+we will allow two internal links. Let's run the simulation and turn on visualization of the links (Visualization-> FPP Links):
+
+After few MCS (FPP links might take few MCS to form because there is stochasticity involved in establishing links between cells)
+we will see the following picture
+
+|img010|
+
+If we let the simulation run for a while, however, we will see that while the distance between cells is maintained the cells do not
+form "elongated cell"
+
+|img011|
+
+Additionally, if we lower FPP Lambdas from 100 to 10:
+
+.. code-block:: XML
+
+    <Plugin Name="FocalPointPlasticity">
+
+        <InternalParameters Type1="Top" Type2="Center">
+            <Lambda>10.0</Lambda>
+            <ActivationEnergy>-50.0</ActivationEnergy>
+            <TargetDistance>5</TargetDistance>
+            <MaxDistance>10.0</MaxDistance>
+            <MaxNumberOfJunctions>1</MaxNumberOfJunctions>
+        </InternalParameters>
+
+        <InternalParameters Type1="Center" Type2="Center">
+            <Lambda>10.0</Lambda>
+            <ActivationEnergy>-50.0</ActivationEnergy>
+            <TargetDistance>5</TargetDistance>
+            <MaxDistance>10.0</MaxDistance>
+            <MaxNumberOfJunctions>2</MaxNumberOfJunctions>
+        </InternalParameters>
+
+   </Plugin>
+
+
+We will see that ``Center`` cells that initially touched ``Top``  cell form additional links between themselves.
+This happens because those two ``Center`` cells can form two links between Center themselves. The first link is formed
+at the beginning of the simulation but during the course of the simulation , when those two ``Center`` cells come together
+(e.g. due to weak FPP Lambda) there is nothing keeping them form forming another link.
+
+|img012|
+
+.. note::
+
+    CC3D will add additional constraint on the max number of links a given cell type can form which will solve this problem
+    but in the current version we have to deal possible issues that might arise when cells may form extra link that we do not want
+
+
+Curvature Plugin
+++++++++++++++++
+
+Let us now put everything together an implement elongated compartmentalized cell. The solution that will prevent two
+``Center`` cells (the ones that initially were touching ``Top`` cell), from forming an extra FPP link,
+is to use Curvature Plugin. The way Curvature plugin works is by constraining the angle that two adjacent links can form
+By using high value of Curvature lambda you may constrain two adjacent links to form a straight line
+and by adiabatically lowering the lambda you can control how much elongated cell can bend.
+The code for this section is in ``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_08``
+
+HEre is the code that we add to the XML to enable Curvature energy calculations:
+
+.. code-block:: XML
+
+    <Plugin Name="Curvature">
+
+        <InternalParameters Type1="Top" Type2="Center">
+            <Lambda>1000.0</Lambda>
+            <ActivationEnergy>-50.0</ActivationEnergy>
+        </InternalParameters>
+
+        <InternalParameters Type1="Center" Type2="Center">
+            <Lambda>1000.0</Lambda>
+            <ActivationEnergy>-50.0</ActivationEnergy>
+        </InternalParameters>
+
+
+
+        <InternalTypeSpecificParameters>
+            <Parameters TypeName="Top" MaxNumberOfJunctions="1" NeighborOrder="1"/>
+            <Parameters TypeName="Center" MaxNumberOfJunctions="2" NeighborOrder="1"/>
+        </InternalTypeSpecificParameters>
+
+    </Plugin>
+
+
+With this extra addition the compartments will form a line even if we let the simulation run for a very long time:
+
+|img013|
+
+
+As you probably have noticed, the syntax for this plugin resembles the syntax of the FPP plugin - we have ``<Lambda>``,
+``<ActivationEnergy>``, ``MaxNumberOfJunctions`` . This is because Curvature plugin establishes its own set of "links" between
+cells but those links are not used to penalize intercellular distance but rather to penalize the deviation from straight line
+arrangement of compartment cells
+
+Adding persistent motion to cells
++++++++++++++++++++++++++++++++++
+
+Let us add a bit more code to make this simulation more interesting. First, we will create more cells. We will use
+our convenience function ``create_arranged_cells`` and as a result all of those cells will be arranged vertically -
+this will not be a problem though because, next, we will be applying random force to the "first" cell of each cluster i.e.
+to the cell that is created first in each cluster. We will store a list of "first" cells inside member variable
+``self.list_of_leading_cells = []`` which is a list. . we have to be careful to ensure that cells stored in that list do
+not disappear because if the do disappear and we try to reference them we will get Segmentation Fault Error.
+We will show later how we could avoid this issue in the code , just to show you how to handle situation of that type.
+Before we apply any force, we will give simulation a generous 300 MCS for all the FPP links to get established.
+If we applied force before links are established it is likely that some ``Top`` cell could have moved away from the
+cluster before links had a chance to form. Next, every 500 MCS we will reassign random forces applied to "first" cells.
+
+The simulation code can be found in ``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_09``
+
+
+In terms of XML modification, we only need to add a one-liner that enavbles ExternalPotential plugin that simulates
+external force:
+
+.. code-block:: XML
+
+    <Plugin Name="ExternalPotential"/>
+
+Notice that we do not specify any parameters because we will use Python to set force vectors applied to "first" cells
+
+The ``ElongatedCellsSteppables.py`` is more interesting:
+
+.. code-block:: Python
+
+    from cc3d.core.PySteppables import *
+    import random
+
+
+    class ElongatedCellsSteppable(SteppableBasePy):
+        def __init__(self, frequency=1):
+
+            SteppableBasePy.__init__(self, frequency)
+            self.list_of_leading_cells = []
+            self.maxAbsLambdaX = 10
+
+        def start(self):
+            self.create_arranged_cells(x_s=25, y_s=25, size=5, cell_type_ids=[1, 2, 2, 2, 2, 1])
+            self.create_arranged_cells(x_s=40, y_s=25, size=5, cell_type_ids=[1, 2, 2, 2, 2, 1])
+
+            self.create_arranged_cells(x_s=50, y_s=5, size=5, cell_type_ids=[1, 2, 2, 2, 2, 1])
+            self.create_arranged_cells(x_s=60, y_s=40, size=5, cell_type_ids=[1, 2, 2, 2, 2, 1])
+            self.create_arranged_cells(x_s=70, y_s=60, size=5, cell_type_ids=[1, 2, 2, 2, 2, 1])
+
+            for cell in self.cell_list:
+                print("cell id=", cell.id, " clusterId=", cell.clusterId)
+
+        def create_arranged_cells(self, x_s, y_s, size, cell_type_ids=None):
+            """
+            this function creates vertically arranged cells.
+
+            x_s, ys - coordinates of bottom_left corner of the cell arrangement
+            size - size of the cell arrangement
+            cell_type_ids - list of cell type ids
+
+            """
+            cluster_id = None
+            for i, cell_type_id in enumerate(cell_type_ids):
+                cell = self.new_cell(cell_type=cell_type_id)
+
+                if i == 0:
+                    cluster_id = cell.clusterId
+                    self.list_of_leading_cells.append(cell)
+                else:
+                    # to make all cells created by this function, we must reassign clusterId
+                    # of all the cells created by this function except the first one
+                    # When the first cell gets created, it gets reassigned clusterId by
+                    # CompuCell3D and we will use this clusterId to assign it to all other cells created by this function
+                    self.reassign_cluster_id(cell=cell, cluster_id=cluster_id)
+                self.cell_field[x_s : x_s + size, y_s + i * size : y_s + (i + 1) * size, 0] = cell
+
+        def step(self, mcs):
+
+            if mcs < 300:
+                return
+
+            if not mcs % 500:
+                # randomize force applied to leading cell
+                for cell in self.list_of_leading_cells:
+                    cell.lambdaVecX = random.randint(-self.maxAbsLambdaX, self.maxAbsLambdaX)
+                    cell.lambdaVecY = random.randint(-self.maxAbsLambdaX, self.maxAbsLambdaX)
+
+
+Inside the ``step`` method we create not one but several linear clusters - notice how we vary location of
+bottom left coordinates of each cluster.
+
+Inside constructor:
+
+.. code-block:: python
+
+        def __init__(self, frequency=1):
+
+            SteppableBasePy.__init__(self, frequency)
+            self.list_of_leading_cells = []
+            self.maxAbsLambdaX = 10
+
+we create ``self.list_of_leading_cells`` that holds cell objects representing "first" cells of each cluster. Storing of the
+"first" cell of each cluster takes place inside  ``self.create_arranged_cells`` method.
+We also add a convenience variable ``self.maxAbsLambdaX = 10`` that determines absolute value of
+force component - in x or y directions.
+We also introduce ``step(self, mcs)`` which "does nothing" for first 300 MCS and after 300 mcs it assigns a random force to each cell
+in the ``self.list_of_leading_cells`` every 500 MCS  - we use ``if not mcs % 500:`` to execute code every 500 MCS.
+
+Here are few screenshots of the simulation:
+
+MCS=447:
+
+|img014|
+
+
+MCS=1125:
+
+|img015|
+
+MCS=4006:
+
+|img016|
+
+MCS=8289:
+
+|img017|
+
+
+Notice, how cells belonging to a different clusters in general to not "mix with each other". We can control this behavior
+by adjusting Contact energy plugin coefficients - because they govern interactions between cells belonging to
+different clusters
+
+.. note::
+
+    It is possible that you may apply a force that is too large and FPP links may break. To handle situations
+    like this you should run simulation many times and observe issues and write a code that addresses them
+
+
+Let us write a more robust code is better prepared to handle cells that may disappear (``Top`` cells to which we apply the force)
+
+.. code-block:: python
+
+    class ElongatedCellsSteppable(SteppableBasePy):
+        def __init__(self, frequency=1):
+
+            SteppableBasePy.__init__(self, frequency)
+            self.leading_cells_ids = set()
+            self.maxAbsLambdaX = 10
+
+        def start(self):
+            self.create_arranged_cells(x_s=25, y_s=25, size=5, cell_type_ids=[1, 2, 2, 2, 2, 1])
+            self.create_arranged_cells(x_s=40, y_s=25, size=5, cell_type_ids=[1, 2, 2, 2, 2, 1])
+
+            self.create_arranged_cells(x_s=50, y_s=5, size=5, cell_type_ids=[1, 2, 2, 2, 2, 1])
+            self.create_arranged_cells(x_s=60, y_s=40, size=5, cell_type_ids=[1, 2, 2, 2, 2, 1])
+            self.create_arranged_cells(x_s=70, y_s=60, size=5, cell_type_ids=[1, 2, 2, 2, 2, 1])
+
+            for cell in self.cell_list:
+                print("cell id=", cell.id, " clusterId=", cell.clusterId)
+
+        def create_arranged_cells(self, x_s, y_s, size, cell_type_ids=None):
+            """
+            this function creates vertically arranged cells.
+
+            x_s, ys - coordinates of bottom_left corner of the cell arrangement
+            size - size of the cell arrangement
+            cell_type_ids - list of cell type ids
+
+            """
+            cluster_id = None
+            for i, cell_type_id in enumerate(cell_type_ids):
+                cell = self.new_cell(cell_type=cell_type_id)
+
+                if i == 0:
+                    cluster_id = cell.clusterId
+                    self.leading_cells_ids.add(cell.id)
+                else:
+                    # to make all cells created by this function, we must reassign clusterId
+                    # of all the cells created by this function except the first one
+                    # When the first cell gets created, it gets reassigned clusterId by
+                    # CompuCell3D and we will use this clusterId to assign it to all other cells created by this function
+                    self.reassign_cluster_id(cell=cell, cluster_id=cluster_id)
+                self.cell_field[x_s : x_s + size, y_s + i * size : y_s + (i + 1) * size, 0] = cell
+
+        def step(self, mcs):
+
+            if mcs < 300:
+                return
+
+            if not mcs % 500:
+                # randomize force applied to leading cell
+                for cell in self.cell_list:
+                    if cell.id in self.leading_cells_ids:
+                        cell.lambdaVecX = random.randint(-self.maxAbsLambdaX, self.maxAbsLambdaX)
+                        cell.lambdaVecY = random.randint(-self.maxAbsLambdaX, self.maxAbsLambdaX)
+
+
+Let us outline the changes we made
+
+1. Instead of using ``self.list_of_leading_cells`` to store cell objects, we use a set ``self.leading_cells_ids`` to store cell ids (integers).
+Python set has this nice property that lookups are instantaneous.
+
+2. Instead of iterating the list with cell objects we iterate over each cell in the simulation (yes,
+a bit inefficient by we can speed it up by iterating over cells of type ``Top``) and we check if ``cell.id`` is in ``self.leading_cells_ids``
+and only then we apply the force.
+
+This change will avoid accessing ``Top`` cell object that was deleted in the course fo the simulation.
+
+In summary, in this case study we have demonstrated how to turn a very simple simulation involving just a single cell into
+a not-so-trivial simulation that involves multiple motile, elongated compartmental cells.
+
+
 .. |img001| image:: images/elongated_cells_tutorial/img001.png
     :scale: 50%
 
@@ -433,4 +778,28 @@ to avoid intermingling.
     :scale: 50%
 
 .. |img009| image:: images/elongated_cells_tutorial/img009.png
+    :scale: 50%
+
+.. |img010| image:: images/elongated_cells_tutorial/img010.png
+    :scale: 50%
+
+.. |img011| image:: images/elongated_cells_tutorial/img011.png
+    :scale: 50%
+
+.. |img012| image:: images/elongated_cells_tutorial/img012.png
+    :scale: 50%
+
+.. |img013| image:: images/elongated_cells_tutorial/img013.png
+    :scale: 50%
+
+.. |img014| image:: images/elongated_cells_tutorial/img014.png
+    :scale: 50%
+
+.. |img015| image:: images/elongated_cells_tutorial/img015.png
+    :scale: 50%
+
+.. |img016| image:: images/elongated_cells_tutorial/img016.png
+    :scale: 50%
+
+.. |img017| image:: images/elongated_cells_tutorial/img017.png
     :scale: 50%
