@@ -6,8 +6,8 @@ We want the cells to stay elongated throughout the course of the simulation. In 
 starting from a simulation involving a single cell you can scale up and build more sophisticated models
 
 
-Understanding Contact Energies - how to get non-pixelated cell shape
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Understanding Contact Energies - how to avoid pixelated cells
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now that we know about compartments and how they are handled by CC3D, let's see how we can  translate our knowledge
 into building a simple simulation that involves contact energies. In particular, we want to show you a common pitfall
@@ -113,7 +113,7 @@ A partially pixelated cell is not particularly interesting but we should expect 
 and after few MCS it disintegrated into few pieces. Because we have only volume energy there is nothing to prevent cell pixelization
 and any cell shape as long as the total number of pixel in the single cell is roughly 25 is perfectly fine.
 
-Let's try using contact energy to see if we can make the cell non-pixelized - ``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_01``
+Let's try using contact energy to see if we can make the cell non-pixelized - ``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_02``
 The rationale is as follows: Volume energy will asure the number of pixel in the cell is roughly 25 and the
 contact energy's task will be to keep cell from pixelizing by
 penalizing cell-Medium interface. As you recall CC3D minimizes energy so if we use positive contact coefficient
@@ -197,7 +197,7 @@ contact energy coefficient between cell and Medium is lower than contact energy 
         <NeighborOrder>4</NeighborOrder>
     </Plugin>
 
-When we run this new simulation (``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_01``) we get the following:
+When we run this new simulation (``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_03``) we get the following:
 
 |img003|
 
@@ -211,7 +211,7 @@ Writing Convenience function to create elongated cell
 When we look at the Python code above where we created 3 cells we can see that it would be nice to have a function that
 would create entire cell for us. Here is a prototype of such function:
 
-The entire code can be found here: ``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_01``
+The entire code can be found here: ``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_04``
 
 .. code-block:: python
 
@@ -222,6 +222,8 @@ The entire code can be found here: ``Demos/CompuCellPythonTutorial/ElongatedCell
 
     def start(self):
         self.create_arranged_cells(x_s=25, y_s=25, size=5, cell_type_ids=[1, 2, 2, 2, 2, 1])
+        for cell in self.cell_list:
+            print("cell id=", cell.id, " cluster_id=", cell.clusterId)
 
     def create_arranged_cells(self, x_s, y_s, size, cell_type_ids=None):
         """
@@ -245,6 +247,165 @@ type that is placed 5 pixel above previous cell. This way after we run it we wil
 
 |img006|
 
+Adding convenience functions to your steppables will make your code easier to read and maintain
+
+Making Compartmentalized Cell
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To understand better the concept of compartmentalized cell we added a printout in the ``start`` function that prints
+cells' ``cell.id`` and ``clusterId``. When we dont have compartmentalized cells in our simulation, no two cells share
+the same ``clusterId`` or each cell's ``id`` is paired with a distinct ``clusterId`` - as we can see from the printout
+below:
+
+.. code-block:: console
+
+    cell id= 1  clusterId= 1
+    cell id= 2  clusterId= 2
+    cell id= 3  clusterId= 3
+    cell id= 4  clusterId= 4
+    cell id= 5  clusterId= 5
+    cell id= 6  clusterId= 6
+
+
+Let's change it. Instead of creating 6 independent cells let's assign them to the same cluster so that our six cells
+will now be turned into compartments of a single cell with ``clusterId`` 1. From the modeling point of view this
+corresponds to a situation where you would like your biological cells be represented with more level of internal details.
+Perhaps you would like to simulate polarized cells , or perhaps you may want to better control shape of cells.
+
+Here the code (``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_05``) that turns six
+independent cells in to six compartments of a single compartmentalized cell:
+
+.. code-block:: python
+
+    def create_arranged_cells(self, x_s, y_s, size, cell_type_ids=None):
+        """
+        this function creates vertically arranged cells.
+
+        x_s, ys - coordinates of bottom_left corner of the cell arrangement
+        size - size of the cell arrangement
+        cell_type_ids - list of cell type ids
+
+        """
+        cluster_id = None
+        for i, cell_type_id in enumerate(cell_type_ids):
+            cell = self.new_cell(cell_type=cell_type_id)
+
+            if i == 0:
+                cluster_id = cell.clusterId
+            else:
+                # to make all cells created by this function, we must reassign clusterId
+                # of all the cells created by this function except the first one
+                # When the first cell gets created, it gets reassigned clusterId by
+                # CompuCell3D and we will use this clusterId to assign it to all other cells created by this function
+                self.reassign_cluster_id(cell=cell, cluster_id=cluster_id)
+            self.cell_field[x_s : x_s + size, y_s + i * size : y_s + (i + 1) * size, 0] = cell
+
+and here is the printout of cell ``id``s and ``clusterId``s:
+
+.. code-block:: console
+
+    cell id= 1  clusterId= 1
+    cell id= 2  clusterId= 1
+    cell id= 3  clusterId= 1
+    cell id= 4  clusterId= 1
+    cell id= 5  clusterId= 1
+    cell id= 6  clusterId= 1
+
+
+As we can tell all 6 cells share the same ``clusterId`` which means they represent single compartmentalized cells
+that is composed of 6 compartments.
+
+It is interesting how we have accomplished this assignment. It is worth pointing out that naive assignment of ``cell.id``
+or ``cell.clusterId`` , for example ``cell.clusterId = 20`` will lead to an error:
+
+.. code-block:: console
+
+    AttributeError: ASSIGNMENT cell. clusterId=1 is illegal. clusterId is read only variable
+
+Instead you must use steppable built-in function called ``self.reassign_cluster_id`` to reassign ``clusterId`` of a cell
+
+If we look at the code - ``create_arranged_cells`` - notice that when we iterate over list of ``cell_type_ids``
+we first create cell and then we keep track of the ``clusterId`` of the first cell that was created inside the ``for``
+loop. For each subsequently created cell we reassign it's ``clusterId`` attribute to match the ``clusterId`` of the
+cell that was created first. Normally when new cell gets created CC3D will bump both ``cell.id`` and ``cell.clusterId``
+but by reassigning we are correcting CC3D default behavior so all sx cells end up with ``clusterId`` 1.
+Here is the initial configuration of the cell field:
+
+|img007|
+
+
+But if we run simulation a bit longer we will get the following:
+
+|img008|
+
+This is not what we expected. In the previous simulation all cells were nicely separated, but now, with the same energy
+parameters we are getting a completely different simulation where cells are pixelized and intermixed with each other.
+The only change we did was reassigning ``clusterId``s.  What is then the explanation of this behavior:
+
+The explanation is simple but not obvious. The Contact energy plugin that controls whether cells like to stick to each
+other or like to be surrounded by Medium works only between cells that are members of different cluster. In our case this means that
+Contact energy plugin will only contribute energy that comes from Contact between cell and a Medium (because they are
+from different clusters since medium is a special cell). On the other hand Contact energy plugin WILL NOT include any
+contributions coming from contact between e.g. ``cell.id`` 1 and ``cell.id`` 2. Those contact cell-cell interfaces will
+not contribute anything to the change of energy. Therefore, when in order to minimize energy CC3D will bundle cells together
+(because cell-cell interfaces contribute 0 units of energy) in order to minimize cell-Medium interfaces where
+each such interface contributes 15 units of energy (see XML definition of Contact energy plugin)
+
+To make sure this is indeed the case, go back to ``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_04`` and change
+definition of Contact energy to looks as follows:
+
+.. code-block:: XML
+
+    <Plugin Name="Contact">
+        <Energy Type1="Medium" Type2="Medium">0</Energy>
+        <Energy Type1="Top" Type2="Top">0</Energy>
+        <Energy Type1="Top" Type2="Medium">15</Energy>
+        <Energy Type1="Center" Type2="Medium">15</Energy>
+        <Energy Type1="Center" Type2="Center">0</Energy>
+        <Energy Type1="Center" Type2="Top">0</Energy>
+        <NeighborOrder>4</NeighborOrder>
+    </Plugin>
+
+and you will get exactly the same cell shape as we did in the current simulation with compartmentalized cells.
+
+ContactInternal Plugin
+++++++++++++++++++++++
+
+To restore the expected behavior (where we have 6 cells that are members of the same cluster but are not
+intermingled with each other) we need to add a plugin that will count energy contributions coming from interfaces
+between cells that belong to the same cluster. Here is the XML code we need to include -
+``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_06``:
+
+.. code-block:: XML
+
+    <Plugin Name="Contact">
+        <Energy Type1="Medium" Type2="Medium">0</Energy>
+        <Energy Type1="Top" Type2="Top">30</Energy>
+        <Energy Type1="Top" Type2="Medium">15</Energy>
+        <Energy Type1="Center" Type2="Center">30</Energy>
+        <Energy Type1="Center" Type2="Top">30</Energy>
+        <Energy Type1="Center" Type2="Medium">15</Energy>
+
+        <NeighborOrder>4</NeighborOrder>
+    </Plugin>
+
+    <Plugin Name="ContactInternal">
+
+        <Energy Type1="Top" Type2="Top">30</Energy>
+        <Energy Type1="Center" Type2="Center">30</Energy>
+        <Energy Type1="Center" Type2="Top">30</Energy>
+
+
+        <NeighborOrder>4</NeighborOrder>
+    </Plugin>
+
+
+Contact and ContactInternal work in tandem. Contact takes care of interfaces between cells that belong to different clusters
+while ContactInternal computes energies coming from interfaces between cells belonging to the same cluster. Now each cell-cell
+interface coming from same cluster will add 30 units of energy which combined with 15 units between cell and Medium will cause cells
+to avoid intermingling.
+
+|img009|
 
 
 .. |img001| image:: images/elongated_cells_tutorial/img001.png
@@ -261,6 +422,15 @@ type that is placed 5 pixel above previous cell. This way after we run it we wil
 
 .. |img005| image:: images/elongated_cells_tutorial/img005.png
     :scale: 50%
+
 .. |img006| image:: images/elongated_cells_tutorial/img006.png
     :scale: 50%
 
+.. |img007| image:: images/elongated_cells_tutorial/img007.png
+    :scale: 50%
+
+.. |img008| image:: images/elongated_cells_tutorial/img008.png
+    :scale: 50%
+
+.. |img009| image:: images/elongated_cells_tutorial/img009.png
+    :scale: 50%
