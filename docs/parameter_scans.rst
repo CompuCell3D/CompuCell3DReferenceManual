@@ -3,7 +3,9 @@ Parameter Scans
 
 .. note::
 
-   Specification of parameter scans in version 4.x.x is different than in earlier versions. In particular old parameter scan simulations will not run in 4.x but as you will see the new way of specifying paramter scans is much simpler and less laborious than in previous implementations.
+   Specification of parameter scans in version 4.x.x is different than in earlier versions.
+    In particular old parameter scan simulations will not run in 4.x but as you will see
+    the new way of specifying parameter scans is much simpler and less laborious than in previous implementations.
 
 When building biomedical simulations it is a common practice to explore
 parameter space to search for optimal solution or to study the
@@ -19,9 +21,28 @@ ability to create and run parameter scans directly from CC3D GUI’s or
 from command line. The way in which parameter scan simulation is run is
 exactly the same as for “regular”, single-run simulation.
 
-Implementation of parameter scans requires users to write simple JSON
+Adding parameter scan to your ``.cc3d`` project is best accomplished using Twedit++. Let's open arbitrary project in
+Twedit++ by navigating to ``CC3D Project->Open CC3D Project...``. To add Parameter Scan, right-click on the top-level
+project stub in the tree view in the left panel and pick ``Add Parameter Scan``
+
+|ps_001|
+
+When we expand the top level project stub, expend the newly added ParameterScan stub and double-click on
+``ParameterScanSpecs.json`` we will see a pre-formatted template of the parameter scan file:
+
+|ps_002|
+
+You may also find it useful to learn how to remove parameter scan from CC3D project. All you need to do is to right-click
+on the ``ParameterScan`` stub and pick ``Remove Resources``
+
+|ps_003|
+
+Implementation of parameter scans requires users to populater JSON
 file with parameter scan specification and replacing
 actual values in the CC3DML or Python scripts with template markers.
+
+You may find examples of ready-to-run Parameter Scans in ``Demos/ParameterScan`` folder in your CC3D installation folder
+
 Let us look at the example simulation in ``Demos/ParameterScan/CellSorting``.
 The parameter scan specification file ``ParameterScanSpecs.json`` looks as follows:
 
@@ -120,7 +141,7 @@ To run a parameter scan you open up a parameter scan ``.cc3d`` project in the Pl
 .. figure:: images/param_scan_01.png
     :alt: param_scan_01
 
-Next, when you click "Play" or "Step" buttons on the PLayer's tool bar you will get the following po-pup dialog:
+Next, when you click "Play" or "Step" buttons on the Player's tool bar you will get the following po-pup dialog:
 
 .. figure:: images/param_scan_02.png
     :alt: param_scan_02
@@ -213,6 +234,46 @@ The structure of the file looks the same but when we replace ``values`` with ``c
 actual numpy statement and it will be evaluated by CC3D. Clearly , as shown above, you can mix-and-match
 which parameters are specified using numpy statement and which ones are specified using simple Python lists.
 
+One particularly useful type parameter scan you should run once your model is mature is the one where you vary
+``<RandomSeed>`` in the ``<Potts>`` section and keep all other parameters intact. By doing repeat runs of your
+simulation with different random seed you can quantify how stochasticity affects simulation outcomes.
+
+Here is a minimal setup for such simulation (also shown in ``Demos/ParameterScan/CellSortingRandomSeedScan``)
+
+``ParameterScanSpecs.json``:
+
+ .. code-block:: json
+
+    {
+        "version": "4.0.0",
+        "parameter_list": {
+               "random_seed":{
+                   "code":"np.random.randint(10, 99999, size=100)"
+               }
+        }
+    }
+
+The statement ``np.random.randint(10, 99999, size=100)`` generates an array of 100 random numbers between 10 and 99999
+
+``CellSorting.xml``:
+
+
+.. code-block:: xml
+
+    <CompuCell3D version="3.6.2">
+
+       <Potts>
+          <Dimensions x="100" y="100" z="1"/>
+          <Steps>110</Steps>
+          <Temperature>10.0</Temperature>
+          <NeighborOrder>2</NeighborOrder>
+          <RandomSeed>{{random_seed}}</RandomSeed>
+       </Potts>
+
+    ...
+
+
+
 .. |param_scan_01| image:: images/param_scan_01.png
    :width: 5.3n
    :height: 1.8in
@@ -224,3 +285,12 @@ which parameters are specified using numpy statement and which ones are specifie
 .. |param_scan_03| image:: images/param_scan_03.png
    :width: 4.3n
    :height: 2.0in
+
+.. |ps_001| image:: images/parameter_scans/img001.png
+   :scale: 50%
+
+.. |ps_002| image:: images/parameter_scans/img002.png
+   :scale: 50%
+
+.. |ps_003| image:: images/parameter_scans/img003.png
+   :scale: 50%
