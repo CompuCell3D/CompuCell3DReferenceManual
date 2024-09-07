@@ -22,6 +22,7 @@ CC3D:
                 x_scale_type='linear',
                 y_scale_type='log',
                 grid=True # only in 3.7.6 or higher
+                config_options={'legend':True} # Turn on legends
             )
 
             self.plot_win.add_plot("AverageVol", style='Dots', color='red', size=5)
