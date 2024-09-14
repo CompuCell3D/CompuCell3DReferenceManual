@@ -1,9 +1,9 @@
-Building Simulation of Elongated Cells. Case Study in using Compartments, FPP Links, Curvature energy terms.
+Compartments, FPP Links and Curvature - how to build elongated cells.
 ------------------------------------------------------------------------------------------------------------
 
-The goal of this tutorial is to build a simulation of multiple elongated cells where each sell is composed of compartments.
-We want the cells to stay elongated throughout the course of the simulation. In this tutorial we want to show you how
-starting from a simulation involving a single cell you can scale up and build more sophisticated models
+The goal of this tutorial is to teach you how to transform the most basic simulation involving just a single cell into
+a simulation involving multiple elongated cells where each cell is composed of compartments.
+We want the cells to stay elongated throughout the course of the simulation.
 
 
 Understanding Contact Energies - how to avoid pixelated cells
@@ -19,9 +19,9 @@ and Curvature plugin.
 .. note::
 
     Our intention is to teach you how you can start building complex simulation from grounds up
-    by starting with a single ce,, understand the behavior of the single cell under different set of parameters
+    by starting with a single cell understand the behavior of the single cell under different set of parameters
     and gradually adding complexity to your simulation. We strongly believe that in order to build robust and complex
-    simulations you firs must master simple cases and build confidence needed to bring your modeling skills
+    simulations you first must master simple cases and build confidence needed to bring your modeling skills
     to the "next level". It is very much like playing the piano, in general it is advised to learn how to play
     "Chopsticks" https://www.youtube.com/watch?v=JM5fjgiFrxg before attempting to play the "Flight of the Bumblebee" https://www.youtube.com/watch?v=M93qXQWaBdE
 
@@ -500,7 +500,7 @@ Curvature Plugin
 
 Let us now put everything together an implement elongated compartmentalized cell. The solution that will prevent two
 ``Center`` cells (the ones that initially were touching ``Top`` cell), from forming an extra FPP link,
-is to use Curvature Plugin. The way Curvature plugin works is by constraining the angle that two adjacent links can form
+is to use Curvature Plugin. The :ref:`curvature-plugin` constrains the angle at which two adjacent links can form.
 By using high value of Curvature lambda you may constrain two adjacent links to form a straight line
 and by adiabatically lowering the lambda you can control how much elongated cell can bend.
 The code for this section is in ``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_08``
@@ -548,9 +548,7 @@ Let us add a bit more code to make this simulation more interesting. First, we w
 our convenience function ``create_arranged_cells`` and as a result all of those cells will be arranged vertically -
 this will not be a problem though because, next, we will be applying random force to the "first" cell of each cluster i.e.
 to the cell that is created first in each cluster. We will store a list of "first" cells inside member variable
-``self.list_of_leading_cells = []`` which is a list. . we have to be careful to ensure that cells stored in that list do
-not disappear because if the do disappear and we try to reference them we will get Segmentation Fault Error.
-We will show later how we could avoid this issue in the code , just to show you how to handle situation of that type.
+``self.list_of_leading_cells = []`` which is a list.
 Before we apply any force, we will give simulation a generous 300 MCS for all the FPP links to get established.
 If we applied force before links are established it is likely that some ``Top`` cell could have moved away from the
 cluster before links had a chance to form. Next, every 500 MCS we will reassign random forces applied to "first" cells.
@@ -566,6 +564,10 @@ external force:
     <Plugin Name="ExternalPotential"/>
 
 Notice that we do not specify any parameters because we will use Python to set force vectors applied to "first" cells
+
+We also have to be careful to ensure that cells stored in that list do
+not disappear because if the do disappear and we try to reference them we will get Segmentation Fault Error.
+We will show later how we could avoid this issue in the code , just to show you how to handle situation of that type.
 
 The ``ElongatedCellsSteppables.py`` is more interesting:
 
@@ -583,6 +585,8 @@ The ``ElongatedCellsSteppables.py`` is more interesting:
             self.maxAbsLambdaX = 10
 
         def start(self):
+            # creating 5 "vertical" compartmental cells that are separated from each other in the x direction
+            # each compartmental consists of 5 compartments that have cell type ids: 1, 2, 2, 2, 1 respectively
             self.create_arranged_cells(x_s=25, y_s=25, size=5, cell_type_ids=[1, 2, 2, 2, 2, 1])
             self.create_arranged_cells(x_s=40, y_s=25, size=5, cell_type_ids=[1, 2, 2, 2, 2, 1])
 
