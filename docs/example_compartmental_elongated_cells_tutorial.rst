@@ -491,8 +491,32 @@ at the beginning of the simulation but during the course of the simulation , whe
 
 .. note::
 
-    CC3D will add additional constraint on the max number of links a given cell type can form which will solve this problem
-    but in the current version we have to deal possible issues that might arise when cells may form extra link that we do not want
+    To prevent this situation where ``Center`` cells form a "triangle of links" you may add an override in the FocalPointPlasticity
+    Plugin that will cap number of total links that Center cells can form to 2 links:
+
+    .. code-block:: xml
+
+        <Plugin Name="FocalPointPlasticity">
+
+            <InternalParameters Type1="Top" Type2="Center">
+                <Lambda>100.0</Lambda>
+                <ActivationEnergy>-50.0</ActivationEnergy>
+                <TargetDistance>5</TargetDistance>
+                <MaxDistance>10.0</MaxDistance>
+                <MaxNumberOfJunctions>1</MaxNumberOfJunctions>
+            </InternalParameters>
+
+            <InternalParameters Type1="Center" Type2="Center">
+                <Lambda>100.0</Lambda>
+                <ActivationEnergy>-50.0</ActivationEnergy>
+                <TargetDistance>5</TargetDistance>
+                <MaxDistance>10.0</MaxDistance>
+                <MaxNumberOfJunctions>2</MaxNumberOfJunctions>
+            </InternalParameters>
+
+            <InternalMaxTotalNumberOfLinks CellType="Center">2</InternalMaxTotalNumberOfLinks>
+
+       </Plugin>
 
 
 Curvature Plugin
