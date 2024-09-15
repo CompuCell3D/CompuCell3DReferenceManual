@@ -122,6 +122,34 @@ example):
    </Plugin>
 
 
+The total number of links a given cell can form is computed as a sum of ``<MaxNumberOfJunctions>`` values coming from ``<Parameters>``
+or ``<InternalParameters>`` sections where a given cell type appears. In the example above ``Center`` can form maximum of 2 internal links (between compartments)
+
+CompuCell3D gives you ability to override this default algorithm by adding additional tag that control the total number of links:
+
+
+.. code-block:: xml
+
+   <Plugin Name="FocalPointPlasticity">
+
+       <MaxTotalNumberOfLinks CellType="Center">1</MaxTotalNumberOfLinks>
+       <InternalMaxTotalNumberOfLinks CellType="Center">1</InternalMaxTotalNumberOfLinks>
+
+
+       <Parameters Type1="Top" Type2="Top">
+          <Lambda>10.0</Lambda>
+        ...
+
+In this example we are limiting the maximum number of links ``Center`` cells can form with Center cells of another cluster to 1
+``<MaxTotalNumberOfLinks CellType="Center">1</MaxTotalNumberOfLinks>`` and do the same for number of links the ``Center`` cells can form
+with cells that are members of the same cluster: ``<InternalMaxTotalNumberOfLinks CellType="Center">1</InternalMaxTotalNumberOfLinks>``
+
+
+
+where we can override this default algorithm. This feature can be useful when working with "elongated" compartmental cells where
+you do not want Center cells to form more than two links
+
+
 We can also specify link constituent law and change it to different form
 that "spring relation". To do this we use the following syntax inside
 FocalPointPlasticity CC3DML plugin:
