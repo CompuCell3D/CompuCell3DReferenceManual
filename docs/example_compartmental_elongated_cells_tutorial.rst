@@ -30,6 +30,11 @@ The goal is to make the cell look non-pixelized and do not disappear.
 
 The code for this simulation can be found in ``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_01``
 
+.. note::
+
+    The Demos can be open from Player using ``File -> Demo Browser`` menu.
+    Alternatively you may navigate to https://github.com/CompuCell3D/CompuCell3D/tree/master/CompuCell3D/core/Demos
+
 Here is the XML
 
 .. code-block:: xml
@@ -245,7 +250,10 @@ The entire code can be found here: ``Demos/CompuCellPythonTutorial/ElongatedCell
 
 
 This function iterates over a list of ``cell_type_ids`` and for each new cell type listed it creates a new cell of this
-type that is placed 5 pixel above previous cell. This way after we run it we will see the following initial configuration (after first MCS and after several MCS):
+type that is placed 5 pixel above previous cell. Note that we want to have cell types  of "first" and "last" cell to be different because
+they will play a special role as we start using FocalPointPlasticity Links and ExternalPotential plugins later in the chapter
+
+When we run the simulation we will see the following initial configuration (after first MCS and after several MCS):
 
 |img005|
 
@@ -417,11 +425,11 @@ to avoid intermingling.
 FocalPointPlasticity Plugin - constraining intercellular distances
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Now that we understand how to handle Contact and COntactInternal plugins . let us focus attention on energy terms that will
-allow us to constrain distances between cells. FocalPointPlasticity Plugin (**FPP**) is one of the solutions.
+Now that we understand how to handle Contact and ContactInternal plugins, let us focus attention on energy terms that will
+allow us to constrain distances between cells. :ref:`fpp-plugin` (**FPP**) is one of the solutions.
 
 This plugin implements energy term that penalizes deviations from target distance between two cells that are connected
-by FPP link. This plugin is described in details in PLugins section of the Reference Manual but it is worth mentioning that
+by FPP link. This plugin is described in details in :ref:`fpp-plugin`, but it is worth mentioning that
 this plugin has separate mechanisms for handling links between cells that are part of the same cluster and cells that
 are part of different clusters. The simulation code we will use in this section is in ``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_07``
 
@@ -458,8 +466,7 @@ we will see the following picture
 
 |img010|
 
-If we let the simulation run for a while, however, we will see that while the distance between cells is maintained the cells do not
-form "elongated cell"
+If we let the simulation run for a while, however, we will see that while the distance between cells is maintained, the cells do not become elongated.
 
 |img011|
 
@@ -528,14 +535,14 @@ at the beginning of the simulation but during the course of the simulation , whe
 Curvature Plugin
 ++++++++++++++++
 
-Let us now put everything together an implement elongated compartmentalized cell. The solution that will prevent two
+Let us now put everything together and implement elongated compartmentalized cell. The solution that will prevent two
 ``Center`` cells (the ones that initially were touching ``Top`` cell), from forming an extra FPP link,
 is to use Curvature Plugin. The :ref:`curvature-plugin` constrains the angle at which two adjacent links can form.
 By using high value of Curvature lambda you may constrain two adjacent links to form a straight line
 and by adiabatically lowering the lambda you can control how much elongated cell can bend.
 The code for this section is in ``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_08``
 
-HEre is the code that we add to the XML to enable Curvature energy calculations:
+Here is the code that we add to the XML to enable Curvature energy calculations:
 
 .. code-block:: XML
 
@@ -586,7 +593,7 @@ cluster before links had a chance to form. Next, every 500 MCS we will reassign 
 The simulation code can be found in ``Demos/CompuCellPythonTutorial/ElongatedCellsTutorial/Tutorial_09``
 
 
-In terms of XML modification, we only need to add a one-liner that enavbles ExternalPotential plugin that simulates
+In terms of XML modification, we only need to add a one-liner that enables ExternalPotential plugin that simulates
 external force:
 
 .. code-block:: XML

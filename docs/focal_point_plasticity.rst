@@ -1,3 +1,4 @@
+.. _fpp-plugin:
 FocalPointPlasticity Plugin
 ---------------------------
 
