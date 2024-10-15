@@ -241,22 +241,27 @@ The Potts section also contains tags called ``<Boundary_y>`` and
 ``<Boundary_x>``. These tags impose boundary conditions on the lattice. In
 this case, the ``x`` and ``y`` axes are **periodic**.
 
-For example:
-
-.. code-block:: xml
-
-    <Boundary_x>Periodic</Boundary_x>
-
 .. _periodic-boundary:
 
 **Periodic Boundary Conditions**: cause the edges of the simulation area to "wrap around." For example, a pixel at (``x=0 , y=1, z=1``)
 will neighbor the pixel at (``x=100, y=1, z=1``). We recommend using periodic boundaries when you want to simulate a large area of tissue while keeping your lattice small. 
 
+.. code-block:: xml
+
+    <Boundary_x>Periodic</Boundary_x>
+
+
 .. _no-flux-boundary:
 
-**'no-flux' Boundary Conditions**: is the opposite of periodic, so the lattice remains a finite area. This is the default. 
+**'NoFlux' Boundary Conditions**: is the opposite of periodic, so the lattice remains a finite area. This is the default. 
+
+.. code-block:: xml
+
+    <Boundary_x>NoFlux</Boundary_x>
 
 Boundary conditions are independent in each XYZ direction, so you can specify any combination of them you like.
+
+See `Boundary Conditions <boundary_conditions_cells.html>`_ for more details.
 
 --------------------------------------------------
 
