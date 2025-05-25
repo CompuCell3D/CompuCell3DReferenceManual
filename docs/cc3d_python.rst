@@ -231,7 +231,7 @@ PottsCore defines the global simulation properties such as dim_x/dim_y (the simu
         neighbor_order=2,
         boundary_x="Periodic",
         boundary_y="Periodic",
-        fluctuation_amplitude=1))
+        fluctuation_amplitude=10))
 
 A built-in plugin or steppable specification in the Python API consists of
 creating an instance of its corresponding class, setting the internal data of the

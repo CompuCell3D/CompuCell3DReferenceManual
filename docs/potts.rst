@@ -98,9 +98,12 @@ amplitude individually for each cell:
 When determining which value of fluctuation amplitude to use, CompuCell
 prioritizes Python definitions. Otherwise, if ``fluctAmpl`` was not set by Python, it will try to use the CC3DML for fluctuation amplitude by cell types. 
 Lastly, it will resort to a globally defined fluctuation amplitude
-(``Temperature``). Thus, it is perfectly fine to use a combination of these techniques.
+(``Temperature``). If none of these are defined, the default value is used. Thus, it is perfectly fine to use a combination of these techniques.
 
-If none of these are defined, the *default value* of fluctuation amplitude is 0. 
+.. note:: Default Value of Fluctuation Amplitude
+
+    For XML-based simulations, the **default value** of ``FluctuationAmplitude``/``Temperature`` is **0**. For Python-only (PyCoreSpecs) simulations, the **default value** of ``fluctuation_amplitude`` is **10**. 
+
 Note that a value of 0 does not turn off activity; there will still be slight fluctuations in cell membranes. 
 
 In the Glazier-Graner-Hogeweg (GGH) Model, the fluctuation amplitude is determined by taking into
