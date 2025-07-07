@@ -1,9 +1,8 @@
 DiffusionSolverFE
 -----------------
 
-DiffusionSolverFE is new solver in 3.6.2 and is intended to fully
-replace ``FlexibleDiffusionSolverFE``. It eliminates several limitations
-and inconveniences of ``FlexibleDiffusionSolverFE`` and provides new
+DiffusionSolverFE is the main PDE solver in CompuCell3D. It eliminates several limitations
+and inconveniences of its predecessor, ``FlexibleDiffusionSolverFE``. and provides new
 features such as GPU implementation or cell type dependent
 diffusion/decay coefficients. In addition it also eliminates the need
 to rescale diffusion/decay/secretion constants. It checks stability

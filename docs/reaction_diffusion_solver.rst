@@ -67,7 +67,7 @@ XML Properties
     * Enables deployment of the CC3D FluctuationCompensator.
 * **Element** ``<InitialConcentrationExpression>`` (optional)
     * Contains a `muParser expression <mu_parser.html>`_ to define the level of concentration at each voxel on MCS 0.
-    * We recommend using either InitialConcentrationExpression or ConcentrationFileName but not both.
+    * You can use either InitialConcentrationExpression or ConcentrationFileName but not both. However, the preferred way to handle initial conditions is to use the ``start`` function of the Python Steppable and initialize fields there. 
 
 
 Example Usage
@@ -282,3 +282,5 @@ Similarly as in the case of ``FlexibleDiffusionSolverFE``, we may use the
 ``<AutoscaleDiffusion>`` tag, which tells CC3D to automatically rescale the diffusion constant. 
 See section `FlexibleDiffusionSolver <flexible_diffusion_solver.html>`_ or the `Appendix <appendix.html>`_ for more
 information.
+
+Each diffusion field can have a localized ``DiffusionConstant`` and/or ``DecayConstant`` for ``ReactionDiffusionSolverFE``. Behind the scenes, the max stable decay coefficient is a value just under 1 (approx. ``1 - 1.17549e-38``).

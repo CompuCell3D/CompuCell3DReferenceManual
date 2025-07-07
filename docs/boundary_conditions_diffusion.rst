@@ -50,10 +50,10 @@ It also controls the maximum concentration that will generate from the source.
 ConstantDerivative
 ============================
 
-ConstantDerivative uses a von Neumann Equation to control the curvature of a diffusing substrate defined by a ConstantValue boundary condition. 
+The primary use of Constant Derivative boundary conditions is to implement zero flux across the simulation boundary. This ensures that the chemical does not flow out of the simulation domain. One could use ``ConstantDerivative`` to simulate inflow/outflow of a chemical to or from the simulation domain. 
+Alternatively, it can be used to create curvature or other nonlinear patterns of the substrate. 
 
-This mode should not be used on its own; rather, it is meant to be combined with ConstantValue diffusion to create nonlinear patterns of substrates. 
-Note also that each `Plane` only allows either ConstantValue or ConstantDerivative diffusion but not both.
+To use this feature, you should have one ``Plane`` tag that uses ``ConstantDerivative`` diffusion and another that uses ``ConstantValue``.
 
 **Example:**
 
