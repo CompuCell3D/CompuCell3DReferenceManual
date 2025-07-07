@@ -74,6 +74,14 @@ or watch the `CompuCell3D Workshop Python tutorial videos <https://www.youtube.c
 
 
 .. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Real-world Examples
+
+   section_real_world_examples
+
+
+.. toctree::
     :caption: Screenshots, Restarts, Parameter Scans
     :hidden:
 

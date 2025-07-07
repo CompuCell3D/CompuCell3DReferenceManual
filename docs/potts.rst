@@ -50,10 +50,10 @@ Fluctuation Amplitude (Temperature)
 -------------------------------------------------------------------
 
 The ``FluctuationAmplitude``/``Temperature`` parameter determines the intrinsic fluctuation or
-motility of each cell membrane.
+motility of each cell membrane. (Either key word works in XML)
 Try setting a high ``Temperature`` value in XML. 
 You should see much more activity from pixel changes.
-Conversely, a low ``Temperature`` will 
+Conversely, a low ``Temperature`` will decrease cell membrane activity. 
 
 .. note::
 
@@ -98,7 +98,13 @@ amplitude individually for each cell:
 When determining which value of fluctuation amplitude to use, CompuCell
 prioritizes Python definitions. Otherwise, if ``fluctAmpl`` was not set by Python, it will try to use the CC3DML for fluctuation amplitude by cell types. 
 Lastly, it will resort to a globally defined fluctuation amplitude
-(``Temperature``). Thus, it is perfectly fine to use a combination of these techniques.
+(``Temperature``). If none of these are defined, the default value is used. Thus, it is perfectly fine to use a combination of these techniques.
+
+.. note:: Default Value of Fluctuation Amplitude
+
+    For XML-based simulations, the **default value** of ``FluctuationAmplitude``/``Temperature`` is **0**. For Python-only (PyCoreSpecs) simulations, the **default value** of ``fluctuation_amplitude`` is **10**. 
+
+Note that a value of 0 does not turn off activity; there will still be slight fluctuations in cell membranes. 
 
 In the Glazier-Graner-Hogeweg (GGH) Model, the fluctuation amplitude is determined by taking into
 account the fluctuation amplitude of a *"source"* (expanding) cell and a
@@ -167,6 +173,35 @@ which of 4 quadrants each cell is located in.
                     cell.fluctAmpl = -1
 
             self.steppableCallCounter += 1
+
+
+Similarly, fluctuation_amplitude can be set in a Python-only simulation:
+
+.. code-block:: python
+
+    from cc3d import CompuCellSetup
+    from cc3d.core.PyCoreSpecs import Metadata, PottsCore
+
+    spec_potts = PottsCore()
+    spec_potts.dim_x, spec_potts.dim_y = 100, 100
+    spec_potts.steps = 100000
+    spec_potts.neighbor_order = 2
+    spec_potts.fluctuation_amplitude = 50
+
+OR
+
+.. code-block:: python
+
+    from cc3d import CompuCellSetup
+    from cc3d.core.PyCoreSpecs import Metadata, PottsCore
+
+    CompuCellSetup.register_specs(PottsCore(dim_x=dim_x,
+                                    dim_y=dim_y,
+                                    steps=100000,
+                                    neighbor_order=2,
+                                    boundary_x="Periodic",
+                                    boundary_y="Periodic",
+                                    fluctuation_amplitude=50))
 
 
 

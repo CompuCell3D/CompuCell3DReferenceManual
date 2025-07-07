@@ -195,7 +195,7 @@ For example, a typical simulation specification consists of the
 `Contact <contact_plugin.html>`_
 plugins, and a
 `BlobInitializer steppable <blob_initializer.html>`_
-to initialize a cell distribution, which can look like the following when using the Python API,
+to initialize a cell distribution, which can look like the following when using the Python API:
 
 .. code-block:: python
 
@@ -221,13 +221,25 @@ to initialize a cell distribution, which can look like the following when using 
     blob_init_specs = BlobInitializer()
     blob_init_specs.region_new(width=5, radius=20, center=(50, 50, 0), cell_types=("Condensing", "NonCondensing"))
 
+PottsCore defines the global simulation properties such as dim_x/dim_y (the simulation boundaries) and fluctuation_amplitude/temperature (the cell membrane activity level). 
+
+.. code-block:: python
+
+    CompuCellSetup.register_specs(PottsCore(dim_x=dim_x,
+        dim_y=dim_y,
+        steps=100000,
+        neighbor_order=2,
+        boundary_x="Periodic",
+        boundary_y="Periodic",
+        fluctuation_amplitude=10))
+
 A built-in plugin or steppable specification in the Python API consists of
 creating an instance of its corresponding class, setting the internal data of the
 instance and registering the instance with a ``CC3DSimService`` instance through
 the method ``register_specs``. Like in typical CC3D projects, every built-in plugin
 and steppable that is registered with a ``CC3DSimService`` instance will automatically
 function within the underlying simulation of the ``CC3DSimService`` instance for the
-entire duration of the simulation,
+entire duration of the simulation.
 
 .. code-block:: python
 
