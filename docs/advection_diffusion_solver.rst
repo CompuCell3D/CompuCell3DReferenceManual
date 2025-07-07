@@ -1,4 +1,4 @@
-AdvectionDiffusionSolver.
+AdvectionDiffusionSolver
 -------------------------
 
 .. note::
