@@ -3,6 +3,7 @@ NumPy Field Manipulation
 
 NumPy-backed fields are a **new feature in CompuCell3D 4.7.0** that allows direct access to scalar or vector field data as NumPy arrays. 
 In comparison to traditional field manipulation, using NumPy offers easier array manipulation syntax and efficient computational performance.
+The array data is shared memory between your Python code and CompuCell3D's C++ backend. 
 
 The demo **shared_numpy_fields** shows this feature in action. 
 
@@ -91,7 +92,7 @@ NumPy fields can be created in XML too. This is just a different way of writing 
     <Steppable Type="FieldManager">
         <Field Name="fibers_field_manager" Type="vector"/>
         <Field Name="numpy_field_manager" Type="scalar"/>
-        <Field Name="cell_type_field" Type="scalar" Precision="uchar"/>
+        <Field Name="cell_type_field" Type="scalar" Precision="uint8"/>
         <Field Name="cell_volume_field" Type="scalar" Precision="int16"/>
     </Steppable>
 
@@ -112,30 +113,30 @@ Key Differences from Standard Field API
     <table>
     <thead>
         <tr>
-        <th>Feature</th>
-        <th>NumPy Field API</th>
+            <th>Feature</th>
+            <th>NumPy Field API</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-        <td>Access Syntax</td>
-        <td>NumPy-style slicing: <code>field[x1:x2, y1:y2, z1]</code></td>
+            <td>Access Syntax</td>
+            <td>NumPy-style slicing: <code>field[x1:x2, y1:y2, z1]</code></td>
         </tr>
         <tr>
-        <td>Performance</td>
-        <td>Significantly faster for bulk operations using NumPy</td>
+            <td>Performance</td>
+            <td>Significantly faster for bulk operations using NumPy</td>
         </tr>
         <tr>
-        <td>Data Types</td>
-        <td>Must specify <code>dtype</code> (e.g., <code>int16</code>, <code>float32</code>)</td>
+            <td>Data Types</td>
+            <td>Must specify <code>dtype</code> (e.g., <code>int16</code>, <code>float32</code>)</td>
         </tr>
         <tr>
-        <td>Padding</td>
-        <td>Use <code>raw_field</code> to access padded data regions</td>
+            <td>Padding</td>
+            <td>Use <code>raw_field</code> to access padded data regions</td>
         </tr>
         <tr>
-        <td>In-place Editing</td>
-        <td>Allows slicing and assignment directly</td>
+            <td>In-place Editing</td>
+            <td>Allows slicing and assignment directly</td>
         </tr>
     </tbody>
     </table>
@@ -152,4 +153,4 @@ The demo **shared_numpy_fields_steppables.py** shows that it's possible to edit 
     self.copy_cell_attribute_field_values_to("cell_type_field", "type")
     self.copy_cell_attribute_field_values_to("cell_volume_field", "id")
 
-These populate the NumPy fields with values derived from cell attributes. However, the NumPy data must then be copied back manually to the cells.
+These populate the NumPy fields with values derived from cell attributes. However, if your workflow requires you to transfer data from NumPy arrays to cells, you should write code to do this after `copy_cell_attribute_field_values_to`. 
