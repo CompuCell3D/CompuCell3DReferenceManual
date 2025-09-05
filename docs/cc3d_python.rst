@@ -221,7 +221,7 @@ to initialize a cell distribution, which can look like the following when using 
     blob_init_specs = BlobInitializer()
     blob_init_specs.region_new(width=5, radius=20, center=(50, 50, 0), cell_types=("Condensing", "NonCondensing"))
 
-PottsCore defines the global simulation properties such as dim_x/dim_y (the simulation boundaries) and fluctuation_amplitude/temperature (the cell membrane activity level). 
+PottsCore defines the global simulation properties such as dim_x/dim_y (the simulation boundaries) and fluctuation_amplitude/temperature (the cell membrane activity level).
 
 .. code-block:: python
 
@@ -595,3 +595,209 @@ Here is an example screenshot of the control panel and frame grid based on the `
 
 The settings on the control panel will only apply to active `selected frames`.
 Use the buttons to toggle which frames are active.
+
+
+CompuCell3D Jupyter Specification UI
+------------------------------------
+
+This section describes an interactive Jupyter Notebook widget for configuring CompuCell3D simulation specifications through a visual interface. It offers a point-and-click UI that produces the same ``cc3d.core.PyCoreSpecs`` objects used by ``CC3DSimService``.
+
+.. note::
+
+    The Jupyter Specification UI widget is currently a work in progress. While core features like Metadata, Potts Core, Cell Types, and basic Plugins are functional, some additional features in the Plugins, Initializers, and Steppable tabs may show "not implemented yet" placeholders. The widget is designed to be extensible, and additional features are being added.
+
+
+Overview
+~~~~~~~~
+
+The Jupyter Specification UI provides a comprehensive interface for setting up CompuCell3D simulations with:
+
+- **Interactive tabs**: configure lattice, boundaries, processors, cell types, and plugins
+- **Visual controls**: adjust physics parameters and plugin settings
+- **Live validation**: immediate feedback about configuration issues
+- **Integrated visualization**: launch and view simulations directly in the notebook
+- **Configuration persistence**: save and load JSON configurations
+
+.. image:: images/SpecificationSetupUIwidget.jpg
+   :alt: Screenshot of the Jupyter Specification UI widget showing configuration tabs
+   :width: 100%
+
+
+Features
+~~~~~~~~
+
+- **Metadata configuration**: set processor count and debug output
+- **Potts core**: configure dimensions, neighbor order, and boundary conditions
+- **Cell types**: define types with optional freezing
+- **Plugins**:
+
+  - Volume and Surface constraints
+  - Adhesion/Contact energies
+  - Chemotaxis and Boundary tracking
+- **Initializers**: blob initialization with region controls
+- **Steppables**: custom Python steppable configuration (not yet implemented)
+- **Visualization**: integrated viewer and controls
+
+
+Quick Start
+~~~~~~~~~~~
+
+The Jupyter Specification UI provides an intuitive interface for configuring CompuCell3D simulations through interactive tabs and controls. Users can set up complex simulations without writing code, while still having access to the underlying specification objects for advanced use cases.
+
+A minimal usage snippet is:
+
+.. code-block:: python
+
+    from JupyterSpecificationUI import SpecificationSetupUI
+    from JupyterWidgetStyling import inject_jupyter_widget_css
+
+    # Optional: widget styling
+    inject_jupyter_widget_css()
+
+    # Initialize and display the UI
+    ui = SpecificationSetupUI()
+
+    # One-line run with visualization
+    ui.run_and_visualize()
+
+For more granular control, use the manual setup shown below.
+
+
+Using the UI in Two Ways
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The UI supports two equivalent methods for running simulations:
+
+1. **Quickstart Method**: a single call ``ui.run_and_visualize()`` that performs validation, creates specs, configures the service, runs/initializes/starts the simulation, creates visualization widgets, and shows a run/pause button.
+2. **Granular Control Method**: extract ``specs`` from the UI and perform each simulation step explicitly for maximum control.
+
+Quickstart Method (``ui.run_and_visualize()``)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    # Validate, generate specs, start simulation, show visualization and controls
+    ui.run_and_visualize()
+
+.. image:: images/cell_sorting_initial_output.png
+   :alt: Screenshot of CompuCell3D simulation visualization in Jupyter Notebook
+   :width: 60%
+
+Internally, this performs:
+
+1. Validate configuration
+2. Generate specification objects
+3. Create and configure ``CC3DSimService``
+4. Register all specifications
+5. Run, initialize, and start the simulation
+6. Create interactive visualization
+7. Display a run/pause toggle button
+
+For a complete example, see ``SortingExample.ipynb`` in the notebook directory.
+
+
+Configuration Persistence
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Jupyter Specification UI supports saving and loading simulation configurations in JSON format. By default, configurations are saved to ``simulation_setup.json`` in the same folder where the Jupyter Specification UI widget object is instantiated. This allows you to:
+
+- **Save configurations**: export your UI settings to a JSON file for reuse
+- **Load configurations**: import previously saved configurations
+- **Share setups**: distribute complete simulation configurations to colleagues
+- **Version control**: track configuration changes over time
+
+The JSON format includes all simulation parameters in a structured format:
+
+.. code-block:: json
+
+    {
+        "Metadata": {
+            "num_processors": 1,
+            "debug_output_frequency": 0
+        },
+        "PottsCore": {
+            "dim_x": 100,
+            "dim_y": 100,
+            "dim_z": 1,
+            "neighbor_order": 2,
+            "fluctuation_amplitude": 10.0,
+            "boundary_x": "NoFlux",
+            "boundary_y": "NoFlux"
+        },
+        "CellType": [
+            {"Cell type": "Medium", "id": 0, "freeze": false},
+            {"Cell type": "Condensing", "id": 1, "freeze": false},
+            {"Cell type": "NonCondensing", "id": 2, "freeze": false}
+        ],
+        "Plugins": {
+            "VolumePlugin": {
+                "params": [
+                    {"CellType": "Condensing", "target_volume": 25.0, "lambda_volume": 2.0},
+                    {"CellType": "NonCondensing", "target_volume": 25.0, "lambda_volume": 2.0}
+                ]
+            },
+            "ContactPlugin": {
+                "energies": {
+                    "Condensing": {
+                        "Condensing": {"energy": 2.0},
+                        "NonCondensing": {"energy": 11.0}
+                    }
+                }
+            }
+        },
+        "Initializer": {
+            "type": "BlobInitializer",
+            "regions": [{
+                "width": 5,
+                "radius": 20,
+                "center": [50, 50, 0],
+                "cell_types": ["Condensing", "NonCondensing"]
+            }]
+        }
+    }
+
+
+Granular Control Method
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    from cc3d.CompuCellSetup.CC3DCaller import CC3DSimService
+
+    # Get specification objects from the UI
+    specs = ui.specs
+
+    # Create simulation service
+    cc3d_sim = CC3DSimService()
+
+    # Register specifications
+    cc3d_sim.register_specs(specs)
+
+    # Start the simulation step-by-step
+    cc3d_sim.run()
+    cc3d_sim.init()
+    cc3d_sim.start()
+
+    # Create visualization and controls manually
+    vis_widget = cc3d_sim.visualize().show()
+    display(cc3d_sim.jupyter_run_button())
+
+This approach provides full control for customization, debugging, and integration with custom workflows.
+
+
+What ``ui.specs`` Returns
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``ui.specs`` property returns a list of populated specification objects compatible with ``CC3DSimService``:
+
+.. code-block:: python
+
+    specs = [
+        Metadata(...),           # Global simulation settings
+        PottsCore(...),          # Lattice and simulation parameters
+        CellTypePlugin(...),     # Cell type definitions
+        VolumePlugin(...),       # Volume constraints
+        ContactPlugin(...),      # Contact energies
+        BlobInitializer(...),    # Initial cell distribution
+        # ... additional plugins as configured in the UI
+    ]
