@@ -1,3 +1,4 @@
+.. _curvature-plugin:
 Curvature Plugin
 ----------------
 

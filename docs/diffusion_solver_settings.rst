@@ -1,3 +1,12 @@
+Diffusion Solver Settings
+######################################
+
+Related: 
+    * `DiffusionSolverFE <diffusion_solver.html>`_ (main PDE solver)
+    * `Flexible <flexible_diffusion_solver.html>`_
+    * `Fast <fast_diffusion_solver_2D.html>`_
+    * `ReactionDiffusion <reaction_diffusion_solver.html>`_
+
 Instabilities of the Forward Euler Method
 ------------------------------------------
 
@@ -46,6 +55,8 @@ and
 Initial Conditions
 -------------------
 
+.. _ConcentrationFileName:
+
 We can specify initial concentration as a function of ``x``, ``y``, ``z``
 coordinates using ``<InitialConcentrationExpression>`` tag we use ``muParser``
 syntax to type the expression. Alternatively we may use
@@ -88,7 +99,9 @@ Python.
 Boundary Conditions
 -------------------
 
-All standard solvers (``Flexible``, ``Fast``, and ``ReactionDiffusion``) by default
+Related: `Boundary Conditions Reference <boundary_conditions_diffusion.html>`_
+
+All standard solvers (`DiffusionSolverFE <diffusion_solver.html>`_, `Flexible <flexible_diffusion_solver.html>`_, `Fast <fast_diffusion_solver_2D.html>`_, and `ReactionDiffusion <reaction_diffusion_solver.html>`_) by default
 use the same boundary conditions as the GGH simulation (and those are
 specified in the Potts section of the CC3DML script). Users can,
 however, override those defaults and use customized boundary conditions

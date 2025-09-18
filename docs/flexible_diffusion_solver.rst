@@ -145,6 +145,8 @@ we use syntax:
 
     <DoNotDecayIn>Medium</DoNotDecayIn>
 
+.. _SecretionData:
+
 In addition to diffusion parameters we may specify how secretion should
 proceed. ``SecretionData`` section contains all the necessary information to
 tell CompuCell how to handle secretion. Let's study the example:
@@ -173,6 +175,8 @@ concentration every MCS. Line:
 means that cells of type ``Medium`` will get additional ``0.1`` increase in
 concentration **but only when** they touch cell of type ``Amoeba``. This mode of
 `secretion <secretion.html>`_ is called ``SecretionOnContact``.
+
+.. _DeltaT:
 
 We can also see new CC3DML tags ``<DeltaT>`` and ``<DeltaX>``. Their values
 determine the correspondence between MCS and actual time and between

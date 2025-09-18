@@ -1,9 +1,13 @@
 ReactionDiffusionSolverFVM Plugin
 --------------------------------------
 
-Related: `ReactionDiffusionSolver Plugin <docs\reaction_diffusion_solver.html>`_
+Related: `ReactionDiffusionSolverFE Plugin <reaction_diffusion_solver.html>`_
 
-The reaction diffusion finite volume (RDFVM) solver uses the finite volume method to
+How It Works
+***************************
+
+The reaction diffusion finite volume (RDFVM) solver provides a high level of customization in both XML and Python. 
+It uses the finite volume method to
 solve the following system of :math:`N` reaction diffusion equations:
 
 .. math::
@@ -68,6 +72,9 @@ surface shared by the volumes at :math:`\mathbf{x}` and :math:`\mathbf{x}_k`,
 .. math::
 
     P_{j, k} \left( \mathbf{x}, t \right) = \frac{2 P_j \left( \mathbf{x}, t \right) P_j \left( \mathbf{x}_k, t \right)}{P_j \left( \mathbf{x}, t \right) + P_j \left( \mathbf{x}_k, t \right)}
+
+Example Usage
+****************************
 
 The following is a representative example of a specification for the RDFVM solver using two fields
 *U* and *V* and two cell types *CellType1* and *CellType2*,
@@ -139,7 +146,8 @@ the form,
         \frac{\partial V}{\partial t} &= \nabla \left(D_V \nabla V \right) - U^2 V + 0.9
     \end{align*}
 
-The complete CC3DML interface for the RDFVM solver is as follows,
+XML Properties
+****************************
 
 * **Element** ``<DeltaX>`` (optional)
     * Specifies discretization along the *x* dimension.
@@ -154,7 +162,7 @@ The complete CC3DML interface for the RDFVM solver is as follows,
     * When enabled, simulation steps are explicitly integrated using maximum stable sub-steps.
     * Note that the derived stability condition (Scarborough) is sufficient but not necessary, so greater time steps than those calculated may be stable, but are not guaranteed to be stable.
 * **Element** ``<FluctuationCompensator>`` (optional)
-    * Enables deployment of the CC3D FluctuationCompensator.
+    * Enables deployment of the `CC3D FluctuationCompensator <fluctuation_compensator_addon.html>`_.
 * **Element** ``<DiffusionField>``
     * Defines a diffusion field
     * **Attribute** ``Name``: the name of the field
@@ -197,7 +205,7 @@ The complete CC3DML interface for the RDFVM solver is as follows,
             * String expression for the initial concentration
             * **Value**: initial concentration expression (*e.g.*, ``x*y+10*z``)
     * **Element** ``<SecretionData>`` (optional)
-            * Secretion data elements, defined in the same way as for DiffusionSolverFE
+            * Secretion data elements, defined in the same way as for `FlexibleDiffusionSolverFE <flexible_diffusion_solver.html#_SecretionData>`_
     * **Element** ``<ReactionData>`` (optional)
         * **Element** ``<ExpressionSymbol>`` (optional)
             * Declares a custom symbol for the field in reaction expressions.
@@ -215,6 +223,11 @@ The complete CC3DML interface for the RDFVM solver is as follows,
         * Boundary condition elements, defined in the same as for DiffusionSolverFE.
         * Boundary conditions are applied at surfaces and can be manipulated at each site during simulation execution.
         * If a condition is not specified for a boundary, then it is assumed to be zero flux.
+        * `BoundaryConditions <boundary_conditions_diffusion.html>`_ options:
+            * NoFlux (default)
+            * ConstantValue
+            * ConstantDerivative
+            * Periodic
 
 The RDFVM solver provides a runtime interface for manipulating various model features during a simulation
 from a steppable. In general, the RDFVM solver is accessible during simulations that use it in Python from
@@ -261,8 +274,11 @@ a volume can be selected using the following names,
 * ``MinZ``: surface with outward-facing normal pointing towards the negative *z* direction.
 * ``MaxZ``: surface with outward-facing normal pointing towards the positive *z* direction.
 
+Python Reference
+****************************
+
 The RDFVM solver provides methods for setting the following mass transport laws and
-conditions on the basis of individual volume element surface during simulation execution,
+conditions on the basis of individual volume element surface during simulation execution.
 
 * useDiffusiveSurface(field_name: string, surface_name: string, pt: CompuCell.Point3D)
     * Use diffusive transport on a surface of a volume
@@ -303,7 +319,7 @@ conditions on the basis of individual volume element surface during simulation e
 
 The RDFVM solver also provides methods for setting cell-based model parameters for transport laws,
 which are applied according to the transport laws and boundary conditions of each volume occupied
-by a cell,
+by a cell.
 
 * getCellDiffusivityCoefficient(cell: CompuCell.CellG, field_name: string)
     * Get the diffusion coefficient of a cell for a field

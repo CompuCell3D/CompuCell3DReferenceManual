@@ -30,4 +30,6 @@ This section "off-the-shelf" steppables that are available in CC3D and were impl
     blob_initializer
     pif_initializer
     pif_dumper
+    tube_initializer
+    polygon_initializer
     mu_parser

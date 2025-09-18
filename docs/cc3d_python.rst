@@ -37,7 +37,7 @@ The `Twedit <https://github.com/CompuCell3D/cc3d-twedit5>`_ and
 execution and sharing of simulations in a project structure that can consist of
 Python and `CC3DML <index.html>`_ source
 code, auxiliary resources (*e.g.*,
-`PIF files <steppable_section.html#pif-initializer>`_)
+`PIF files <pif_initializer.html>`_)
 and a ``.cc3d`` project file that describes the contents of a CC3D project.
 This structure is the officially supported CC3D project structure that the complete
 distribution of CC3D packages supports.
@@ -192,10 +192,10 @@ For example, a typical simulation specification consists of the
 `Potts specification <potts_and_lattice.html#potts-section>`_,
 `CellType <cell_type_plugin.html>`_,
 `Volume <volume_and_surface_flex_plugins.html>`_ and
-`Contact <plugins_section.html#contact-plugin>`_
-plugins and a
-`BlobInitializer steppable <steppable_section.html#blobinitializer-steppable>`_
-to initialize a cell distribution, which can look like the following when using the Python API,
+`Contact <contact_plugin.html>`_
+plugins, and a
+`BlobInitializer steppable <blob_initializer.html>`_
+to initialize a cell distribution, which can look like the following when using the Python API:
 
 .. code-block:: python
 
@@ -221,13 +221,25 @@ to initialize a cell distribution, which can look like the following when using 
     blob_init_specs = BlobInitializer()
     blob_init_specs.region_new(width=5, radius=20, center=(50, 50, 0), cell_types=("Condensing", "NonCondensing"))
 
+PottsCore defines the global simulation properties such as dim_x/dim_y (the simulation boundaries) and fluctuation_amplitude/temperature (the cell membrane activity level). 
+
+.. code-block:: python
+
+    CompuCellSetup.register_specs(PottsCore(dim_x=dim_x,
+        dim_y=dim_y,
+        steps=100000,
+        neighbor_order=2,
+        boundary_x="Periodic",
+        boundary_y="Periodic",
+        fluctuation_amplitude=10))
+
 A built-in plugin or steppable specification in the Python API consists of
 creating an instance of its corresponding class, setting the internal data of the
 instance and registering the instance with a ``CC3DSimService`` instance through
 the method ``register_specs``. Like in typical CC3D projects, every built-in plugin
 and steppable that is registered with a ``CC3DSimService`` instance will automatically
 function within the underlying simulation of the ``CC3DSimService`` instance for the
-entire duration of the simulation,
+entire duration of the simulation.
 
 .. code-block:: python
 
@@ -241,7 +253,7 @@ entire duration of the simulation,
 
 For applications using a single ``CC3DSimService`` instance, instances of classes from the
 ``cc3d.core.PyCoreSpecs`` module that correspond to built-in plugins and steppables that support
-`steering <https://pythonscriptingmanual.readthedocs.io/en/latest/steering_changing_cc3dml_parameters_on-the-fly.html>`_
+`steering <steering_changing_cc3dml_parameters_on-the-fly.html>`_
 provide a method ``steer``. When ``steer`` is called on a registered ``cc3d.core.PyCoreSpecs``
 instance, the underlying built-in plugin or steppable is updated according to the internal data of the
 ``cc3d.core.PyCoreSpecs`` instance,
