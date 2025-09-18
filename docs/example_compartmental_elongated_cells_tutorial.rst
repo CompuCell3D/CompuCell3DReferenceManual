@@ -1,4 +1,4 @@
-Compartments, FPP Links and Curvature - how to build elongated cells.
+whichCompartments, FPP Links and Curvature - how to build elongated cells.
 ------------------------------------------------------------------------------------------------------------
 
 The goal of this tutorial is to teach you how to transform the most basic simulation involving just a single cell into
