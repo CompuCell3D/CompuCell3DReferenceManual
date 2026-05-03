@@ -86,6 +86,7 @@ or watch the `CompuCell3D Workshop Python tutorial videos <https://www.youtube.c
     :hidden:
 
     configuring_multiple_screenshots
+    custom_simulation_settings
     parameter_scans
     restarting_simulations
 
