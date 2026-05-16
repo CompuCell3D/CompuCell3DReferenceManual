@@ -41,6 +41,48 @@ When a Python-only simulation starts, CC3D checks the folder containing the
 top-level Python script. If it finds ``_custom_settings.xml``, it loads those
 settings before visualization windows are created.
 
+Selecting a Global Settings Directory Name
+------------------------------------------
+
+Player normally reads global settings from ``~/.compucell3d_py3``. You can
+start Player with a different global settings folder name when you need an
+isolated settings profile, for example when testing custom visualization
+settings without modifying your normal Player configuration.
+
+Use ``--global-settings-dir-name`` to choose the directory name under your home
+directory:
+
+.. code-block:: bash
+
+    compucell3d.command --global-settings-dir-name .cc3d_project_settings -i MySimulation.cc3d
+
+On Windows, use ``compucell3d.bat``:
+
+.. code-block:: bat
+
+    compucell3d.bat --global-settings-dir-name .cc3d_project_settings -i MySimulation.cc3d
+
+On Linux, use ``compucell3d.sh``:
+
+.. code-block:: bash
+
+    ./compucell3d.sh --global-settings-dir-name .cc3d_project_settings -i MySimulation.cc3d
+
+If CC3D is installed in a Python environment, you can also launch Player as a
+Python module:
+
+.. code-block:: bash
+
+    python -m cc3d.player5 --global-settings-dir-name .cc3d_project_settings -i MySimulation.cc3d
+
+In this example Player uses ``~/.cc3d_project_settings`` for global settings.
+The option expects a directory name, not a full filesystem path.
+
+.. note::
+
+   The earlier option name ``--global-settings-dir`` has been replaced by
+   ``--global-settings-dir-name``.
+
 .. admonition:: Info
 
    When running Python-only simulations, you may need to update window
