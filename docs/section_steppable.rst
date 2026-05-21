@@ -35,6 +35,7 @@ familiar with `Developers' Manual <https://compucell3ddevelopersmanual.readthedo
 
     uniform_initializer
     blob_initializer
+    tube_initializer
     pif_initializer
     pif_dumper
     mitosis
