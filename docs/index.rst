@@ -1,7 +1,7 @@
 .. python_scripting_manual documentation master file, created by
 
 
-CompuCell3D Manual - version 4.6.0
+CompuCell3D Manual - version 4.9.0
 =======================================================
 
 This manual teaches how to leverage Python for complex CompuCell3D simulations.
@@ -86,6 +86,7 @@ or watch the `CompuCell3D Workshop Python tutorial videos <https://www.youtube.c
     :hidden:
 
     configuring_multiple_screenshots
+    custom_simulation_settings
     parameter_scans
     restarting_simulations
 
